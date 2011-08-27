@@ -20,7 +20,7 @@ audio[controls], canvas, video { display: inline-block; *display: inline; *zoom:
    ========================================================================== */
 
 /*
- * 1. Correct text resizing oddly in IE6/7 when body font-size is set using em units
+ * 1. Correct text resizing oddly in IE6/7 when body font-size is set using em unitsor
  *    http://clagnut.com/blog/348/#c790
  * 2. Force vertical scrollbar in non-IE
  * 3. Remove Android and iOS tap highlight color to prevent entire container being highlighted

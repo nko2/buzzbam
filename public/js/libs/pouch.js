@@ -493,7 +493,7 @@ var makePouch = function (db) {
       if (cursor) {
         // TODO: Accumulate a bucket by merging rev trees
         console.log("Document updating needs implementing ASAP!!");
-        cursor.continue();
+		cursor.continue();
       } else {
         // Cursor has exceeded the key range so the rest are inserts
         buckets.forEach(function (bucket) {
