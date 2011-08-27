@@ -62,6 +62,15 @@ var viewModel = {
 
 ko.applyBindings(viewModel);
 
+function populateParty(party)
+{
+  var userIds = party.userIds;
+  for (var i in party.userIds) {
+    $.getJSON('user?id=' + userIds[i], function(data) {
+    }
+  }
+}
+
 function populateParties()
 {
   $(document).ready(function() {
