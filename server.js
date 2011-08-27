@@ -80,7 +80,7 @@ app.get('/login', function(req, res) {
   https.get({
     host: 'graph.facebook.com',
     port: 443,
-    path: '/oauth/access_token?client_id='+consumer_key+'&redirect_uri=http://partyplanner.no.de/continue&client_secret='+consumer_secret+'&code='+code
+    path: '/oauth/access_token?client_id='+consumer_key+'&redirect_uri=http://partyplanner.no.de/login&client_secret='+consumer_secret+'&code='+code
   }, function(result) {
     var body = '';
     result.on('data', function (chunk) {
