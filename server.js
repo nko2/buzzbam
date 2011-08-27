@@ -11,6 +11,8 @@ var http = require('http');
 var url = require('url');
 var qs = require('querystring');
 var config = require('./config');
+var uuid = require('./uuid');
+var client = require('./client');
 
 var app = module.exports = express.createServer();
 
@@ -35,40 +37,6 @@ app.configure('production', function(){
 
 // Routes
 
-function jsonGet(options, callback) {
-  console.log({get: options});
-  https.get(options, function(response) {
-    var body = '';
-    response.on('data', function(chunk) {
-      body += chunk;
-    });
-    response.on('end', function() {
-      console.log({getResponse: body});
-      callback(JSON.parse(body));
-    });
-  });
-}
-
-function jsonPost(options, content, callback) {
-  console.log({post: content});
-  options.headers = {
-    'Content-Length': content.length,
-    'Content-Type': 'application/x-www-form-urlencoded'
-  };
-  var request = https.request(options, function(response) {
-    var body = '';
-    response.on('data', function(chunk) {
-      body += chunk;
-    });
-    response.on('end', function() {
-      console.log({postResponse: body});
-      callback(JSON.parse(body));
-    });
-  });
-  request.write(content);
-  request.end();
-}
-
 function map(input, fn) {
   var result = [];
   for (var index in input) {
@@ -78,20 +46,9 @@ function map(input, fn) {
   return result;
 }
 
-function getUuid(fn) {
-  var options = {
-    host:'buzzbam.iriscouch.com',
-    port:443,
-    path:'/_uuids',
-  };
-  jsonGet(options, function(result) {
-    fn(result.uuids[0]);
-  });
-}
-
 app.get('/user', function(req, res) {
   var id = req.param('id');
-  jsonGet({host: 'graph.facebook.com', port: 443, path: '/'+id+'?access_token=' + req.session.user.access_token}, function(result) {
+  client.get({host: 'graph.facebook.com', port: 443, path: '/'+id+'?access_token=' + req.session.user.access_token}, function(result) {
     res.send(result);
   });
 });
@@ -101,7 +58,7 @@ app.get('/friends', function(req, res) {
     res.send(JSON.stringify({me:{name:'Anonymous'},friends:[]}));
   }
   else {
-    jsonGet({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
+    client.get({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
       var response = {
         me: { 
           id: req.session.user.id,
@@ -127,14 +84,14 @@ app.post('/newitem', function(req, res) {
     description: description,
   };
 
-  getUuid(function(uuid){
+  uuid.get(function(uuid){
     var options = {
       host:'buzzbam.iriscouch.com',
       port:443,
       path:'/items/'+uuid,
       method:'PUT'
     };
-    jsonPost(options, JSON.stringify(item), function(result) {
+    client.post(options, JSON.stringify(item), function(result) {
       res.send(result);
     });
   });
@@ -152,7 +109,7 @@ app.post('/newcomment', function(req, res) {
     port:443,
     path:'/items/'+itemid
   };
-  jsonGet(options, function(party) {
+  client.get(options, function(party) {
     if (!(party.comments instanceof Array)) {
       party.comments = [];
     }
@@ -163,7 +120,7 @@ app.post('/newcomment', function(req, res) {
     });
     var updated = JSON.stringify(party);
     options.method = 'PUT';
-    jsonPost(options, updated, function(result) {
+    client.post(options, updated, function(result) {
       res.send(JSON.stringify(result));
     });
   });
@@ -187,14 +144,14 @@ app.get('/newparty', function(req, res) {
     where: {}
   };
 
-  getUuid(function(uuid){
+  uuid.get(function(uuid){
     var options = {
       host:'buzzbam.iriscouch.com',
       port:443,
       path:'/party/'+uuid,
       method:'PUT'
     };
-    jsonPost(options, JSON.stringify(party), function(result) {
+    client.post(options, JSON.stringify(party), function(result) {
       res.send(result);
     });
   });
@@ -208,7 +165,7 @@ app.get('/party', function(req, res) {
     port:443,
     path:'/party/'+id
   };
-  jsonGet(options, function(party) {
+  client.get(options, function(party) {
     res.send(JSON.stringify(party));
   });
 });
@@ -224,20 +181,20 @@ function viewValues(viewResult) {
 
 app.get('/items', function(req, res) {
   var id = req.param('id');
-  jsonGet({host:'buzzbam.iriscouch.com',port:443,path:'/items/_design/parties/_view/items?key="'+id+'"'}, function(items) {
+  client.get({host:'buzzbam.iriscouch.com',port:443,path:'/items/_design/parties/_view/items?key="'+id+'"'}, function(items) {
     res.send(JSON.stringify(viewValues(items)));
   });
 });
 
 app.get('/parties', function(req, res) {
   var id = req.session.user ? req.session.user.id : '';
-  jsonGet({host:'buzzbam.iriscouch.com',port:443,path:'/party/_design/parties/_view/public'}, function(publicParties) {
+  client.get({host:'buzzbam.iriscouch.com',port:443,path:'/party/_design/parties/_view/public'}, function(publicParties) {
     var options = {
       host:'buzzbam.iriscouch.com',
       port:443,
       path:'/party/_design/parties/_view/parties?key="'+id+'"'
     };
-    jsonGet(options, function(parties) {
+    client.get(options, function(parties) {
       var result = {
         'public': viewValues(publicParties),
         'parties': viewValues(parties)
@@ -300,7 +257,7 @@ app.get('/login', function(req, res) {
       req.session.user = {
         access_token: parsed.access_token
       };
-      jsonGet({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
+      client.get({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
         req.session.user.name = result.name;
         req.session.user.id = result.id;
         res.redirect('/index.html');
