@@ -1,8 +1,7 @@
 exports.couch = {
   user:'admin',
   pass: 'Xy123!@#',
-  server: 'partyplanner.iriscouch.com',
-  db: 'partyplanner'
+  server: 'buzzbam.iriscouch.com'
 };
 exports.fb = {
   key: '225589484159909',
