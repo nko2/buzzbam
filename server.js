@@ -95,16 +95,21 @@ app.get('/user', function(req, res) {
 });
 
 app.get('/friends', function(req, res) {
-  jsonGet({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
-    var response = {
-      me: { 
-        id: req.session.user.id,
-        name: req.session.user.name
-      },
-      friends: result.data
-    };
-    res.send(JSON.stringify(response));
-  });
+  if (!req.session.user) {
+    res.send(JSON.stringify({me:{name:'Anonymous'},friends:[]});
+  }
+  else {
+    jsonGet({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
+      var response = {
+        me: { 
+          id: req.session.user.id,
+          name: req.session.user.name,
+        },
+        friends: result.data
+      };
+      res.send(JSON.stringify(response));
+    });
+  }
 });
 
 app.get('/newparty', function(req, res) {
