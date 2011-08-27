@@ -19,6 +19,10 @@
 //  });
 //}
 
+function logIntoFacebook() {
+  window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
+}
+
 function updateUserData()
 {
   $.getJSON('friends', function(data) {
