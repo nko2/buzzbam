@@ -2,7 +2,7 @@ function updateUserData()
 {
   $.getJSON('friends', function(data) {
     viewModel.isLoggedIn(data.me.id?true:false);
-    viewModel.userFullName(data.me.name);
+    viewModel.user(new user({fullName: data.me.name});
     viewModel.friends(data.me.friends);
   });
 }
