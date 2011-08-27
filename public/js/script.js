@@ -9,7 +9,8 @@ function updateUserStatus()
       if (data.user) {
         var anchor = $('<a/>');
         anchor.click(function(e) {
-          $.getJSON('logout', updateUserStatus);
+          //$.getJSON('logout', updateUserStatus);
+          window.location = 'http://www.facebook.com/logout.php';
         });
         anchor.text('Logout (' + data.user.name + ')');
         $('.loggedin').empty().append(anchor);
