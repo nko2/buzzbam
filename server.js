@@ -36,12 +36,14 @@ app.configure('production', function(){
 // Routes
 
 function jsonGet(options, callback) {
+  console.log({get: options});
   https.get(options, function(response) {
     var body = '';
     response.on('data', function(chunk) {
       body += chunk;
     });
     response.on('end', function() {
+      console.log({getResponse: body});
       callback(JSON.parse(body));
     });
   });
@@ -143,24 +145,26 @@ app.post('/newcomment', function(req, res) {
   var itemid = req.param('id');
   var message = req.param('message');
 
-  //XXX TODO deny new items for other peoples parties
+  //XXX TODO deny new comments for other peoples parties
 
-  var item = {
-    task: true,
-    done: false,
-    partyid: partyid,
-    description: description,
+  var options = {
+    host:'buzzbam.iriscouch.com',
+    port:443,
+    path:'/items/'+itemid
   };
-
-  getUuid(function(uuid){
-    var options = {
-      host:'buzzbam.iriscouch.com',
-      port:443,
-      path:'/items/'+uuid,
-      method:'PUT'
-    };
-    jsonPost(options, JSON.stringify(item), function(result) {
-      res.send(result);
+  jsonGet(options, function(party) {
+    if (!(party.comments instanceof Array)) {
+      party.comments = [];
+    }
+    party.comments.push({
+      user: req.session.user.id,
+      message: message,
+      time: new Date()
+    });
+    var updated = JSON.stringify(party);
+    options.method = 'PUT';
+    jsonPost(options, updated, function(result) {
+      res.send(JSON.stringify(result));
     });
   });
 
