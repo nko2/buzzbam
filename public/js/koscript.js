@@ -31,10 +31,6 @@ var user = function (opt) {
   this.email = opt.email;
   this.role = opt.role ? opt.role : 'contrib';
   this.rsvp = opt.rsvp ? opt.rsvp : 'maybe';
-  
-  this.formattedFullName = ko.dependentObservable(function () {
-      var name = this.fullName;
-      return 
 };
 
 var friend = function (opt) {
@@ -77,8 +73,7 @@ viewModel.formattedLoggedInName = ko.dependentObservable(function () {
 
 ko.applyBindings(viewModel);
 
-function populateParty(party)
-{
+function populateParty(party) {
   var userIds = party.userIds;
   for (var i in party.userIds) {
     $.getJSON('user?id=' + userIds[i], function(data) {
@@ -87,8 +82,7 @@ function populateParty(party)
   }
 }
 
-function populateParties()
-{
+function populateParties() {
   $(document).ready(function() {
     $.getJSON('parties', function(data) {
       var newParties = [];
