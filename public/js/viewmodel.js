@@ -1,5 +1,7 @@
 var parties = [];
 var friends = [];
+var tasks = [];
+var todos = [];
 
 var whereInfo = function (opt) {
   this.id = opt.id;
@@ -10,6 +12,14 @@ var whenInfo = function (opt) {
   this.id = opt.id;
   this.startTime = opt.startTime;
   this.endTime = opt.endTime;
+  
+  formattedTimeFull = function () {
+    if (this.startTime && this.endTime) {
+      return this.startTime + ' ' + this.endTime;
+    } else if (this.startTime) {
+      return this.startTime;
+    }
+    else return '';  
 };
 
 var user = function (opt) {
@@ -66,6 +76,8 @@ var viewModel = {
   friends: ko.observableArray(friends),
   parties: ko.observableArray(parties),
   selectedParty: ko.observable(),
+  tasks: ko.observableArray(tasks),
+  todos: ko.observableArray(todos),
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {

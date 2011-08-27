@@ -1,12 +1,3 @@
-function populateParty(party) {
-  var userIds = party.userIds;
-  for (var i in party.userIds) {
-    $.getJSON('user?id=' + userIds[i], function(data) {
-      party.users.push(new user({ }));
-    });
-  }
-};
-
 function populateParties(data) {
   var newParties = [];
   for (var i in data) {
@@ -61,3 +52,9 @@ function logInOutOfFacebook() {
     });
   }
 };
+
+function createNewParty() {
+  window.location = 'http://partyplanner.no.de/index.html';
+};
+
+

@@ -22,21 +22,21 @@
 	<div class="grid-page">
 		<div class="grid-container">
 			<div class="grid-group_100 c999">
-				<h1 class="oi-title" data-bind="text: selectedParty">Event Title</h1>
-				<h2 class="oi-description">Add a description</h2>
+				<h1 class="oi-title" data-bind="text: selectedParty.title"></h1>
+				<h2 class="oi-description" data-bind="text: selectedParty.description"></h2>
 				<ul class="ol-supnav">
 					<li class='loggedin' data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
 				</ul>
 				<ul class="ol-navigation">
-					<li>Where</li>
-					<li>When</li>
-					<li>Who</li>
+					<li><textarea class="role_disabled" data-bind="text: selectedParty.whereInfo.location">Where</textarea></li>
+					<li><textarea class="role_disabled" data-bind="text: selectedParty.formattedTimeFull">When</textarea></li>
+					<li><textarea class="role_disabled" data-bind="template: { name: 'whoTemplate', foreach: selectedParty.users">Who</textarea></li>
 				</ul>
 			</div>
 			<div class="grid-group_100">
 				<div class="grid-task">
 					<div class="grid-progress fff">
-						<ul class="ol-checklist">
+						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: tasks>
 							<li>
 								Checklist Item 1
 							</li>
@@ -55,22 +55,7 @@
 						</ul>
 					</div>
 					<div class="grid-todo fff">
-						<ul class="ol-checklist">
-							<li>
-								Todo Task 1
-							</li>
-							<li>
-								Todo Task 2
-							</li>
-							<li>
-								Todo Task 3
-							</li>
-							<li>
-								Todo Task 4
-							</li>
-							<li>
-								Todo Task 5
-							</li>
+						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: todos>
 						</ul>
 					</div>
 				</div>
@@ -78,7 +63,9 @@
 					<div class="grid-posts fff">
 						Post<br />Post<br />Post<br />Post<br />Post<br />Post<br />
 					</div>
-					<div class="grid-users fff" data-bind='template: { name: "friendTemplate", foreach: friends }' ></div>
+					<div class="grid-users fff">
+                      <ul data-bind='template: { name: "friendTemplate", foreach: friends }'></ul>
+                    </div>
 					<div class="grid-chat pink">
 						Chat
 					</div>
@@ -96,17 +83,24 @@
 <script src='js/libs/jquery.tmpl.js' type='text/javascript'></script>
 <script src="js/libs/knockout-1.2.1.debug.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
-    
-<script src="http://connect.facebook.net/en_US/all.js"></script>
 <script src="js/facebook.js"></script>
 <script src="js/koscript.js"></script>
 <script src="js/viewmodel.js"></script>
 <script src="js/script.js"></script>
     
 <script type="text/x-jquery-tmpl" id="friendTemplate">
+  <li>
     <span data-bind="text: fullName"></span>
-    <span data-bind="text: userId"></span>
-    <span><a href="#" data-bind="click: remove">Remove</a></span>
+  </li>
 </script>
+
+<script type="text/x-jquery-tmpl" id="whoTemplate">
+    <span data-bind="text: fullName"></span>
+</script>
+
+<script type="text/x-jquery-tmpl" id="checklistTemplate">
+    <li data-bind="text: description"></li>
+</script>
+
 </body>
 </html>
