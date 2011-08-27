@@ -3,15 +3,13 @@
  * Module dependencies.
  */
 
-var consumer_key = '225589484159909';
-var consumer_secret = 'a9d292055b206ac346dd4010ddc8abed';
-
 require('nko')('SVvsNwr4CEZy0EzQ');
 
 var express = require('express');
 var https = require('https');
 var url = require('url');
 var qs = require('querystring');
+var config = require('./config');
 
 var app = module.exports = express.createServer();
 
@@ -64,6 +62,14 @@ app.get('/summary', function(req, res) {
   });
 });
 
+app.get('/getuser', function(req, res) {
+  var response = {};
+  if (req.session.user) {
+    response.user = req.session.user;
+  }
+  res.send(JSON.stringify(response));
+});
+
 app.get('/login', function(req, res) {
 
   var error = req.param('error');
@@ -80,7 +86,7 @@ app.get('/login', function(req, res) {
   https.get({
     host: 'graph.facebook.com',
     port: 443,
-    path: '/oauth/access_token?client_id='+consumer_key+'&redirect_uri=http://partyplanner.no.de/login&client_secret='+consumer_secret+'&code='+code
+    path: '/oauth/access_token?client_id='+config.fb.key+'&redirect_uri=http://partyplanner.no.de/login&client_secret='+config.fb.secret+'&code='+code
   }, function(result) {
     var body = '';
     result.on('data', function (chunk) {
@@ -96,7 +102,11 @@ app.get('/login', function(req, res) {
       req.session.user = {
         access_token: parsed.access_token
       };
-      res.redirect('/summary');
+      jsonGet({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
+        req.session.user.name = result.name;
+        req.session.user.id = result.id;
+        res.redirect('/');
+      });
     });
   });
   
