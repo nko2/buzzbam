@@ -1,4 +1,4 @@
-  
+
 /**
  * Module dependencies.
  */
@@ -9,15 +9,11 @@ var consumer_secret = 'a9d292055b206ac346dd4010ddc8abed';
 require('nko')('SVvsNwr4CEZy0EzQ');
 
 var express = require('express');
-//var OAuth = require('oauth').OAuth;
+var https = require('https');
+var url = require('url');
+var qs = require('querystring');
 
 var app = module.exports = express.createServer();
-
-//var oauth = new OAuth(
-//  "https://www.facebook.com/dialog/oauth",
-//  "https://graph.facebook.com/oauth/access_token",
-//  consumer_key, consumer_secret, "1.0",
-//  "http://192.168.1.216:3000/done", "HMAC-SHA1");
 
 // Configuration
 
@@ -48,6 +44,25 @@ app.get('/', function(req, res){
   });
 });
 
+function jsonGet(options, callback) {
+  https.get(options, function(response) {
+    var body = '';
+    response.on('data', function(chunk) {
+      body += chunk;
+    });
+    response.on('end', function() {
+      callback(JSON.parse(body));
+    });
+  });
+}
+
+
+app.get('/summary', function(req, res) {
+  jsonGet({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
+    res.send(JSON.stringify(result));
+  });
+});
+
 app.get('/login', function(req, res) {
 
   var error = req.param('error');
@@ -59,10 +74,29 @@ app.get('/login', function(req, res) {
   }
 
   var code = req.param('code');
-  req.session.user = {
-    code: code
-  };
-  res.redirect('/');
+
+  https.get({
+    host: 'graph.facebook.com',
+    port: 443,
+    path: '/oauth/access_token?client_id='+consumer_key+'&client_secret='+consumer_secret+'&code='+code
+  }, function(res) {
+    var body = '';
+    res.on('data', function (chunk) {
+      body += chunk;
+    });
+    res.on('end', function() {
+      if (res.statusCode != 200) {
+        res.send(body, 500);
+        return;
+      }
+      var parsed = qs.parse(body);
+      req.session.user = {
+        access_token: parsed.access_token
+      };
+      res.redirect('/summary');
+    });
+  });
+  
 });
 
 app.listen(80);
