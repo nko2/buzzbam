@@ -32,7 +32,7 @@ function populateUserInfo(data) {
   var user = new user({});
 }
 
-function logInOutOfFacebook() {o
+function logInOutOfFacebook() {
   if (!viewModel.isLoggedIn()) {
     window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
   } else {
