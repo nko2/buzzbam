@@ -1,12 +1,9 @@
-    /*list-ol*/
+/*list-ol*/
 
-.ol-check_list {
+.ol-checklist {
 }
 
-.ol-todo {
-}
-
-    /*content-oc*/
+/*content-oc*/
 
 .oc-logo {
 }
@@ -56,7 +53,7 @@
 .oc-icon {
 }
 
-    /*action-oa*/
+/*action-oa*/
 
 .oa-where {
 }
@@ -88,18 +85,34 @@
 .oa-login {
 }
 
-    /*social-os*/
+/*social-os*/
 
 
-    /*item-oi*/
+/*item-oi*/
 
 
-    /*person-op*/
+/*person-op*/
 
 
-    /*group-og*/
+/*group-og*/
 
 .og-comment {
 }
 
-    /*notification-on*/
+/*notification-on*/
+
+
+/*
+Zones
+**************************************************************************************************
+**************************************************************************************************/
+
+/* ZONE: todo*/
+.zone-todo .ol-checklist {
+	margin: 0;
+}
+
+/* ZONE: progress*/
+.zone-checklist  .ol-checklist {
+	margin: 0;
+}
