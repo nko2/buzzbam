@@ -103,6 +103,18 @@ app.get('/friends', function(req, res) {
   }
 });
 
+app.post('/updateparty', function(req,res) {
+  var party = req.param('party');
+  data.updateParty(req.seession, party, function(result) {
+    if (result.error) {
+      res.send(403);
+    }
+    else {
+      res.send(result);
+    }
+  });
+});
+
 app.post('/newitem', function(req, res) {
   var partyid = req.param('id');
   var description = req.param('description');

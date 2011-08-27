@@ -67,6 +67,10 @@ var server = (function() {
     $.getJSON('party', {id:id}, callback);
   };
 
+  that.updateParty = function(id, party, callback) {
+    $.post('updateparty', {party:party}, callback, 'json');
+  };
+
   that.getParties = function(callback) {
     $.getJSON('parties', callback);
   };

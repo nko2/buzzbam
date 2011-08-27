@@ -29,6 +29,25 @@ function getItems(session, partyid, callback) {
   });
 }
 
+function updateParty(session, party, callback) {
+  var options = {
+    host: config.couch.server,
+    port: 443,
+    path: '/party/'+party.id
+  };
+  client.get(options, function(origParty) {
+    if (partyHasUser(origParty, session.user)) {
+      options.method = 'PUT';
+      client.post(options, JSON.stringify(party), function(result) {
+        callback(result);
+      });
+    }
+    else {
+      callback({error:"permission denied"});
+    }
+  });
+}
+
 function getParty(session, partyid, callback) {
   var options = {
     host: config.couch.server,
