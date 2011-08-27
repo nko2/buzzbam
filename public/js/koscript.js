@@ -9,16 +9,24 @@ var partyInfo = function (opt) {
   this.users = ko.observableArray();//[new user(opt.creator)]);
   this.userIds = ko.observableArray(opt.userIds);
   this.items = ko.observableArray([]);
-  this.whereInfo = new whereInfo(opt.whereInfo);
-  this.whenInfo = new whenInfo(opt.whenInfo);
+  this.whereInfo = new whereInfo(opt.where);
+  this.whenInfo = new whenInfo(opt.when);
 };
 
 var whereInfo = function (opt) {
+  if (!opt) {
+    return;
+  }
+  
   this.id = opt.id;
   this.location = opt.location;
 };
 
 var whenInfo = function (opt) {
+  if (!opt) {
+    return;
+  }
+  
   this.id = opt.id;
   this.startTime = opt.startTime;
   this.endTime = opt.endTime;
@@ -64,7 +72,7 @@ var viewModel = {
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
   if (viewModel.user() && viewModel.isLoggedIn()) {
-    var name = user().fullName;
+    var name = viewModel.user().fullName;
     return "Logout (" + name + ")";
   } else {
     return "Log into Facebook";
