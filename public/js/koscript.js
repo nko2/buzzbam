@@ -41,7 +41,7 @@ var item = function (opt) {
 
 var comment = function (opt) {
 	this.id = opt.id;
-	this.userId = opt.userId;
+	this.userId = opt.userId;r
 	this.text = opt.text;
 	this.time = opt.time ? opt.time : Date.now();
 }
