@@ -23,7 +23,7 @@ var user = function (opt) {
   this.role = opt.role ? opt.role : 'contrib';
   this.rsvp = opt.rsvp ? opt.rsvp : 'maybe';
   this.timezone = opt.timezone;
-  this.
+  this.localse: opt.locale;
 };
 
 var friend = function (opt) {
