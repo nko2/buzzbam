@@ -31,6 +31,10 @@ var user = function (opt) {
   this.email = opt.email;
   this.role = opt.role ? opt.role : 'contrib';
   this.rsvp = opt.rsvp ? opt.rsvp : 'maybe';
+  
+  this.formattedFullName = ko.dependentObservable(function () {
+      var name = this.fullName;
+      return 
 };
 
 var friend = function (opt) {
@@ -56,11 +60,20 @@ var comment = function (opt) {
 }
   
 var viewModel = {
-  userFullName: ko.observable(),
+  user: ko.observable(),
   isLoggedIn: ko.observable(false),
   friends: ko.observableArray(friends),
   parties: ko.observableArray(parties),
 };
+
+viewModel.formattedLoggedInName = ko.dependentObservable(function () {
+  if (user() && viewModel.isLoggedIn()) {
+    var name = user().fullName;
+    return "Logout (" + name + ")";
+  } else {
+    return "Log into Facebook";
+  }
+}, viewModel);
 
 ko.applyBindings(viewModel);
 
