@@ -20,8 +20,8 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.session({secret:"foo"}));
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -34,10 +34,8 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res){
-  res.render('index', {
-    title: 'Express'
-  });
+app.get('/*', function(req, res){
+  res.redirect('/index.html');
 });
 
 function jsonGet(options, callback) {
@@ -52,7 +50,6 @@ function jsonGet(options, callback) {
     });
   });
 }
-
 
 app.get('/summary', function(req, res) {
   jsonGet({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
@@ -103,7 +100,7 @@ app.get('/login', function(req, res) {
       jsonGet({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
         req.session.user.name = result.name;
         req.session.user.id = result.id;
-        res.redirect('/');
+        res.redirect('/index.html');
       });
     });
   });
