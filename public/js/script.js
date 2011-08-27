@@ -2,7 +2,7 @@ function updateUserData() {
   server.getUserAndFriends(function(data) {
     viewModel.isLoggedIn(data.me.id ? true : false);
     viewModel.user(new user({ fullName: data.me.name }));
-    viewModel.friends(data.me.friends);
+    populateFriends(data.friends);
     server.getParties(populateParties);
     if (data.me.id) {
       server.getUserInfo(data.me.id, populateUserInfo);

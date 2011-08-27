@@ -28,7 +28,7 @@ var user = function (opt) {
 
 var friend = function (opt) {
 	this.userId = opt.userId;
-	this.name = opt.name;
+	this.fullName = opt.fullName;
 	
 	this.remove = function () { viewModel.friends.remove(this); }
 }

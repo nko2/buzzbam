@@ -27,6 +27,17 @@ function populateParties(data) {
   }
 };
 
+function populateFriends(data) {
+  var newFriends = [];
+  for (var i in data) {
+    newFriends.push(new friend({
+      userId: data[i].id,
+      fullName: data[i].name,
+    }));
+  }
+  viewModel.friends(newFriends);
+};
+
 function populateUserInfo(data) {
   //viewModel.user(new user({
   var temp = new user({
