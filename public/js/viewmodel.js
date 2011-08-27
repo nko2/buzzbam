@@ -51,8 +51,8 @@ var partyInfo = function (opt) {
   this.users = ko.observableArray();//[new user(opt.creator)]);
   this.userIds = ko.observableArray(opt.userIds);
   this.items = ko.observableArray([]);
-  this.whereInfo = new whereInfo(opt.where);
-  this.whenInfo = new whenInfo(opt.when);
+  this.whereInfo = new whereInfo(opt.where ? opt.where : {});
+  this.whenInfo = new whenInfo(opt.when ? opt.when : {});
 };
 
 var viewModel = {
