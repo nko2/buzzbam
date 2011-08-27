@@ -139,6 +139,33 @@ app.post('/newitem', function(req, res) {
 
 });
 
+app.post('/newcomment', function(req, res) {
+  var itemid = req.param('id');
+  var message = req.param('message');
+
+  //XXX TODO deny new items for other peoples parties
+
+  var item = {
+    task: true,
+    done: false,
+    partyid: partyid,
+    description: description,
+  };
+
+  getUuid(function(uuid){
+    var options = {
+      host:'buzzbam.iriscouch.com',
+      port:443,
+      path:'/items/'+uuid,
+      method:'PUT'
+    };
+    jsonPost(options, JSON.stringify(item), function(result) {
+      res.send(result);
+    });
+  });
+
+});
+
 app.get('/newparty', function(req, res) {
   var title = req.param('title');
   var description = req.param('description');
@@ -190,6 +217,13 @@ function viewValues(viewResult) {
   }
   return results;
 }
+
+app.get('/items', function(req, res) {
+  var id = req.param('id');
+  jsonGet({host:'buzzbam.iriscouch.com',port:443,path:'/items/_design/parties/_view/items?key="'+id+'"'}, function(items) {
+    res.send(JSON.stringify(viewValues(items)));
+  });
+});
 
 app.get('/parties', function(req, res) {
   var id = req.session.user ? req.session.user.id : '';
