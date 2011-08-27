@@ -71,6 +71,14 @@ viewModel.formattedLoggedInName = ko.dependentObservable(function () {
   }
 }, viewModel);
 
+viewModel.logInOutOfFacebook = ko.dependentObservable(function() {
+  if (viewModel.isLoggedIn()) {
+    window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
+  } else {
+    window.location = 'http://www.facebook.com/logout.php';
+  }
+}, viewModel);
+
 ko.applyBindings(viewModel);
 
 function populateParty(party) {
