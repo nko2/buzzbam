@@ -7,26 +7,38 @@ function populateParty(party) {
   }
 };
 
-function populateParties() {
-  $(document).ready(function() {
-    $.getJSON('parties', function(data) {
-      var newParties = [];
-      for (var i in data) {
-        newParties.push(new partyInfo({
-          id: data[i].id,
-          isPublic: data[i].public,
-          title: data[i].title,
-          description: data[i].description,
-          userIds: data[i].users,
-          itemIds: data[i].items,
-          whereId: data[i].whereId,
-          whenId: data[i].whenId,
-        }));
-      }
-      viewModel.parties(newParties);
-    });
-  });
+function populateParties(data) {
+  var newParties = [];
+  for (var i in data) {
+    newParties.push(new partyInfo({
+      id: data[i].id,
+      isPublic: data[i].public,
+      title: data[i].title,
+      description: data[i].description,
+      userIds: data[i].users,
+      itemIds: data[i].items,
+      whereId: data[i].whereId,
+      whenId: data[i].whenId,
+    }));
+  }
+  viewModel.parties(newParties);
+};
+
+function populateUserInfo(data) {
+  //viewModel.user(new user({
+  var user = new user({});
 }
+
+function logInOutOfFacebook() {
+  if (!viewModel.isLoggedIn()) {
+    window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
+  } else {
+    FB.logout(function(resp) {
+      viewModel.user(new user({}));
+      viewModel.isLoggedIn(false);
+    });
+  }
+};
 
 $(document).ready(function() {
   populateParties();
