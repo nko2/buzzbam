@@ -17,6 +17,26 @@ function log(x) {
 var server = (function() {
   var that = {};
 
+  // these should be undefined to start
+  var sinceParties;
+  var sinceItems;
+
+  // returns [partyid,partyid,...]
+  that.longPollPartyChanges = function(callback) {
+    $.getJSON('longpoll/parties', {since:sinceParties}, function(changes) {
+      sinceParties = changes.last_seq;
+      callback(changes.parties);
+    });
+  };
+
+  // returns [itemid,itemid,...]
+  that.longPollItemChanges = function(partyid, callback) {
+    $.getJSON('longpoll/items', {partyid:partyid, since:sinceItems}, function(changes) {
+      sinceItems = changes.last_seq;
+      callback(changes.items);
+    });
+  };
+
   // returns {first_name,last_name,name,id, ... }
   that.getUserInfo = function(id, callback) {
     $.getJSON('user', {id:id}, callback);
@@ -45,6 +65,10 @@ var server = (function() {
 
   that.getParty = function(id, callback) {
     $.getJSON('party', {id:id}, callback);
+  };
+
+  that.updateParty = function(id, party, callback) {
+    $.post('updateparty', {party:party}, callback, 'json');
   };
 
   that.getParties = function(callback) {

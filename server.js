@@ -36,8 +36,6 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
-// Routes
-
 function map(input, fn) {
   var result = [];
   for (var index in input) {
@@ -46,6 +44,39 @@ function map(input, fn) {
   }
   return result;
 }
+
+// Routes
+
+app.get('/longpoll/items', function(req, res) {
+  var partyid = req.param('partyid');
+  var since = req.param('since');
+  data.getParty(req.session, partyid, function(party) {
+    if (party.error) {
+      res.send(403);
+    }
+    else {
+      data.longPollItems(req.session, partyid, since, function(changes) {
+	var result = {
+	  last_seq: changes.last_seq,
+	  items: map(changes.results, function(x) { return x.id; })
+	};
+	res.send(result);
+      });
+    }
+  });
+});
+
+app.get('/longpoll/parties', function(req, res) {
+  var userid = req.session.user.id;
+  var since = req.param('since');
+  data.longPollParties(req.session, userid, since, function(changes) {
+    var result = {
+      last_seq: changes.last_seq,
+      parties: map(changes.results, function(x) { return x.id; })
+    };
+    res.send(result);
+  });
+});
 
 app.get('/user', function(req, res) {
   var id = req.param('id');
@@ -70,6 +101,18 @@ app.get('/friends', function(req, res) {
       res.send(JSON.stringify(response));
     });
   }
+});
+
+app.post('/updateparty', function(req,res) {
+  var party = req.param('party');
+  data.updateParty(req.seession, party, function(result) {
+    if (result.error) {
+      res.send(403);
+    }
+    else {
+      res.send(result);
+    }
+  });
 });
 
 app.post('/newitem', function(req, res) {
@@ -107,7 +150,7 @@ app.post('/newcomment', function(req, res) {
   var itemid = req.param('id');
   var message = req.param('message');
 
-  data.getItem(req.session, partyid, function(item) {
+  data.getItem(req.session, itemid, function(item) {
     if (item.error) {
       res.send(403);
     }
@@ -121,7 +164,12 @@ app.post('/newcomment', function(req, res) {
         time: new Date()
       });
       var updated = JSON.stringify(item);
-      options.method = 'PUT';
+      var options = {
+        host: config.couch.server,
+        port: 443,
+        path: '/items/'+itemid,
+        method: 'PUT'
+      };
       client.post(options, updated, function(result) {
         res.send(JSON.stringify(result));
       });
@@ -276,7 +324,8 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/*', function(req, res){
-  res.redirect('/index.html');
+  res.send(404);
+  //res.redirect('/index.html');
 });
 
 app.listen(80);
