@@ -32,6 +32,13 @@ var user = function (opt) {
   this.rsvp = opt.rsvp ? opt.rsvp : 'maybe';
 };
 
+var friend = function (opt) {
+	this.userId = opt.userId;
+	this.name = opt.name;
+	
+	this.remove = function () { viewModel.friends.remove(this); }
+}
+
 var item = function (opt) {
   this.id = opt.id;
   this.isTask = opt.isTask;
@@ -50,7 +57,7 @@ var comment = function (opt) {
 var viewModel = {
   userFullName: ko.observable(),
   friends: ko.observableArray(friends),
-  parties: ko.observableArray(parties)
+  parties: ko.observableArray(parties),
 };
 
 ko.applyBindings(viewModel);
