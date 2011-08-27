@@ -34,10 +34,6 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/*', function(req, res){
-  res.redirect('/index.html');
-});
-
 function jsonGet(options, callback) {
   console.log(options);
   https.get(options, function(response) {
@@ -105,6 +101,10 @@ app.get('/login', function(req, res) {
     });
   });
   
+});
+
+app.get('/*', function(req, res){
+  res.redirect('/index.html');
 });
 
 app.listen(80);
