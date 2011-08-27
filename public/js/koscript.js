@@ -7,6 +7,7 @@ var partyInfo = function (opt) {
   this.title = opt.title;
   this.description = opt.description;
   this.users = ko.observableArray();//[new user(opt.creator)]);
+  this.userIds = ko.observableArray(opt.userIds);
   this.items = ko.observableArray([]);
   this.whereInfo = new whereInfo(opt.whereInfo);
   this.whenInfo = new whenInfo(opt.whenInfo);
@@ -56,6 +57,7 @@ var comment = function (opt) {
   
 var viewModel = {
   userFullName: ko.observable(),
+  isLoggedIn: ko.observable(false),
   friends: ko.observableArray(friends),
   parties: ko.observableArray(parties),
 };
@@ -67,6 +69,7 @@ function populateParty(party)
   var userIds = party.userIds;
   for (var i in party.userIds) {
     $.getJSON('user?id=' + userIds[i], function(data) {
+      party.users.push(new user({ }));
     });
   }
 }
