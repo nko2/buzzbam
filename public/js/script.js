@@ -1,9 +1,12 @@
-function updateUserData()
-{
-  $.getJSON('friends', function(data) {
-    viewModel.isLoggedIn(data.me.id?true:false);
-    viewModel.user(new user({fullName: data.me.name}));
+function updateUserData() {
+  server.getUserAndFriends(function(data) {
+    viewModel.isLoggedIn(data.me.id ? true : false);
+    viewModel.user(new user({ fullName: data.me.name }));
     viewModel.friends(data.me.friends);
+    server.getParties(populateParties);
+    if (data.me.id) {
+      server.getUserInfo(data.me.id, populateUserInfo);
+    }
   });
 }
 
@@ -11,14 +14,16 @@ function log(x) {
   console.log(x);
 }
 
-var server = (function(){
+var server = (function() {
   var that = {};
 
-  that.getUser = function(id, callback) {
+  // returns {first_name,last_name,name,id, ... }
+  that.getUserInfo = function(id, callback) {
     $.getJSON('user', {id:id}, callback);
   };
 
-  that.getFriends = function(callback) {
+  // returns {me:{id?,name},friends:[{id,name}*]}
+  that.getUserAndFriends = function(callback) {
     $.getJSON('friends', callback);
   };
 
@@ -54,6 +59,6 @@ var server = (function(){
 })();
 
 $(document).ready(function() {
-  updateUserData();
+  getUserAndFriends();
 });
 
