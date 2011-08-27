@@ -15,7 +15,15 @@
 	max-width: 100%;
 }
 
-.grid-group_100 { float: left; position: relative; width:100%; }
+.grid-container_portal {
+	margin: 0 auto;
+	position: relative;
+	width: 960px;
+	height: 100%;
+	min-width: 960px;
+	max-width: 960px;
+}
+
 .grid-task { float: left; position: relative; width: 200px; }
 .grid-progress { float: left; position: relative; width: 200px; }
 .grid-todo { float: left; position: relative; width: 200px; }
@@ -28,6 +36,241 @@
 /* Assigned Clearfixes */
 /***********************/
 .grid-container:after,
+.grid-task:after,
+.grid-progress:after,
+.grid-todo:after,
+.grid-collaborate:after,
+.grid-posts:after,
+.grid-users:after,
+.grid-chat:after
+{
+content: ".";
+display: block;
+height: 0;
+clear: both;
+visibility: hidden;
+}
+
+* html .grid-container,
+* html .grid-task:after,
+* html .grid-progress:after,
+* html .grid-todo:after,
+* html .grid-collaborate:after,
+* html .grid-posts:after,
+* html .grid-users:after,
+* html .grid-chat:after
+{ height: 1%; }
+
+
+/************************************/
+/* Flex width layout for intro page */
+/************************************/
+
+.grid-group_1 { float: left; position: relative; width:1%; }
+.grid-group_2 { float: left; position: relative; width:2%; }
+.grid-group_3 { float: left; position: relative; width:3%; }
+.grid-group_4 { float: left; position: relative; width:4%; }
+.grid-group_5 { float: left; position: relative; width:5%; }
+.grid-group_6 { float: left; position: relative; width:6%; }
+.grid-group_7 { float: left; position: relative; width:7%; }
+.grid-group_8 { float: left; position: relative; width:8%; }
+.grid-group_9 { float: left; position: relative; width:9%; }
+.grid-group_10 { float: left; position: relative; width:10%; }
+.grid-group_11 { float: left; position: relative; width:11%; }
+.grid-group_12 { float: left; position: relative; width:12%; }
+.grid-group_13 { float: left; position: relative; width:13%; }
+.grid-group_14 { float: left; position: relative; width:14%; }
+.grid-group_15 { float: left; position: relative; width:15%; }
+.grid-group_16 { float: left; position: relative; width:16%; }
+.grid-group_17 { float: left; position: relative; width:17%; }
+.grid-group_18 { float: left; position: relative; width:18%; }
+.grid-group_19 { float: left; position: relative; width:19%; }
+.grid-group_20 { float: left; position: relative; width:20%; }
+.grid-group_21 { float: left; position: relative; width:21%; }
+.grid-group_22 { float: left; position: relative; width:22%; }
+.grid-group_23 { float: left; position: relative; width:23%; }
+.grid-group_24 { float: left; position: relative; width:24%; }
+.grid-group_25 { float: left; position: relative; width:25%; }
+.grid-group_26 { float: left; position: relative; width:26%; }
+.grid-group_27 { float: left; position: relative; width:27%; }
+.grid-group_28 { float: left; position: relative; width:28%; }
+.grid-group_29 { float: left; position: relative; width:29%; }
+.grid-group_30 { float: left; position: relative; width:30%; }
+.grid-group_31 { float: left; position: relative; width:31%; }
+.grid-group_32 { float: left; position: relative; width:32%; }
+.grid-group_33 { float: left; position: relative; width:33%; }
+.grid-group_34 { float: left; position: relative; width:34%; }
+.grid-group_35 { float: left; position: relative; width:35%; }
+.grid-group_36 { float: left; position: relative; width:36%; }
+.grid-group_37 { float: left; position: relative; width:37%; }
+.grid-group_38 { float: left; position: relative; width:38%; }
+.grid-group_39 { float: left; position: relative; width:39%; }
+.grid-group_40 { float: left; position: relative; width:40%; }
+.grid-group_41 { float: left; position: relative; width:41%; }
+.grid-group_42 { float: left; position: relative; width:42%; }
+.grid-group_43 { float: left; position: relative; width:43%; }
+.grid-group_44 { float: left; position: relative; width:44%; }
+.grid-group_45 { float: left; position: relative; width:45%; }
+.grid-group_46 { float: left; position: relative; width:46%; }
+.grid-group_47 { float: left; position: relative; width:47%; }
+.grid-group_48 { float: left; position: relative; width:48%; }
+.grid-group_49 { float: left; position: relative; width:49%; }
+.grid-group_50 { float: left; position: relative; width:50%; }
+.grid-group_51 { float: left; position: relative; width:51%; }
+.grid-group_52 { float: left; position: relative; width:52%; }
+.grid-group_53 { float: left; position: relative; width:53%; }
+.grid-group_54 { float: left; position: relative; width:54%; }
+.grid-group_55 { float: left; position: relative; width:55%; }
+.grid-group_56 { float: left; position: relative; width:56%; }
+.grid-group_57 { float: left; position: relative; width:57%; }
+.grid-group_58 { float: left; position: relative; width:58%; }
+.grid-group_59 { float: left; position: relative; width:59%; }
+.grid-group_60 { float: left; position: relative; width:60%; }
+.grid-group_61 { float: left; position: relative; width:61%; }
+.grid-group_62 { float: left; position: relative; width:62%; }
+.grid-group_63 { float: left; position: relative; width:63%; }
+.grid-group_64 { float: left; position: relative; width:64%; }
+.grid-group_65 { float: left; position: relative; width:65%; }
+.grid-group_66 { float: left; position: relative; width:66%; }
+.grid-group_67 { float: left; position: relative; width:67%; }
+.grid-group_68 { float: left; position: relative; width:68%; }
+.grid-group_69 { float: left; position: relative; width:69%; }
+.grid-group_70 { float: left; position: relative; width:70%; }
+.grid-group_71 { float: left; position: relative; width:71%; }
+.grid-group_72 { float: left; position: relative; width:72%; }
+.grid-group_73 { float: left; position: relative; width:73%; }
+.grid-group_74 { float: left; position: relative; width:74%; }
+.grid-group_75 { float: left; position: relative; width:75%; }
+.grid-group_76 { float: left; position: relative; width:76%; }
+.grid-group_77 { float: left; position: relative; width:77%; }
+.grid-group_78 { float: left; position: relative; width:78%; }
+.grid-group_79 { float: left; position: relative; width:79%; }
+.grid-group_80 { float: left; position: relative; width:80%; }
+.grid-group_81 { float: left; position: relative; width:81%; }
+.grid-group_82 { float: left; position: relative; width:82%; }
+.grid-group_83 { float: left; position: relative; width:83%; }
+.grid-group_84 { float: left; position: relative; width:84%; }
+.grid-group_85 { float: left; position: relative; width:85%; }
+.grid-group_86 { float: left; position: relative; width:86%; }
+.grid-group_87 { float: left; position: relative; width:87%; }
+.grid-group_88 { float: left; position: relative; width:88%; }
+.grid-group_89 { float: left; position: relative; width:89%; }
+.grid-group_90 { float: left; position: relative; width:90%; }
+.grid-group_91 { float: left; position: relative; width:91%; }
+.grid-group_92 { float: left; position: relative; width:92%; }
+.grid-group_93 { float: left; position: relative; width:93%; }
+.grid-group_94 { float: left; position: relative; width:94%; }
+.grid-group_95 { float: left; position: relative; width:95%; }
+.grid-group_96 { float: left; position: relative; width:96%; }
+.grid-group_97 { float: left; position: relative; width:97%; }
+.grid-group_98 { float: left; position: relative; width:98%; }
+.grid-group_99 { float: left; position: relative; width:99%; }
+.grid-group_100 { float: left; position: relative; width:100%; }
+
+/***********************/
+/* Assigned Clearfixes */
+/***********************/
+.grid-container:after,
+.grid-element:after,
+.grid-group_1:after,
+.grid-group_2:after,
+.grid-group_3:after,
+.grid-group_4:after,
+.grid-group_5:after,
+.grid-group_6:after,
+.grid-group_7:after,
+.grid-group_8:after,
+.grid-group_9:after,
+.grid-group_10:after,
+.grid-group_11:after,
+.grid-group_12:after,
+.grid-group_13:after,
+.grid-group_14:after,
+.grid-group_15:after,
+.grid-group_16:after,
+.grid-group_17:after,
+.grid-group_18:after,
+.grid-group_19:after,
+.grid-group_20:after,
+.grid-group_21:after,
+.grid-group_22:after,
+.grid-group_23:after,
+.grid-group_24:after,
+.grid-group_25:after,
+.grid-group_26:after,
+.grid-group_27:after,
+.grid-group_28:after,
+.grid-group_29:after,
+.grid-group_30:after,
+.grid-group_31:after,
+.grid-group_32:after,
+.grid-group_33:after,
+.grid-group_34:after,
+.grid-group_35:after,
+.grid-group_36:after,
+.grid-group_37:after,
+.grid-group_38:after,
+.grid-group_39:after,
+.grid-group_40:after,
+.grid-group_41:after,
+.grid-group_42:after,
+.grid-group_43:after,
+.grid-group_44:after,
+.grid-group_45:after,
+.grid-group_46:after,
+.grid-group_47:after,
+.grid-group_48:after,
+.grid-group_49:after,
+.grid-group_50:after,
+.grid-group_51:after,
+.grid-group_52:after,
+.grid-group_53:after,
+.grid-group_54:after,
+.grid-group_55:after,
+.grid-group_56:after,
+.grid-group_57:after,
+.grid-group_58:after,
+.grid-group_59:after,
+.grid-group_60:after,
+.grid-group_61:after,
+.grid-group_62:after,
+.grid-group_63:after,
+.grid-group_64:after,
+.grid-group_65:after,
+.grid-group_66:after,
+.grid-group_67:after,
+.grid-group_68:after,
+.grid-group_69:after,
+.grid-group_70:after,
+.grid-group_71:after,
+.grid-group_72:after,
+.grid-group_73:after,
+.grid-group_74:after,
+.grid-group_75:after,
+.grid-group_76:after,
+.grid-group_77:after,
+.grid-group_78:after,
+.grid-group_79:after,
+.grid-group_80:after,
+.grid-group_81:after,
+.grid-group_82:after,
+.grid-group_83:after,
+.grid-group_84:after,
+.grid-group_85:after,
+.grid-group_86:after,
+.grid-group_87:after,
+.grid-group_88:after,
+.grid-group_89:after,
+.grid-group_90:after,
+.grid-group_91:after,
+.grid-group_92:after,
+.grid-group_93:after,
+.grid-group_94:after,
+.grid-group_95:after,
+.grid-group_96:after,
+.grid-group_97:after,
+.grid-group_98:after,
+.grid-group_99:after,
 .grid-group_100:after
 {
 content: ".";
@@ -39,5 +282,105 @@ visibility: hidden;
 
 
 * html .grid-container,
+* html .grid-element,
+* html .grid-group_1:after,
+* html .grid-group_2:after,
+* html .grid-group_3:after,
+* html .grid-group_4:after,
+* html .grid-group_5:after,
+* html .grid-group_6:after,
+* html .grid-group_7:after,
+* html .grid-group_8:after,
+* html .grid-group_9:after,
+* html .grid-group_10:after,
+* html .grid-group_11:after,
+* html .grid-group_12:after,
+* html .grid-group_13:after,
+* html .grid-group_14:after,
+* html .grid-group_15:after,
+* html .grid-group_16:after,
+* html .grid-group_17:after,
+* html .grid-group_18:after,
+* html .grid-group_19:after,
+* html .grid-group_20:after,
+* html .grid-group_21:after,
+* html .grid-group_22:after,
+* html .grid-group_23:after,
+* html .grid-group_24:after,
+* html .grid-group_25:after,
+* html .grid-group_26:after,
+* html .grid-group_27:after,
+* html .grid-group_28:after,
+* html .grid-group_29:after,
+* html .grid-group_30:after,
+* html .grid-group_31:after,
+* html .grid-group_32:after,
+* html .grid-group_33:after,
+* html .grid-group_34:after,
+* html .grid-group_35:after,
+* html .grid-group_36:after,
+* html .grid-group_37:after,
+* html .grid-group_38:after,
+* html .grid-group_39:after,
+* html .grid-group_40:after,
+* html .grid-group_41:after,
+* html .grid-group_42:after,
+* html .grid-group_43:after,
+* html .grid-group_44:after,
+* html .grid-group_45:after,
+* html .grid-group_46:after,
+* html .grid-group_47:after,
+* html .grid-group_48:after,
+* html .grid-group_49:after,
+* html .grid-group_50:after,
+* html .grid-group_51:after,
+* html .grid-group_52:after,
+* html .grid-group_53:after,
+* html .grid-group_54:after,
+* html .grid-group_55:after,
+* html .grid-group_56:after,
+* html .grid-group_57:after,
+* html .grid-group_58:after,
+* html .grid-group_59:after,
+* html .grid-group_60:after,
+* html .grid-group_61:after,
+* html .grid-group_62:after,
+* html .grid-group_63:after,
+* html .grid-group_64:after,
+* html .grid-group_65:after,
+* html .grid-group_66:after,
+* html .grid-group_67:after,
+* html .grid-group_68:after,
+* html .grid-group_69:after,
+* html .grid-group_70:after,
+* html .grid-group_71:after,
+* html .grid-group_72:after,
+* html .grid-group_73:after,
+* html .grid-group_74:after,
+* html .grid-group_75:after,
+* html .grid-group_76:after,
+* html .grid-group_77:after,
+* html .grid-group_78:after,
+* html .grid-group_79:after,
+* html .grid-group_80:after,
+* html .grid-group_81:after,
+* html .grid-group_82:after,
+* html .grid-group_83:after,
+* html .grid-group_84:after,
+* html .grid-group_85:after,
+* html .grid-group_86:after,
+* html .grid-group_87:after,
+* html .grid-group_88:after,
+* html .grid-group_89:after,
+* html .grid-group_90:after,
+* html .grid-group_91:after,
+* html .grid-group_92:after,
+* html .grid-group_93:after,
+* html .grid-group_94:after,
+* html .grid-group_95:after,
+* html .grid-group_96:after,
+* html .grid-group_97:after,
+* html .grid-group_98:after,
+* html .grid-group_99:after,
 * html .grid-group_100:after
 { height: 1%; }
