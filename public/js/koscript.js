@@ -22,6 +22,9 @@ function populateParties(data) {
     }));
   }
   viewModel.parties(newParties);
+  if (parties.count > 0) {
+    viewModel.selectedParty(parties[0]);
+  }
 };
 
 function populateUserInfo(data) {
@@ -29,7 +32,7 @@ function populateUserInfo(data) {
   var user = new user({});
 }
 
-function logInOutOfFacebook() {
+function logInOutOfFacebook() {o
   if (!viewModel.isLoggedIn()) {
     window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
   } else {
@@ -39,7 +42,3 @@ function logInOutOfFacebook() {
     });
   }
 };
-
-$(document).ready(function() {
-  populateParties();
-});

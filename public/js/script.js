@@ -59,6 +59,6 @@ var server = (function() {
 })();
 
 $(document).ready(function() {
-  getUserAndFriends();
+  updateUserData();
 });
 
