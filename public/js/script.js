@@ -1,5 +1,4 @@
-function updateUserData()
-{
+function updateUserData() {
   server.getUserAndFriends(function(data) {
     viewModel.isLoggedIn(data.me.id ? true : false);
     viewModel.user(new user({ fullName: data.me.name }));
@@ -15,7 +14,7 @@ function log(x) {
   console.log(x);
 }
 
-var server = (function(){
+var server = (function() {
   var that = {};
 
   // returns {first_name,last_name,name,id, ... }
