@@ -1,5 +1,6 @@
 /*
- * Base
+ * DOCUMENT: base.css
+ * Defines base styles
  */
 
 /*
@@ -183,7 +184,7 @@ input[type="search"] { -moz-box-sizing: content-box; -webkit-box-sizing: content
  * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/ 
  */
 
-button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+button::-moz-focus-inner, a::-moz-focus-inner, input::-moz-focus-inner, a::-moz-focus-inner { border: 0; padding: 0;}
 
 /* Remove default vertical scrollbar in IE6/7/8/9 */
 textarea { overflow: auto; vertical-align: top; }
@@ -235,3 +236,69 @@ table { border-collapse: collapse; border-spacing: 0; }
   p, h2, h3 { orphans: 3; widows: 3; }
   h2, h3{ page-break-after: avoid; }
 }
+
+/*
+Default Nodes > Content 
+**************************************************************************************************/
+
+.oc-logo {
+	background: #eee none no-repeat left top;
+	height: 40px;
+	width: 120px;
+	font-size: 20px;
+}
+
+
+/*
+Default Nodes > List 
+**************************************************************************************************/
+.ol-menu {
+	padding: 0;
+}
+
+.ol-menu > li { 
+	cursor: pointer;
+}
+
+.ol-navigation {
+	padding: 0;
+}
+
+.ol-navigation > li { 
+	float: left;
+	margin-right: 20px;
+	cursor: pointer;
+	list-style-type: none;
+}
+
+.ol-subnav {
+	padding: 0;
+}
+
+.ol-subnav > li {
+	display: inline;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+.ol-supnav {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	padding: 0;
+}
+
+.ol-supnav > li {
+	display: inline;
+	padding: 0 10px;
+	list-style-type: none;
+}
+
+.ol-events {
+}
+
+
+.ol-events > li {
+	list-style-type: none;
+}
+

@@ -1,88 +1,175 @@
-/*list-ol*/
+/*
+ * DOCUMENT: theme.css
+ * Defines page theme.
+ */
 
-.ol-checklist {
+
+/*
+Typography
+**************************************************************************************************
+**************************************************************************************************/
+
+/*
+Intialize site baselines and font size.
+**************************************************************************************************/
+
+.site-default { font-size: 13px; line-height: 20px; background: #fff; }
+
+
+/*
+Block Elements
+**************************************************************************************************/
+
+/* Headers and Sub-headers */
+.site-default p,
+.site-default h1, .site-default .nc-h1, .site-default h2, .site-default .nc-h2, .site-default h3, .site-default .nc-h3, .site-default h4, .site-default .nc-h4, .site-default h5, .site-default .nc-h5, .site-default h6, .site-default .nc-h6 { padding: 0 10px; }
+
+.site-default h1, .site-default .nc-h1 {
+	font-size: 20px;
+	line-height: 24px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
+
+.site-default h2, .site-default .nc-h2 {
+	font-size: 16px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+.site-default p { padding-bottom: 10px; }
+
+/*
+Inline Elements
+**************************************************************************************************/
+
+
+
+/*
+Links
+**************************************************************************************************
+**************************************************************************************************/
+
+.site-default a { color: #1A5EA8; outline: none; cursor: pointer; }
+.site-default a:link { color: #1A5EA8; }
+.site-default a:visited { color: #1A5EA8; }
+.site-default a:hover { color: #0070E9; }
+.site-default a:active { color: #007bff; }
+
+
+/*
+Default Nodes > List 
+**************************************************************************************************/
+.site-default .ol-checklist {
+}
+
+.site-default .ol-menu {
+}
+
+.site-default .ol-menu > li { 
+}
+
+.site-default .ol-navigation {
+}
+
+.site-default .ol-navigation > li { 
+}
+
+.site-default .ol-subnav {
+}
+
+.site-default .ol-subnav > li {
+	cursor: pointer;
+}
+
+.site-default .ol-supnav {
+}
+
+.site-default .ol-supnav > li {
+	cursor: pointer;
+}
+
 
 /*content-oc*/
 
-.oc-logo {
+.site-default .oc-logo {
 }
 
-.oc-create_event {
+.site-default .oc-create_event {
 }
 
-.oc-about {
+.site-default .oc-about {
 }
 
-.oc-title {
+.site-default .oc-title {
 }
 
-.oc-description {
+.site-default .oc-description {
 }
 
-.oc-location {
+.site-default .oc-location {
 }
 
-.oc-address {
+.site-default .oc-address {
 }
 
-.oc-map {
+.site-default .oc-map {
 }
 
-.oc-time {
+.site-default .oc-time {
 }
 
-.oc-date {
+.site-default .oc-date {
 }
 
-.oc-post {
+.site-default .oc-post {
 }
 
-.oc-todo {
+.site-default .oc-todo {
 }
 
-.oc-h1 {
+.site-default .oc-h1 {
 }
 
-.oc-h2 {
+.site-default .oc-h2 {
 }
 
-.oc-h3 {
+.site-default .oc-h3 {
 }
 
-.oc-icon {
+.site-default .oc-icon {
 }
 
 /*action-oa*/
 
-.oa-where {
+.site-default .oa-where {
 }
 
-.oa-when {
+.site-default .oa-when {
 }
 
-.oa-who {
+.site-default .oa-who {
 }
 
-.oa-text {
+.site-default .oa-text {
 }
 
-.oa-textarea {
+.site-default .oa-textarea {
 }
 
-.oa-button {
+.site-default .oa-button {
 }
 
-.oa-screen {
+.site-default .oa-screen {
 }
 
-.oa-date {
+.site-default .oa-date {
 }
 
-.oa-time {
+.site-default .oa-time {
 }
 
-.oa-login {
+.site-default .oa-login {
 }
 
 /*social-os*/
@@ -96,7 +183,7 @@
 
 /*group-og*/
 
-.og-comment {
+.site-default .og-comment {
 }
 
 /*notification-on*/
@@ -108,11 +195,30 @@ Zones
 **************************************************************************************************/
 
 /* ZONE: todo*/
-.zone-todo .ol-checklist {
+.site-default .zone-todo .ol-checklist {
 	margin: 0;
 }
 
 /* ZONE: progress*/
-.zone-checklist  .ol-checklist {
+.site-default .zone-checklist  .ol-checklist {
 	margin: 0;
 }
+
+/* ZONE: portal_header*/
+.site-default .zone-portal_header {
+	height: 40px;
+}
+
+.site-default .zone-portal_header .oc-logo {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.site-default .zone-portal_header .ol-supnav {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+
