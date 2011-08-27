@@ -67,7 +67,10 @@ app.get('/logout', function(req, res) {
     host: 'www.facebook.com',
     port: 80,
     path: '/logout.php',
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   }, function (result) {
     delete req.session.user;
     res.send('{}', 200);
