@@ -7,6 +7,7 @@ require('nko')('SVvsNwr4CEZy0EzQ');
 
 var express = require('express');
 var https = require('https');
+var http = require('http');
 var url = require('url');
 var qs = require('querystring');
 var config = require('./config');
@@ -59,6 +60,20 @@ app.get('/getuser', function(req, res) {
     response.user = req.session.user;
   }
   res.send(JSON.stringify(response));
+});
+
+app.get('/logout', function(req, res) {
+  var request = http.request({
+    host: 'www.facebook.com',
+    port: 80,
+    path: '/logout.php',
+    method: 'POST'
+  }, function (result) {
+    delete req.session.user;
+    res.send('{}', 200);
+  });
+  request.write('confirm=1');
+  request.end();
 });
 
 app.get('/login', function(req, res) {
