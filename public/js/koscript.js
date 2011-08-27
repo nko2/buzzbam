@@ -67,7 +67,7 @@ function populateParty(party)
   var userIds = party.userIds;
   for (var i in party.userIds) {
     $.getJSON('user?id=' + userIds[i], function(data) {
-    }
+    });
   }
 }
 
