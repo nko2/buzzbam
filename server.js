@@ -55,7 +55,7 @@ app.get('/longpoll/items', function(req, res) {
       res.send(403);
     }
     else {
-      data.longPollItems(req.session, userid, since, function(changes) {
+      data.longPollItems(req.session, partyid, since, function(changes) {
 	var result = {
 	  last_seq: changes.last_seq,
 	  items: map(changes.results, function(x) { return x.id; })
@@ -138,7 +138,7 @@ app.post('/newcomment', function(req, res) {
   var itemid = req.param('id');
   var message = req.param('message');
 
-  data.getItem(req.session, partyid, function(item) {
+  data.getItem(req.session, itemid, function(item) {
     if (item.error) {
       res.send(403);
     }
@@ -152,7 +152,12 @@ app.post('/newcomment', function(req, res) {
         time: new Date()
       });
       var updated = JSON.stringify(item);
-      options.method = 'PUT';
+      var options = {
+        host: config.couch.server,
+        port: 443,
+        path: '/items/'+itemid,
+        method: 'PUT'
+      };
       client.post(options, updated, function(result) {
         res.send(JSON.stringify(result));
       });
