@@ -36,12 +36,14 @@ app.configure('production', function(){
 // Routes
 
 function jsonGet(options, callback) {
+  console.log({get: options});
   https.get(options, function(response) {
     var body = '';
     response.on('data', function(chunk) {
       body += chunk;
     });
     response.on('end', function() {
+      console.log({getResponse: body});
       callback(JSON.parse(body));
     });
   });
@@ -145,13 +147,6 @@ app.post('/newcomment', function(req, res) {
 
   //XXX TODO deny new comments for other peoples parties
 
-  var item = {
-    task: true,
-    done: false,
-    partyid: partyid,
-    description: description,
-  };
-
   var options = {
     host:'buzzbam.iriscouch.com',
     port:443,
@@ -166,7 +161,9 @@ app.post('/newcomment', function(req, res) {
       message: message,
       time: new Date()
     });
-    jsonPost(options, function(result) {
+    var updated = JSON.stringify(party);
+    options.method = 'PUT';
+    jsonPost(options, updated, function(result) {
       res.send(JSON.stringify(result));
     });
   });
