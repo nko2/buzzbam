@@ -83,7 +83,7 @@
 					<div class="grid-posts fff">
 						Post<br />Post<br />Post<br />Post<br />Post<br />Post<br />
 					</div>
-					<div class="grid-users fff" data-bind="template: {name: 'userTemplate', foreach: friends}" >
+					<div class="grid-users fff" data-bind="template: {name: 'friendTemplate', foreach: friends}" >
 						User<br />User<br />User<br />User<br />User<br />User<br />
 					</div>
 					<div class="grid-chat pink">
@@ -94,7 +94,7 @@
 		</div>
 	</div>
     
-<script type="text/x-jquery-tmpl" id="userTemplate">
+<script type="text/x-jquery-tmpl" id="friendTemplate">
     <span data-bind="text: fullName"></span>
     <span data-bind="text: userId"></span>
     <span><a href="#" data-bind="click: remove">Remove</a></span>
