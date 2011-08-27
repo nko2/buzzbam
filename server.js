@@ -61,6 +61,11 @@ app.get('/getuser', function(req, res) {
   res.send(JSON.stringify(response));
 });
 
+app.get('/logout', function(req, res) {
+  delete req.session.user;
+  res.send('{}', 200);
+});
+
 app.get('/login', function(req, res) {
 
   var error = req.param('error');

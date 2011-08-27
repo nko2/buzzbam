@@ -2,18 +2,30 @@
 
 */
 
-$(document).ready(function() {
-  $.getJSON('getuser', function(data) {
-    if (data.user) {
-      $('.loggedin').text(data.user.name);
-    }
-    else {
-      var anchor = $('<a/>');
-      anchor.attr('href', 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login');
-      anchor.text('Login with Facebook');
-      $('.loggedin').empty().append(anchor);
-    }
+function updateUserStatus()
+{
+  $(document).ready(function() {
+    $.getJSON('getuser', function(data) {
+      if (data.user) {
+        var anchor = $('<a/>');
+        anchor.click(function(e) {
+          $.getJSON('logout', updateUserStatus);
+        });
+        anchor.text('Logout (' + data.user.name + ')');
+        $('.loggedin').empty().append(anchor);
+      }
+      else {
+        var anchor = $('<a/>');
+        anchor.attr('href', 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login');
+        anchor.text('Login with Facebook');
+        $('.loggedin').empty().append(anchor);
+      }
+    });
   });
+}
+
+$(document).ready(function() {
+  updateUserStatus();
 });
 
 var viewModel = {
