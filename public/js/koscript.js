@@ -84,7 +84,8 @@ viewModel.logInOutOfFacebook = function() {
     window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
   } else {
     FB.logout(function(resp) {
-      log(resp);
+      viewModel.user({});
+      viewModel.isLoggedIn(false);
     });
   }
 };
