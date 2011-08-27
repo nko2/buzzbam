@@ -63,7 +63,7 @@ var viewModel = {
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
-  if (user() && viewModel.isLoggedIn()) {
+  if (viewModel.user() && viewModel.isLoggedIn()) {
     var name = user().fullName;
     return "Logout (" + name + ")";
   } else {
