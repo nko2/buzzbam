@@ -48,6 +48,21 @@ function jsonGet(options, callback) {
   });
 }
 
+function map(input, fn) {
+  var result = [];
+  for (var index in input) {
+    var item = input[index];
+    result.push(fn(item));
+  }
+  return result;
+}
+
+app.get('/friends', function(req, res) {
+  jsonGet({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
+    res.send(JSON.stringify(result.data));
+  });
+});
+
 app.get('/party', function(req, res) {
   var id = req.param('id');
   var options = {
