@@ -45,6 +45,7 @@ app.get('/', function(req, res){
 });
 
 function jsonGet(options, callback) {
+  console.log(options);
   https.get(options, function(response) {
     var body = '';
     response.on('data', function(chunk) {
@@ -74,22 +75,24 @@ app.get('/login', function(req, res) {
   }
 
   var code = req.param('code');
+  console.log({cody:code});
 
   https.get({
     host: 'graph.facebook.com',
     port: 443,
-    path: '/oauth/access_token?client_id='+consumer_key+'&client_secret='+consumer_secret+'&code='+code
-  }, function(res) {
+    path: '/oauth/access_token?client_id='+consumer_key+'&redirect_uri=http://partyplanner.no.de&client_secret='+consumer_secret+'&code='+code
+  }, function(result) {
     var body = '';
-    res.on('data', function (chunk) {
+    result.on('data', function (chunk) {
       body += chunk;
     });
-    res.on('end', function() {
-      if (res.statusCode != 200) {
+    result.on('end', function() {
+      if (result.statusCode != 200) {
         res.send(body, 500);
         return;
       }
       var parsed = qs.parse(body);
+      console.log(parsed);
       req.session.user = {
         access_token: parsed.access_token
       };
