@@ -60,7 +60,7 @@ app.get('/longpoll/items', function(req, res) {
 	  last_seq: changes.last_seq,
 	  items: map(changes.results, function(x) { return x.id; })
 	};
-	res.send(changes);
+	res.send(result);
       });
     }
   });
@@ -74,7 +74,7 @@ app.get('/longpoll/parties', function(req, res) {
       last_seq: changes.last_seq,
       parties: map(changes.results, function(x) { return x.id; })
     };
-    res.send(changes);
+    res.send(result);
   });
 });
 
@@ -307,7 +307,8 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/*', function(req, res){
-  res.redirect('/index.html');
+  res.send(404);
+  //res.redirect('/index.html');
 });
 
 app.listen(80);

@@ -68,17 +68,22 @@ function longPollParties(session, userid, since, callback) {
     var options = {
       host: config.couch.server,
       port: 443,
-      path: '/parties'
+      path: '/party'
     };
     client.get(options, function(db) {
-      longPollParties(session, userid, db.committed_update_seq, callback);
+      if (db.error) {
+        callback(db);
+      }
+      else {
+        longPollParties(session, userid, db.committed_update_seq, callback);
+      }
     });
   }
   else {
     var options = {
       host: config.couch.server,
       port: 443,
-      path: '/parties/_changes?filters=parties/mydoc&userid='+userid+'&since='+since+'&feed=longpoll'
+      path: '/party/_changes?filters=parties/mydoc&userid='+userid+'&since='+since+'&feed=longpoll'
     };
     client.get(options, function(changes) {
       callback(changes);
@@ -94,7 +99,12 @@ function longPollItems(session, partyid, since, callback) {
       path: '/items'
     };
     client.get(options, function(db) {
-      longPollItems(session, partyid, db.committed_update_seq, callback);
+      if (db.error) {
+        callback(db);
+      }
+      else {
+        longPollItems(session, partyid, db.committed_update_seq, callback);
+      }
     });
   }
   else {
