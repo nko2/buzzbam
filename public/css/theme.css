@@ -1,0 +1,118 @@
+/*list-ol*/
+
+.ol-checklist {
+}
+
+/*content-oc*/
+
+.oc-logo {
+}
+
+.oc-create_event {
+}
+
+.oc-about {
+}
+
+.oc-title {
+}
+
+.oc-description {
+}
+
+.oc-location {
+}
+
+.oc-address {
+}
+
+.oc-map {
+}
+
+.oc-time {
+}
+
+.oc-date {
+}
+
+.oc-post {
+}
+
+.oc-todo {
+}
+
+.oc-h1 {
+}
+
+.oc-h2 {
+}
+
+.oc-h3 {
+}
+
+.oc-icon {
+}
+
+/*action-oa*/
+
+.oa-where {
+}
+
+.oa-when {
+}
+
+.oa-who {
+}
+
+.oa-text {
+}
+
+.oa-textarea {
+}
+
+.oa-button {
+}
+
+.oa-screen {
+}
+
+.oa-date {
+}
+
+.oa-time {
+}
+
+.oa-login {
+}
+
+/*social-os*/
+
+
+/*item-oi*/
+
+
+/*person-op*/
+
+
+/*group-og*/
+
+.og-comment {
+}
+
+/*notification-on*/
+
+
+/*
+Zones
+**************************************************************************************************
+**************************************************************************************************/
+
+/* ZONE: todo*/
+.zone-todo .ol-checklist {
+	margin: 0;
+}
+
+/* ZONE: progress*/
+.zone-checklist  .ol-checklist {
+	margin: 0;
+}

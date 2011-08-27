@@ -1,0 +1,60 @@
+/*
+ * Extensions
+ */
+
+
+
+/*********************/
+/* Float Cearing Fix */
+/*********************/
+.x-clearfix:after {
+	content: "." !important;
+	display: block !important;
+	height: 0 !important;
+	clear: both !important;
+	visibility: hidden !important;
+}
+
+.x-clearfix { display: inline-block; }
+
+* html .x-clearfix { height: 1% !important; }
+.x-clearfix { display: block; }
+
+
+/*
+Temp Tools
+**************************************************************************************************
+**************************************************************************************************/
+
+.red { background-color: red; }
+.orange { background-color: orange; }
+.yellow { background-color: yellow; }
+.green { background-color: green; }
+.blue { background-color: blue; }
+.purple { background-color: purple; }
+.pink { background-color: pink; }
+.gray { background-color: gray; }
+
+.fff { background-color: #FFF; }
+.eee { background-color: #eee; }
+.ddd { background-color: #ddd; }
+.ccc { background-color: #ccc; }
+.bbb { background-color: #bbb; }
+.aaa { background-color: #aaa; }
+.c999 { background-color: #999; }
+.c888 { background-color: #888; }
+.c777 { background-color: #777; }
+.c666 { background-color: #666; }
+.c555 { background-color: #555; }
+.c444 { background-color: #444; }
+.c333 { background-color: #333; }
+.c222 { background-color: #222; }
+.c111 { background-color: #111; }
+.c000 { background-color: #000; }
+
+
+.x-todo 
+{
+    background: #FFFFD6 !important;
+    color: #bbb !important;    
+}
