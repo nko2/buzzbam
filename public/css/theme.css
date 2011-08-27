@@ -3,6 +3,23 @@
  * Defines page theme.
  */
 
+Fonts
+**************************************************************************************************
+**************************************************************************************************/
+
+/* Set Fonts */
+.site-default { font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
+.site-default h1, .site-default .nc-h1, .site-default h2, .site-default .nc-h2, .site-default h3, .site-default .nc-h3, .site-default h4, .site-default .nc-h4, .site-default h5, .site-default .nc-h5, .site-default h6, .site-default .nc-h6 { font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
+.site-default code { font-family: "Courier New", Courier, monospace; }
+
+/* Set Colors */
+.site-default { color: #333; }
+.site-default h1, .site-default .nc-h1 { color: #333; }
+.site-default h2, .site-default .nc-h2 { color: #333; }
+.site-default h3, .site-default .nc-h3 { color: #333; }
+.site-default h4, .site-default .nc-h4 { color: #333; }
+.site-default h5, .site-default .nc-h5 { color: #444; }
+.site-default h6, .site-default .nc-h6 { color: #444; }
 
 /*
 Typography
@@ -58,9 +75,14 @@ Links
 
 
 /*
-Default Nodes > List 
+Template Nodes > List 
 **************************************************************************************************/
+
 .site-default .ol-checklist {
+}
+
+.site-default .ol-events {
+	padding-left: 10px;
 }
 
 .site-default .ol-menu {
@@ -90,7 +112,9 @@ Default Nodes > List
 }
 
 
-/*content-oc*/
+/*
+Template Nodes > Content 
+**************************************************************************************************/
 
 .site-default .oc-logo {
 }
@@ -140,15 +164,18 @@ Default Nodes > List
 .site-default .oc-icon {
 }
 
-/*action-oa*/
+/*
+Template Nodes > Action 
+**************************************************************************************************/
 
-.site-default .oa-where {
-}
 
-.site-default .oa-when {
-}
-
-.site-default .oa-who {
+.site-default .oa-button
+{
+	outline: 1px solid 
+	margin-right: 10px;
+	color: #555;
+	padding: 0 5px;
+	cursor: pointer;
 }
 
 .site-default .oa-text {
@@ -156,10 +183,6 @@ Default Nodes > List
 
 .site-default .oa-textarea {
 }
-
-.site-default .oa-button {
-}
-
 .site-default .oa-screen {
 }
 
@@ -172,21 +195,47 @@ Default Nodes > List
 .site-default .oa-login {
 }
 
-/*social-os*/
+/*
+Template Nodes > Social 
+**************************************************************************************************/
 
 
-/*item-oi*/
+
+/*
+Template Nodes > Item 
+**************************************************************************************************/
+
+.site-default .oi-title {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.site-default .oi-location {
+	
+}
+
+.site-default .oi-datetime {
+
+}
+
+/*
+Template Nodes > Person 
+**************************************************************************************************/
 
 
-/*person-op*/
 
+/*
+Template Nodes > Group 
+**************************************************************************************************/
 
-/*group-og*/
 
 .site-default .og-comment {
 }
 
-/*notification-on*/
+/*
+Template Nodes > Notification 
+**************************************************************************************************/
+
 
 
 /*
@@ -222,3 +271,19 @@ Zones
 }
 
 
+/* ZONE: event_list*/
+.site-default .zone-event_list {
+	padding: 20px 0;
+}
+
+.site-default .zone-event_list .og-event {
+	margin-bottom: 10px;
+}
+
+.site-default .zone-event_list .oi-locaiton{
+	color: #999;
+}
+
+.site-default .zone-event_list .oi-datetime{
+	color: #999;
+}
