@@ -163,8 +163,13 @@ app.get('/newparty', function(req, res) {
 
 app.get('/party', function(req, res) {
   var id = req.param('id');
-  data.getParty(req.sesion, id, function(party) {
-    res.send(JSON.stringify(party));
+  data.getParty(req.session, id, function(party) {
+    if (party.error) {
+      res.send(403);
+    }
+    else {
+      res.send(JSON.stringify(party));
+    }
   });
 });
 
@@ -180,7 +185,12 @@ function viewValues(viewResult) {
 app.get('/items', function(req, res) {
   var id = req.param('id');
   data.getItems(req.session, id, function(items) {
-    res.send(JSON.stringify(viewValues(items)));
+    if (items.error) {
+      res.send(403);
+    }
+    else {
+      res.send(JSON.stringify(viewValues(items)));
+    }
   });
 });
 

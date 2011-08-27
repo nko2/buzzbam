@@ -5,8 +5,8 @@ var client = require('./client');
 
 function partyHasUser(party, user) {
   for (var userIndex in party.users) {
-    var user = party.users[userIndex];
-    if (session.user.id == user.id) {
+    var partyUser = party.users[userIndex];
+    if (partyUser.id == user.id) {
       return true;
     }
   }
