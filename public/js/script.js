@@ -46,6 +46,10 @@ var server = (function(){
     $.getJSON('parties', callback);
   };
 
+  that.getItems = function(partyid, callback) {
+    $.getJSON('parties', {id:partyid}, callback);
+  };
+
   return that;
 })();
 
