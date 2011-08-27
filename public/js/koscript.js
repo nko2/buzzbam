@@ -29,7 +29,15 @@ function populateParties(data) {
 
 function populateUserInfo(data) {
   //viewModel.user(new user({
-  var temp = new user({});
+  var temp = new user({
+    id: data.id,
+    firstName: data.first_name,
+    lastName: data.last_name, 
+    link: data.link,
+    locale: data.locale,
+    fullName: data.name,
+    timezone: data.timezone
+  });
 }
 
 function logInOutOfFacebook() {

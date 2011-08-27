@@ -15,10 +15,15 @@ var whenInfo = function (opt) {
 var user = function (opt) {
   this.id = opt.id;
   this.userId = opt.userId;
+  this.firstName = opt.firstName;
+  this.lastName = opt.lastName;
   this.fullName = opt.fullName;
+  this.link = opt.link;
   this.email = opt.email;
   this.role = opt.role ? opt.role : 'contrib';
   this.rsvp = opt.rsvp ? opt.rsvp : 'maybe';
+  this.timezone = opt.timezone;
+  this.
 };
 
 var friend = function (opt) {
