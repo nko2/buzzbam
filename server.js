@@ -13,6 +13,7 @@ var qs = require('querystring');
 var config = require('./config');
 var uuid = require('./uuid');
 var client = require('./client');
+var data = require('./data');
 
 var app = module.exports = express.createServer();
 
@@ -75,54 +76,56 @@ app.post('/newitem', function(req, res) {
   var partyid = req.param('id');
   var description = req.param('description');
 
-  //XXX TODO deny new items for other peoples parties
+  data.getParty(req.session, partyid, function(party) {
+    if (party.error) {
+      res.send(403);
+    }
+    else {
+      var item = {
+        task: true,
+        done: false,
+        partyid: partyid,
+        description: description,
+      };
 
-  var item = {
-    task: true,
-    done: false,
-    partyid: partyid,
-    description: description,
-  };
-
-  uuid.get(function(uuid){
-    var options = {
-      host:'buzzbam.iriscouch.com',
-      port:443,
-      path:'/items/'+uuid,
-      method:'PUT'
-    };
-    client.post(options, JSON.stringify(item), function(result) {
-      res.send(result);
-    });
+      uuid.get(function(uuid){
+        var options = {
+          host:'buzzbam.iriscouch.com',
+          port:443,
+          path:'/items/'+uuid,
+          method:'PUT'
+        };
+        client.post(options, JSON.stringify(item), function(result) {
+          res.send(result);
+        });
+      });
+    }
   });
-
 });
 
 app.post('/newcomment', function(req, res) {
   var itemid = req.param('id');
   var message = req.param('message');
 
-  //XXX TODO deny new comments for other peoples parties
-
-  var options = {
-    host:'buzzbam.iriscouch.com',
-    port:443,
-    path:'/items/'+itemid
-  };
-  client.get(options, function(party) {
-    if (!(party.comments instanceof Array)) {
-      party.comments = [];
+  data.getItem(req.session, partyid, function(item) {
+    if (item.error) {
+      res.send(403);
     }
-    party.comments.push({
-      user: req.session.user.id,
-      message: message,
-      time: new Date()
-    });
-    var updated = JSON.stringify(party);
-    options.method = 'PUT';
-    client.post(options, updated, function(result) {
-      res.send(JSON.stringify(result));
-    });
+    else {
+      if (!(item.comments instanceof Array)) {
+        item.comments = [];
+      }
+      item.comments.push({
+        user: req.session.user.id,
+        message: message,
+        time: new Date()
+      });
+      var updated = JSON.stringify(item);
+      options.method = 'PUT';
+      client.post(options, updated, function(result) {
+        res.send(JSON.stringify(result));
+      });
+    }
   });
 
 });
@@ -160,12 +163,7 @@ app.get('/newparty', function(req, res) {
 
 app.get('/party', function(req, res) {
   var id = req.param('id');
-  var options = {
-    host:'buzzbam.iriscouch.com',
-    port:443,
-    path:'/party/'+id
-  };
-  client.get(options, function(party) {
+  data.getParty(req.sesion, id, function(party) {
     res.send(JSON.stringify(party));
   });
 });
@@ -181,7 +179,7 @@ function viewValues(viewResult) {
 
 app.get('/items', function(req, res) {
   var id = req.param('id');
-  client.get({host:'buzzbam.iriscouch.com',port:443,path:'/items/_design/parties/_view/items?key="'+id+'"'}, function(items) {
+  data.getItems(req.session, id, function(items) {
     res.send(JSON.stringify(viewValues(items)));
   });
 });
