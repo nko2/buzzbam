@@ -96,7 +96,7 @@ app.get('/user', function(req, res) {
 
 app.get('/friends', function(req, res) {
   if (!req.session.user) {
-    res.send(JSON.stringify({me:{name:'Anonymous'},friends:[]});
+    res.send(JSON.stringify({me:{name:'Anonymous'},friends:[]}));
   }
   else {
     jsonGet({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
