@@ -1,24 +1,3 @@
-//function updateUserStatus()
-//{
-//  $.getJSON('getuser', function(data) {
-//    if (data.user) {
-//      var anchor = $('<a/>');
-//      anchor.click(function(e) {
-//        //$.getJSON('logout', updateUserStatus);
-//        window.location = 'http://www.facebook.com/logout.php';
-//      });
-//      anchor.text('Logout (' + data.user.name + ')');
-//      $('.loggedin').empty().append(anchor);
-//    }
-//    else {
-//      var anchor = $('<a/>');
-//      anchor.attr('href', 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login');
-//      anchor.text('Login with Facebook');
-//      $('.loggedin').empty().append(anchor);
-//    }
-//  });
-//}
-
 function logIntoFacebook() {
   window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
 }
@@ -47,6 +26,14 @@ var server = (function(){
     $.getJSON('friends', callback);
   };
 
+  that.newItem = function(partyid, description, callback) {
+    $.post('newitem', {id:partyid,description:description}, callback, 'json');
+  };
+
+  that.newComment = function(itemid, message, callback) {
+    $.post('newcomment', {id:itemid, message:message}, callback, 'json');
+  };
+
   that.newParty = function(title, description, callback) {
     var data = { title: title };
     if (description) {
@@ -67,7 +54,6 @@ var server = (function(){
 })();
 
 $(document).ready(function() {
-  updateUserStatus();
   updateUserData();
 });
 
