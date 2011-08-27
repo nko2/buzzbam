@@ -48,80 +48,64 @@ function jsonGet(options, callback) {
   });
 }
 
+function map(input, fn) {
+  var result = [];
+  for (var index in input) {
+    var item = input[index];
+    result.push(fn(item));
+  }
+  return result;
+}
+
+app.get('/friends', function(req, res) {
+  jsonGet({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
+    var response = {
+      me: { 
+        id: req.session.user.id,
+        name: req.session.user.name
+      },
+      friends: result.data
+    };
+    res.send(JSON.stringify(response));
+  });
+});
+
 app.get('/party', function(req, res) {
   var id = req.param('id');
-  var fake = {
-    'X1': {
-      id: 'X1',
-      public: true,
-      owner: 'USER1',
-      title: 'voting party',
-      description: 'Vote for a great app!',
-      users: [{
-        id: 'USER1',
-        name: 'Bill',
-        email: 'bill@bar.com',
-        role: 'admin',
-        rsvp: 'yes'
-      }, {
-        id: 'USER2',
-        name: 'Fred',
-        email: 'fred@bar.com',
-        role: 'contrib',
-        rsvp: 'maybe'
-      }],
-      items: [
-      ],
-      where: {},
-      when: {}
-    },
-    'X2': {
-      id: 'X2',
-      public: false,
-      owner: 'USER2',
-      title: 'fred\'s birfday',
-      description: 'I\'m not that old, come and celebrate with me!',
-      users: [{
-        id: 'USER1',
-        name: 'Bill',
-        email: 'bill@bar.com',
-        role: 'contrib',
-        rsvp: 'yes'
-      }, {
-        id: 'USER2',
-        name: 'Fred',
-        email: 'fred@bar.com',
-        role: 'admin',
-        rsvp: 'yes'
-      }],
-      items: [
-      ],
-      where: {},
-      when: {}
-    }
+  var options = {
+    host:'buzzbam.iriscouch.com',
+    port:443,
+    path:'/party/'+id
   };
-  res.send(JSON.stringify(fake[id]));
+  jsonGet(options, function(party) {
+    res.send(JSON.stringify(party));
+  });
 });
+
+function viewValues(viewResult) {
+  var results = [];
+  var rows = viewResult.rows;
+  for (var row in rows) {
+    results.push(rows[row].value);
+  }
+  return results;
+}
 
 app.get('/parties', function(req, res) {
-  var fake = [
-    { title: 'voting party',
-      id: 'X1',
-      public: true,
-      owner: 'USER1'
-    } ,
-    { title: 'fred\'s birfday',
-      id: 'X2',
-      public: false,
-      owner: 'USER2'
-    } 
-  ];
-  res.send(JSON.stringify(fake));
-});
-
-app.get('/summary', function(req, res) {
-  jsonGet({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
-    res.send(JSON.stringify(result));
+  var id = req.session.user ? req.session.user.id : '';
+  jsonGet({host:'buzzbam.iriscouch.com',port:443,path:'/party/_design/parties/_view/public'}, function(publicParties) {
+    var options = {
+      host:'buzzbam.iriscouch.com',
+      port:443,
+      path:'/party/_design/parties/_view/parties?key="'+id+'"'
+    };
+    jsonGet(options, function(parties) {
+      var result = {
+        'public': viewValues(publicParties),
+        'parties': viewValues(parties)
+      };
+      res.send(JSON.stringify(result));
+    });
   });
 });
 
