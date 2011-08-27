@@ -72,7 +72,7 @@ viewModel.formattedLoggedInName = ko.dependentObservable(function () {
 }, viewModel);
 
 viewModel.logInOutOfFacebook = function() {
-  if (viewModel.isLoggedIn()) {
+  if (!viewModel.isLoggedIn()) {
     window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
   } else {
     $('#logOutForm').submit();
