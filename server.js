@@ -183,14 +183,6 @@ app.get('/parties', function(req, res) {
   });
 });
 
-app.get('/getuser', function(req, res) {
-  var response = {};
-  if (req.session.user) {
-    response.user = req.session.user;
-  }
-  res.send(JSON.stringify(response));
-});
-
 app.get('/logout', function(req, res) {
   var request = http.request({
     host: 'www.facebook.com',
