@@ -63,6 +63,54 @@ function getItem(session, itemid, callback) {
   });
 }
 
+function longPollParties(session, userid, since, callback) {
+  if (!since) {
+    var options = {
+      host: config.couch.server,
+      port: 443,
+      path: '/parties'
+    };
+    client.get(options, function(db) {
+      longPollParties(session, userid, db.committed_update_seq, callback);
+    });
+  }
+  else {
+    var options = {
+      host: config.couch.server,
+      port: 443,
+      path: '/parties/_changes?filters=parties/mydoc&userid='+userid+'&since='+since+'&feed=longpoll'
+    };
+    client.get(options, function(changes) {
+      callback(changes);
+    });
+  }
+}
+
+function longPollItems(session, partyid, since, callback) {
+  if (!since) {
+    var options = {
+      host: config.couch.server,
+      port: 443,
+      path: '/items'
+    };
+    client.get(options, function(db) {
+      longPollItems(session, partyid, db.committed_update_seq, callback);
+    });
+  }
+  else {
+    var options = {
+      host: config.couch.server,
+      port: 443,
+      path: '/items/_changes?filters=parties/myparty&partyid='+partyid+'&since='+since+'&feed=longpoll'
+    };
+    client.get(options, function(changes) {
+      callback(changes);
+    });
+  }
+}
+
+exports.longPollParties = longPollParties;
+exports.longPollItems = longPollItems;
 exports.getParty = getParty;
 exports.getItem = getItem;
 exports.getItems = getItems;

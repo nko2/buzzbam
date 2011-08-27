@@ -36,8 +36,6 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
-// Routes
-
 function map(input, fn) {
   var result = [];
   for (var index in input) {
@@ -46,6 +44,39 @@ function map(input, fn) {
   }
   return result;
 }
+
+// Routes
+
+app.get('/longpoll/items', function(req, res) {
+  var partyid = req.param('partyid');
+  var since = req.param('since');
+  data.getParty(req.session, partyid, function(party) {
+    if (party.error) {
+      res.send(403);
+    }
+    else {
+      data.longPollItems(req.session, userid, since, function(changes) {
+	var result = {
+	  last_seq: changes.last_seq,
+	  items: map(changes.results, function(x) { return x.id; })
+	};
+	res.send(changes);
+      });
+    }
+  });
+});
+
+app.get('/longpoll/parties', function(req, res) {
+  var userid = req.session.user.id;
+  var since = req.param('since');
+  data.longPollParties(req.session, userid, since, function(changes) {
+    var result = {
+      last_seq: changes.last_seq,
+      parties: map(changes.results, function(x) { return x.id; })
+    };
+    res.send(changes);
+  });
+});
 
 app.get('/user', function(req, res) {
   var id = req.param('id');
