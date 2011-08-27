@@ -112,6 +112,33 @@ app.get('/friends', function(req, res) {
   }
 });
 
+app.post('/newitem', function(req, res) {
+  var partyid = req.param('id');
+  var description = req.param('description');
+
+  //XXX TODO deny new items for other peoples parties
+
+  var item = {
+    task: true,
+    done: false,
+    partyid: partyid,
+    description: description,
+  };
+
+  getUuid(function(uuid){
+    var options = {
+      host:'buzzbam.iriscouch.com',
+      port:443,
+      path:'/items/'+uuid,
+      method:'PUT'
+    };
+    jsonPost(options, JSON.stringify(item), function(result) {
+      res.send(result);
+    });
+  });
+
+});
+
 app.get('/newparty', function(req, res) {
   var title = req.param('title');
   var description = req.param('description');
@@ -125,7 +152,6 @@ app.get('/newparty', function(req, res) {
       role: "admin",
       rsvp: "yes"
     }],
-    items: [],
     when: {},
     where: {}
   };
