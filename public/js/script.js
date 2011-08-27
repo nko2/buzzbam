@@ -1,7 +1,3 @@
-/* Author:
-
-*/
-
 function updateUserStatus()
 {
   $(document).ready(function() {
@@ -27,9 +23,4 @@ function updateUserStatus()
 $(document).ready(function() {
   updateUserStatus();
 });
-
-var viewModel = {
-};
-
-ko.applyBindings(viewModel);
 
