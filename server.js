@@ -143,7 +143,7 @@ app.post('/newcomment', function(req, res) {
   var itemid = req.param('id');
   var message = req.param('message');
 
-  //XXX TODO deny new items for other peoples parties
+  //XXX TODO deny new comments for other peoples parties
 
   var item = {
     task: true,
@@ -152,15 +152,22 @@ app.post('/newcomment', function(req, res) {
     description: description,
   };
 
-  getUuid(function(uuid){
-    var options = {
-      host:'buzzbam.iriscouch.com',
-      port:443,
-      path:'/items/'+uuid,
-      method:'PUT'
-    };
-    jsonPost(options, JSON.stringify(item), function(result) {
-      res.send(result);
+  var options = {
+    host:'buzzbam.iriscouch.com',
+    port:443,
+    path:'/items/'+itemid
+  };
+  jsonGet(options, function(party) {
+    if (!(party.comments instanceof Array)) {
+      party.comments = [];
+    }
+    party.comments.push({
+      user: req.session.user.id,
+      message: message,
+      time: new Date()
+    });
+    jsonPost(options, function(result) {
+      res.send(JSON.stringify(result));
     });
   });
 
