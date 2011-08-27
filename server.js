@@ -36,7 +36,6 @@ app.configure('production', function(){
 // Routes
 
 function jsonGet(options, callback) {
-  console.log(options);
   https.get(options, function(response) {
     var body = '';
     response.on('data', function(chunk) {
@@ -48,6 +47,26 @@ function jsonGet(options, callback) {
   });
 }
 
+function jsonPost(options, content, callback) {
+  console.log({post: content});
+  options.headers = {
+    'Content-Length': content.length,
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
+  var request = https.request(options, function(response) {
+    var body = '';
+    response.on('data', function(chunk) {
+      body += chunk;
+    });
+    response.on('end', function() {
+      console.log({postResponse: body});
+      callback(JSON.parse(body));
+    });
+  });
+  request.write(content);
+  request.end();
+}
+
 function map(input, fn) {
   var result = [];
   for (var index in input) {
@@ -56,6 +75,24 @@ function map(input, fn) {
   }
   return result;
 }
+
+function getUuid(fn) {
+  var options = {
+    host:'buzzbam.iriscouch.com',
+    port:443,
+    path:'/_uuids',
+  };
+  jsonGet(options, function(result) {
+    fn(result.uuids[0]);
+  });
+}
+
+app.get('/user', function(req, res) {
+  var id = req.param('id');
+  jsonGet({host: 'graph.facebook.com', port: 443, path: '/'+id+'?access_token=' + req.session.user.access_token}, function(result) {
+    res.send(result);
+  });
+});
 
 app.get('/friends', function(req, res) {
   jsonGet({host: 'graph.facebook.com', port: 443, path: '/me/friends?access_token=' + req.session.user.access_token}, function(result) {
@@ -68,6 +105,38 @@ app.get('/friends', function(req, res) {
     };
     res.send(JSON.stringify(response));
   });
+});
+
+app.get('/newparty', function(req, res) {
+  var title = req.param('title');
+  var description = req.param('description');
+
+  var party = {
+    title: title,
+    description: description,
+    public: false,
+    users: [{
+      id: req.session.user.id,
+      role: "admin",
+      rsvp: "yes"
+    }],
+    items: [],
+    when: {},
+    where: {}
+  };
+
+  getUuid(function(uuid){
+    var options = {
+      host:'buzzbam.iriscouch.com',
+      port:443,
+      path:'/party/'+uuid,
+      method:'PUT'
+    };
+    jsonPost(options, JSON.stringify(party), function(result) {
+      res.send(result);
+    });
+  });
+
 });
 
 app.get('/party', function(req, res) {
