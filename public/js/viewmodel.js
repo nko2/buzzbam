@@ -43,6 +43,7 @@ var friend = function (opt) {
   var that = this;
   that.userId = opt.userId;
   that.fullName = opt.fullName;
+  that.inParty = ko.observable(false);
   that.remove = function () { viewModel.friends.remove(that); }
 }
 
@@ -187,8 +188,11 @@ viewModel.unselectedFriends = ko.dependentObservable(function () {
     var friends = viewModel.friends();
     // compare hash
     for (var i in friends) {
-      if (hash[friends[i].userId]) {
+      if (!hash[friends[i].userId]) {
         unselectedFriends.push(friends[i]);
+        friends[i].inParty(true);
+      } else {
+        friends[i].inParty(false);
       }
     }
     return unselectedFriends;
@@ -198,29 +202,44 @@ viewModel.unselectedFriends = ko.dependentObservable(function () {
 viewModel.addFriend = function(userId) {
   var selectedParty = viewModel.selectedParty();
   if (selectedParty) {
-    var removed = viewModel.friends.remove(function(item) {
-        return item.userId == userId;
-      });
-    if (removed.length > 0) {
-      selectedParty.users.push(new user({
-          userId: removed[0].userId,
-          fullName: removed[0].fullName,
+    // find friend
+    var friends = viewModel.friends();
+    for (var i in friends) {
+      if (friends[i].userId == userId) {
+        friends[i].inParty(true);
+        var partyUsers = selectedParty.users();
+        // make sure it's not already in the list
+        for (var j in partyUsers) {
+          if (partyUsers[j].userId == userId) {
+            return;
+          }
+        }
+        selectedParty.users.push(new user({
+          userId: friends[i].userId,
+          fullName: rfriends[i].fullName,
         }));
+        break;
+      }
     }
   }
-}
+};
 viewModel.removeFriend = function(userId) {
   var selectedParty = viewModel.selectedParty();
   if (selectedParty) {
+    // remove from party
     var removed = selectedParty.users.remove(function(item) {
         return item.userId == userId;
       });
-    viewModel.friends.push(new friend({
-          userId: removed[0].userId,
-          fullName: removed[0].fullName,
-        }));
+    if (removed.length > 0) {
+      var friends = viewModel.friends();
+      for (var i in friends) {
+        if (friends[i].userId == userId) {
+          friends[i].inParty(false);
+        }
+      }
+    }
   }
-}
+};
 viewModel.redirectToParty = function(partyId) {
   window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
 };
