@@ -64,7 +64,7 @@ function getItems(session, partyid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/items/_design/parties/_view/items', {key:partyid}, callback);
+      couchGet('/items/_design/parties/_view/items', {key:JSON.stringify(partyid)}, callback);
     }
   });
 } 
@@ -75,7 +75,7 @@ function getComments(session, partyid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/chat/_design/comments/_view/comments', {key:partyid}, callback);
+      couchGet('/chat/_design/comments/_view/comments', {key:JSON.stringify(partyid)}, callback);
     }
   });
 } 
@@ -142,7 +142,7 @@ function longPollParties(session, userid, since, callback) {
   }
   else {
     var params = {
-      filters: 'parties/mydoc',
+      filter: 'parties/mydoc',
       userid: userid,
       since: since,
       feed: 'longpoll'
@@ -158,13 +158,13 @@ function longPollComments(session, partyid, since, callback) {
         callback(db);
       }
       else {
-        longPollItems(session, partyid, db.committed_update_seq, callback);
+        longPollComments(session, partyid, db.committed_update_seq, callback);
       }
     });
   }
   else {
     var params = {
-      filters: 'comments/myparty',
+      filter: 'comments/myparty',
       partyid: partyid,
       since: since,
       feed: 'longpoll'
@@ -186,7 +186,7 @@ function longPollItems(session, partyid, since, callback) {
   }
   else {
     var params = {
-      filters: 'parties/myparty',
+      filter: 'parties/myparty',
       partyid: partyid,
       since: since,
       feed: 'longpoll'
@@ -197,8 +197,10 @@ function longPollItems(session, partyid, since, callback) {
 
 exports.longPollParties = longPollParties;
 exports.longPollItems = longPollItems;
+exports.longPollComments = longPollComments;
 exports.getParty = getParty;
 exports.getItem = getItem;
+exports.getComment = getComment;
 exports.getItems = getItems;
 exports.couchGet = couchGet;
 exports.couchPost = couchPost;

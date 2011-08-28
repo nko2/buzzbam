@@ -308,7 +308,7 @@ app.get('/parties', function(req, res) {
   var id = req.session.user ? req.session.user.id : '';
   data.couchGet('/party/_design/parties/_view/public', function(publicParties) {
     var path = '/party/_design/parties/_view/parties';
-    data.couchGet(path, {key: id}, function(parties) {
+    data.couchGet(path, {key: JSON.stringify(id)}, function(parties) {
       var result = {
         'public': viewValues(publicParties),
         'parties': viewValues(parties)
@@ -374,7 +374,7 @@ app.get('/login', function(req, res) {
       client.get({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
         req.session.user.name = result.name;
         req.session.user.id = result.id;
-        res.redirect('/index.html');
+        res.redirect('/home.html');
       });
     });
   });
