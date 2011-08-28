@@ -4,6 +4,8 @@ var config = require('./config');
 var client = require('./client');
 var qs = require('querystring');
 
+var data = {};
+
 var parties = {};
 var items = {};
 var comments = {};
@@ -32,6 +34,12 @@ function makeUpdater(storage, id, seq)
       doc: doc
     };
   };
+}
+
+function shortcutComment(uuid, comment)
+{
+  comment._id = uuid;
+  comments[uuid] = { seq: -1, doc: comment };
 }
 
 function load(path, seq, storage) {
@@ -178,7 +186,7 @@ function getComments(session, partyid, since, callback) {
       var last_seq = since;
       for (var id in comments) {
         var comment = comments[id];
-        if (comment.seq > last_seq && comment.doc.partyid === partyid) {
+        if ((comment.seq < 0 || comment.seq > last_seq) && comment.doc.partyid === partyid) {
           results.push(id);
           last_seq = Math.max(last_seq, comment.seq);
         }
@@ -258,5 +266,6 @@ exports.getComments = getComments;
 exports.getItems = getItems;
 exports.couchGet = couchGet;
 exports.couchPost = couchPost;
+exports.shortcutComment = shortcutComment;
 
 

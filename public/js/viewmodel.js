@@ -95,6 +95,7 @@ var partyInfo = function (opt) {
   that.formattedDateTimeFull = ko.dependentObservable(function () {
       return "";
     }, that);
+  that.source = opt.source;
 };
   
 var viewModel = {

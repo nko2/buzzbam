@@ -7,4 +7,7 @@ $(document).ready(function(){
       server.newChat(text);
     }
   });
+
 });
+
+

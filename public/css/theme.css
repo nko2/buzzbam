@@ -283,6 +283,98 @@ Zones
 	height: 222px;
 }
 
+.site-default .zone-event_preview .oi-title {
+	position: absolute;
+	top: 80px;
+	left: 20px;
+	color: #0097BF;
+	font-size: 35px;
+	font-weight: normal;
+	resize: none;
+	background: transparent;
+	outline: 1px solid transparent;
+	display: block;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	height: 40px;
+	padding: 0 10px;
+	width: 600px;
+	border: 0 solid transparent;
+	line-height: 40px;
+	overflow: hidden;
+}
+
+.site-default .zone-event_preview .oi-title:focus {
+	outline: 1px solid #bbb;
+	background: #f6fdff;
+	color: #333;
+}
+
+.site-default .zone-event_preview .oi-description{
+	position: absolute;
+	top: 122px;
+	left: 20px;
+	color: #848484;
+	font-size: 16px;
+	font-weight: normal;
+	resize: none;
+	background: transparent;
+	border: 0 solid transparent;
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 10px;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	width: 600px;
+	overflow: hidden;
+}
+
+.site-default .zone-event_preview .oi-description:focus {
+	outline: 1px solid #bbb;
+	background: #f6fdff;
+	color: #333;
+}
+
+.site-default .zone-event_preview .ol-supnav {
+	position: absolute;
+	top: 4px;
+	right: 10px;
+	height: 32px;
+}
+
+.site-default .zone-event_preview .ol-navigation {
+	height: 35px;
+	position: absolute;
+	bottom: -4px;
+	left: 20px;
+}
+
+.site-default .zone-event_preview .oi-timedate,.site-default .zone-event_preview .oi-locaiton, .site-default .zone-event_preview .oi-attendees {
+	resize: none;
+	border: 0 solid transparent;
+	background: transparent;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 27px;
+	color: #00aedd;
+	text-align: abs-bottom;
+	width: 270px;;
+	height: 30px;
+	overflow: hidden;
+	line-height: 30px;
+	padding: 0 10px;
+}
+
+.site-default .zone-event_preview .oi-timedate:focus,.site-default .zone-event_preview .oi-locaiton:focus {
+	outline: 1px solid #bbb;
+	background: #f6fdff;
+	color: #333;
+}
+
+.site-default .zone-event_preview .oi-attendees {
+	padding-top: 4px;
+	height: 31px;
+}
+
+
 /* ZONE: todo*/
 .site-default .zone-todo .ol-checklist {
 	margin: 0;
