@@ -444,6 +444,7 @@ Zones
 .site-default .zone-chat.grid-chat {
 	background: #eff8fa;
 	min-height: 480px;
+	max-height: 480px;
 	z-index: 900;
 	position: absolute;
 	right: 20px;
@@ -464,6 +465,14 @@ Zones
 	margin-left: 30px;
 	width: 168px;
 	padding: 5px;
+	position: absolute;
+	bottom: 10px;
+}
+
+.site-default .zone-chat .na-chat {
+	height: 380px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .site-default .zone-chat > ul > li {
