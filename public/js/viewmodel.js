@@ -165,6 +165,11 @@ viewModel.selectedPartyTitle = function () {
   }
   return "";
 }
+viewModel.redirectToParty = function(partyId) {
+  window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
+}
+
+window.plannerViewModel = viewModel;
 
 $(document).ready(function() {
   if (window.location.hash === '#debug') {

@@ -108,6 +108,3 @@ function descriptionChange() {
   }
 }
 
-function redirectToParty(partyId) {
-  window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
-}
