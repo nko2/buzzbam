@@ -89,7 +89,8 @@ function loadData() {
       modelSetUser(data.me);
       modelSetIsLoggedIn(data.me.id ? true : false);
     });
-  server.getParties(function(partyIds) {
+  server.getParties(function(data) {
+      var partyIds = data.parties;
       for (var i in partyIds) {
         server.getParty(partyIds[i], modelAddParty);
       }
