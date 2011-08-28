@@ -114,6 +114,12 @@ viewModel.logInOutOfFacebook = logInOutOfFacebook;
 viewModel.whereClick = whereClick;
 viewModel.whenClick = whenClick;
 viewModel.whoClick = whoClick;
+viewModel.selectedPartyUsers = function () {
+  if (viewModel.selectedParty()) {
+    return viewModel.selectedParty().users;
+  }
+  return [];
+}
 
 $(document).ready(function() {
   ko.applyBindings(viewModel);
