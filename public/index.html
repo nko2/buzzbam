@@ -28,8 +28,8 @@
 					<li class='loggedin' data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
 				</ul>
 				<ul class="ol-navigation">
-					<li><textarea class="role_disabled" data-bind="text: selectedParty.whereInfo.location, click: whereClick">Where</textarea></li>
-					<li><textarea class="role_disabled" data-bind="text: selectedParty.formattedTimeFull, click: whenClick">When</textarea></li>
+					<li><textarea class="role_disabled" data-bind="text: formattedLocation, click: whereClick">Where</textarea></li>
+					<li><textarea class="role_disabled" data-bind="text: formattedTimeFull, click: whenClick">When</textarea></li>
 					<li><div class="role_disabled" data-bind="template: { name: 'whoTemplate', foreach: selectedParty.users }, click: whoClick">Who</div></li>
 				</ul>
 			</div>

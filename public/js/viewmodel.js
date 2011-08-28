@@ -12,11 +12,11 @@ var whenInfo = function (opt) {
   this.startTime = ko.observable(opt.startTime);
   this.endTime = ko.observable(opt.endTime);
   
-  formattedTimeDateFull = ko.dependentObservable(function () {
-    if (this.startTime() && this.endTime()) {
-      return this.startTime() + ' ' + this.endTime();
-    } else if (this.startTime()) {
-      return this.startTime();
+  this.formattedTimeDateFull = ko.dependentObservable(function () {
+    if (this.startTime && this.endTime) {
+      return this.startTime + ' ' + this.endTime;
+    } else if (this.startTime) {
+      return this.startTime;
     }
     else return '';
   });
@@ -100,10 +100,13 @@ viewModel.formattedLoggedInName = ko.dependentObservable(function () {
 viewModel.formattedLocation = ko.dependentObservable(function () {
   if (viewModel.selectedParty() &&
       viewModel.selectedParty().whereInfo) {
-    var name = viewModel.user().fullName;
-    return "Logout (" + name + ")";
-  } else {
-    return "Log into Facebook";
+  }
+}, viewModel);
+
+viewModel.formattedTimeFull = ko.dependentObservable(function () {
+  if (viewModel.selectedParty() &&
+      viewModel.selectedParty().whenInfo) {
+      
   }
 }, viewModel);
 
