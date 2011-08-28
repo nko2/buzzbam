@@ -15,6 +15,8 @@ function parseParty(data) {
   } else {
     viewModel.parties.push(newParty);
   }
+  // select the new party by default
+  viewModel.selectedParty(newParty);
 };
 
 function populateParties(data) {
