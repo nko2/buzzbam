@@ -78,7 +78,7 @@ function whereClick() {
 }
 function whereChange() {
   if (viewModel.selectedParty()) {
-    viewModel.selectedParty().title($('.oi-where').text());
+    viewModel.selectedParty().whereInfo.location($('.oi-where').val());
   }
 }
 
