@@ -107,3 +107,7 @@ function descriptionChange() {
     viewModel.selectedParty.description($('.oi-description').text());
   }
 }
+
+function redirectToParty(partyId) {
+  window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
+}

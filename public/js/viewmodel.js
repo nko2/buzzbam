@@ -56,9 +56,8 @@ var comment = function (opt) {
   this.userId = opt.userId;
   this.text = opt.text;
   this.time = opt.time ? opt.time : Date.now();
-  
   this.getUserInfo = function (callback) {
-    server.getUserInfo(this.userId, callback);
+    server.getUserInfo(opt.userId, callback);
   }
 };
 
