@@ -43,7 +43,7 @@
 					<ul class="ol-navigation">
 						<li><textarea class="oi-location" data-bind="text: selectedParty().where, click: whereClick, event: {change: whereChange}"></textarea></li>
 						<li><textarea class="oi-timedate" data-bind="text: selectedParty().when, click: whenClick, event: {change: whenChange}"></textarea></li>
-						<li><div class="oi-attendees" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
+						<!--li><div class="oi-attendees" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li-->
 					</ul>
 				</div>
 			</div>
@@ -57,7 +57,7 @@
 									<li class="role-complete">Name your event</li>
 									<li class="role-complete">Set a time</li>
 									<li class="role-complete">Pick a location</li>
-									<li>Invite some guests</li>
+									<li class="role-complete">Invite some guests</li>
 								</ul>
 							</div>
 							<div class="grid-todo zone-todo">
@@ -67,13 +67,13 @@
 								
 								
 									<!-- START :: SAMPLE CODE -->
-									<li data-bind="text: description"><label><input type="checkbox"> Task 1<label></li>
-									<li data-bind="text: description"><label><input type="checkbox"> Task 2<label></li>
-									<li data-bind="text: description"><label><input type="checkbox"> Task 3<label></li>
-									<li data-bind="text: description"><label><input type="checkbox"> Task 4<label></li>
-									<li data-bind="text: description"><label><input type="checkbox"> Task 5<label></li>
-									<li data-bind="text: description"><label><input type="checkbox"> This is a really long to-do name.<label></li>
-									<li data-bind="text: description"><label><input type="checkbox"> Task 7<label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 1</label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 2</label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 3</label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 4</label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 5</label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> This is a really long to-do name.</label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 7</label></li>
 									<!-- END :: SAMPLE CODE -->
 								
 								
