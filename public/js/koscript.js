@@ -10,10 +10,10 @@ function parseParty(data) {
       whenId: data.whenId,
     });
 
-  if (party.isPublic) {
-    viewModel.publicParties.push(party);
+  if (newParty.isPublic) {
+    viewModel.publicParties.push(newParty);
   } else {
-    viewModel.parties.push(party);
+    viewModel.parties.push(newParty);
   }
 };
 
