@@ -24,16 +24,8 @@ function populateParties(data) {
     return;
   }
   
-  if (data.parties) {
-    for (var i in data.parties) {
-      server.getParty(data.parties[i], parseParty);
-    }
-  }
-  
-  if (data.public) {
-    for (var i in data.public) {
-      server.getParty(data.public[i], parseParty);
-    }
+  for (var i in data) {
+    server.getParty(data[i], parseParty);
   }
 };
 

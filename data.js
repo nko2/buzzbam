@@ -4,6 +4,37 @@ var config = require('./config');
 var client = require('./client');
 var qs = require('querystring');
 
+var parties = {};
+var items = {};
+var comments = {};
+
+function load(path, seq, callback) {
+  var params = {};
+  if (seq) {
+    params.since = seq,
+    params.feed = 'longpoll'
+  }
+  couchGet(path+'/_changes', params, function(initial) {
+    for (var index in initial.results) {
+      var id = initial.results[index].id;
+      couchGet(path + '/' + id, callback);
+    }
+    load(path, initial.last_seq, callback);
+  });
+}
+
+load('/party', undefined, function(party) {
+  parties[party._id] = party;
+});
+
+load('/items', undefined, function(item) {
+  items[item._id] = item;
+});
+
+load('/chat', undefined, function(comment) {
+  comments[comment._id] = comment;
+});
+
 // call as couchGet(path, callback)
 //   or as couchGet(path, params, callback)
 function couchGet(path, params, callback) {
@@ -46,12 +77,13 @@ function couchPost(path, body, callback) {
 }
 
 function partyHasUser(party, user) {
+  var id = user ? user.id : undefined;
   if (party.public) {
     return true;
   }
   for (var userIndex in party.users) {
     var partyUser = party.users[userIndex];
-    if (partyUser.id == user.id) {
+    if (partyUser.id == id) {
       return true;
     }
   }
@@ -64,9 +96,28 @@ function getItems(session, partyid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/items/_design/parties/_view/items', {key:JSON.stringify(partyid)}, callback);
+      var results = [];
+      for (var id in items) {
+        var item = items[id];
+        if (item.partyid === partyid) {
+	  results.push(item._id);
+	}
+      }
+      callback(results);
     }
   });
+} 
+
+function getParties(session, callback) {
+  var userid = session.user ? session.user.id : '';
+  var results = [];
+  for (var id in parties) {
+    var party = parties[id];
+    if (partyHasUser(party, session.user)) { 
+      results.push(party._id);
+    }
+  }
+  callback(results);
 } 
 
 function getComments(session, partyid, callback) {
@@ -75,7 +126,14 @@ function getComments(session, partyid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/chat/_design/comments/_view/comments', {key:JSON.stringify(partyid)}, callback);
+      var results = [];
+      for (var id in comments) {
+        var comment = comments[id];
+        if (comment.partyid === partyid) {
+	  results.push(comment._id);
+	}
+      }
+      callback(results);
     }
   });
 } 
@@ -93,39 +151,36 @@ function updateParty(session, party, callback) {
 }
 
 function getParty(session, partyid, callback) {
-  couchGet('/party/'+partyid, function(party) {
-    if (partyHasUser(party, session.user)) {
-      callback(party);
-    }
-    else {
-      callback({error:"permission denied"});
-    }
-  });
+  var party = parties[partyid];
+  if (party && partyHasUser(party, session.user)) {
+    callback(party);
+  }
+  else {
+    callback({error:"permission denied"});
+  }
 }
 
 function getComment(session, chatid, callback) {
-  couchGet('/chat/'+chatid, function(comment) {
-    getParty(session, comment.partyid, function(party) {
-      if (party.error) {
-        callback({error:"permission denied"});
-      }
-      else {
-        callback(comment);
-      }
-    });
+  var comment = comments[chatid];
+  getParty(session, comment.partyid, function(party) {
+    if (!comment || party.error) {
+      callback({error:"permission denied"});
+    }
+    else {
+      callback(comment);
+    }
   });
 }
 
 function getItem(session, itemid, callback) {
-  couchGet('/items/'+itemid, function(item) {
-    getParty(session, item.partyid, function(party) {
-      if (party.error) {
-        callback({error:"permission denied"});
-      }
-      else {
-        callback(item);
-      }
-    });
+  var item = items[itemid];
+  getParty(session, item.partyid, function(party) {
+    if (!item || party.error) {
+      callback({error:"permission denied"});
+    }
+    else {
+      callback(item);
+    }
   });
 }
 
@@ -199,6 +254,7 @@ exports.longPollParties = longPollParties;
 exports.longPollItems = longPollItems;
 exports.longPollComments = longPollComments;
 exports.getParty = getParty;
+exports.getParties = getParties;
 exports.getItem = getItem;
 exports.getComment = getComment;
 exports.getComments = getComments;
