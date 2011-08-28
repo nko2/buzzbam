@@ -55,7 +55,7 @@
 				<div class="temp-events" >
 					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: getPrivateParties}">
 						<li class="on-login" data-bind="fadeVisible: !isLoggedIn()" >
-							You can <span class="oa-link">log in</span> to see your events or create your own.
+							You can <span class="oa-link" data-bind="click: logInOutOfFacebook">log in</span> to see your events or create your own.
 						</li>
 					</ul>
 				</div>

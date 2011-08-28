@@ -44,7 +44,7 @@ viewModel.createNewParty = function() {
   var description = "Your party description";
   server.newParty(title, description, function(party) {
       modelAddParty(party);
-      window.location = 'index.html?partyId=' + data._id;
+      window.location = 'index.html?partyId=' + party._id;
     });
 };
 
