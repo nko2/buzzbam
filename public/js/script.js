@@ -133,11 +133,14 @@ var server_local = (function() {
 
   // returns [partyid,partyid,...]
   that.longPollPartyChanges = function(callback) {
-      callback([]);
   };
 
   // returns [itemid,itemid,...]
   that.longPollItemChanges = function(partyid, callback) {
+  };
+  
+  // returns [commentid,commentid,...]
+  that.longPollCommentChanges = function(partyid, callback) {
   };
 
   // returns {first_name,last_name,name,id, ... }
