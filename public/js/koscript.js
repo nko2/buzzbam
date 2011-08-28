@@ -110,3 +110,18 @@ function descriptionChange() {
   }
 }
 
+function addPost() {
+  var currentParty = viewModel.currentParty();
+  if (currentParty) {
+    var partyId = currentParty.id;
+    server.newItem(partyId, 'New Topic', parseItem);
+  }
+}
+
+function parseItem(data) {
+  var currentParty = viewModel.currentParty();
+  if (currentParty) {
+    var newItem = new item([]);
+  }
+}
+

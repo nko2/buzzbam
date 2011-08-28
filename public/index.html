@@ -48,6 +48,7 @@
 				</div>
 				<div class="grid-collaborate">
 					<div class="grid-posts fff">
+                        <div data-bind="click: addPost">Add Topic</div>
 						<ul data-bind='template: { name: "postTemplate", foreach: selectedPartyItems }'></ul>
 					</div>
 					<div class="grid-users fff">
