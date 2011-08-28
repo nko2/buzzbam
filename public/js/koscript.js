@@ -71,9 +71,10 @@ function logInOutOfFacebook() {
 
 function createNewParty() {
   // get information from form
-  var title = "default title";
-  var description = "default description";
-  window.location = 'http://partyplanner.no.de/index.html?partyId=new&';
+  var title = escape("default title");
+  var description = escape("default description");
+  window.location = 'index.html?partyId=new&title=' +
+                    title + '&description=' + description;
 };
 
 function whereClick() {

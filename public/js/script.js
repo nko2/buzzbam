@@ -175,7 +175,7 @@ var server_local = (function() {
     callback({});
   };
 
-  that.getComments = function(partyid, callback) {
+  that.getComments = function(partyid, since, callback) {
     callback([]);
   };
 
