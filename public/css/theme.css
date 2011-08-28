@@ -9,8 +9,8 @@ Fonts
 **************************************************************************************************/
 
 /* Set Fonts */
-.site-default { font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
-.site-default h1, .site-default .nc-h1, .site-default h2, .site-default .nc-h2, .site-default h3, .site-default .nc-h3, .site-default h4, .site-default .nc-h4, .site-default h5, .site-default .nc-h5, .site-default h6, .site-default .nc-h6 { font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
+.site-default { font-family: Georgia, Times, "Times New Roman", serif; }
+.site-default h1, .site-default .nc-h1, .site-default h2, .site-default .nc-h2, .site-default h3, .site-default .nc-h3, .site-default h4, .site-default .nc-h4, .site-default h5, .site-default .nc-h5, .site-default h6, .site-default .nc-h6 { font-family: Georgia, Times, "Times New Roman", serif; }
 .site-default code { font-family: "Courier New", Courier, monospace; }
 
 /* Set Colors */
@@ -122,6 +122,8 @@ Theme Object > List
 
 .site-default .ol-supnav > li {
 	cursor: pointer;
+	color: white;
+	font-size: 15px;
 }
 
 
@@ -212,7 +214,9 @@ Theme Object > Action
 Theme Nodes > Social 
 **************************************************************************************************/
 
-
+.site-default .os-icon {
+	
+}
 
 /*
 Theme Nodes > Item 
@@ -284,10 +288,19 @@ Zones
 
 .site-default .zone-portal_header .ol-supnav {
 	position: absolute;
-	top: 0;
+	top: 4px;
 	right: 0;
+	line-height: 32px;
 }
 
+.site-default .zone-portal_header .os-icon {
+	width: 32px;
+	height: 32px;
+	background: red;
+	display: inline-block;
+	text-indent: -9999px;
+	margin-left: 5px;
+}
 
 /* ZONE: event_list*/
 .site-default .zone-event_list {
@@ -334,3 +347,17 @@ Images
 .site-default .image-button_call_to_action:hover {
 	background: transparent url(images/button_call_to_action.png) no-repeat bottom left;
 }
+
+
+.site-default .image-img_event_flow {
+	background: transparent url(images/img_event_flow.png) no-repeat;
+	width: 371px;
+	height: 315px;
+	position: absolute;
+	top: 35px;
+	left: 58px;
+}
+
+}
+
+
