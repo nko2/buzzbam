@@ -57,14 +57,12 @@ var item = function (opt) {
 
 var comment = function (opt) {
   var that = this;
-  that.id = opt.id;
-  that.itemId = opt.itemId;
-  that.userId = opt.userId;
-  that.text = opt.text;
+  that.id = opt._id;
+  that.itemId = opt.itemid;
+  that.userId = opt.user;
+  that.userName = opt.name;
+  that.text = opt.message;
   that.time = opt.time ? opt.time : Date.now();
-  that.getUserInfo = function (callback) {
-      server.getUserInfo(opt.userId, callback);
-    }
 };
 
 var partyInfo = function (opt) {
