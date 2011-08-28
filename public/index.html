@@ -29,7 +29,7 @@
                     <!--li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li-->
 				</ul>
 				<ul class="ol-navigation">
-					<li><textarea class="oi-where" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick, event: {change: whereChange}"></textarea></li>
+					<li><textarea class="oi-where" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick, event: {change: whereChange, blur: function () { alert('dude'); $('.oi-where').attr('disabled','disabled'); }, click: function () { alert('dude2'); $('.oi-where').attr('disabled','');}}"></textarea></li>
 					<li><textarea class="oi-when" data-bind="text: formattedTimeFull.length > 0 ? formattedLocation : 'When', click: whenClick, event: {change: whenChange}"></textarea></li>
 					<li><div data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
 				</ul>
