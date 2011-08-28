@@ -80,6 +80,12 @@ Foundation
 **************************************************************************************************
 **************************************************************************************************/
 .site-default {
+	background: #dcf1f7 url(images/bg_page_app.png) repeat-x;
+	margin: 0;
+	padding: 0;
+}
+
+.site-default.portal {
 	background: transparent url(images/bg_page.png) repeat-x;
 }
 
@@ -182,7 +188,6 @@ Theme Object > Content
 .site-default .oc-legal {
 	color: #999;
 	font-style: oblique;
-	margin-top: 40px;
 	font-size: 12px;
 	text-align: right;
 }
@@ -272,6 +277,11 @@ Theme Nodes > Notification
 Zones
 **************************************************************************************************
 **************************************************************************************************/
+/* ZONE: event_preview*/
+.site-default .zone-event_preview {
+	background: url(images/bg_app_header_left.png) top left no-repeat, url(images/bg_app_header_right.png) top right no-repeat #FFF;
+	height: 222px;
+}
 
 /* ZONE: todo*/
 .site-default .zone-todo .ol-checklist {
@@ -392,6 +402,36 @@ Zones
 	font-size: 16px;
 }
 
+/*
+Temp
+**************************************************************************************************
+**************************************************************************************************/
+
+
+.site-default .temp-brandcap-blue {
+	background: #4ed6f7;
+	height: 5px;
+}
+.site-default .temp-brandcap-purple {
+	background: #c89dff;
+		height: 5px;
+
+}
+.site-default .temp-brandcap-red {
+	background: #ea6a67;
+		height: 5px;
+
+}
+.site-default .temp-brandcap-orange {
+	background: #ffce68;
+		height: 5px;
+
+}
+.site-default .temp-brandcap-green {
+	background: #a6ea6b;
+	height: 5px;
+
+}
 
 /*
 Images
@@ -435,6 +475,7 @@ Images
 	background: transparent url(images/content_pitch.png) no-repeat;
 	width: 960px;
 	height: 180px;
+	margin-top: 10px;
 }
 
 

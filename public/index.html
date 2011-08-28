@@ -18,21 +18,30 @@
 	<link rel="stylesheet" href="css/theme.css">
 	<link rel="stylesheet" href="css/extensions.css">
 </head>
-<body class="site-default v1 eee">
+<body class="site-default v1">
 	<div class="grid-page">
 		<div class="grid-container">
-			<div class="grid-group_100 c999">
-				<h1 class="oi-title" data-bind="text: selectedPartyTitle(), event: {change: titleChange}"></h1>
-				<h2 class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></h2>
-				<ul class="ol-supnav">
-					<li class='loggedin' data-bind="text: formattedLoggedInName(), click: logInOutOfFacebook"></li>
-                    <!--li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li-->
-				</ul>
-				<ul class="ol-navigation">
-					<li><textarea class="oi-where" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick, event: {change: whereChange, blur: function () { alert('dude'); $('.oi-where').attr('disabled','disabled'); }, click: function () { alert('dude2'); $('.oi-where').attr('disabled','');}}"></textarea></li>
-					<li><textarea class="oi-when" data-bind="text: formattedTimeFull.length > 0 ? formattedLocation : 'When', click: whenClick, event: {change: whenChange}"></textarea></li>
-					<li><div data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
-				</ul>
+			<div class="grid-group_100">
+				<div class="grid-group_20 temp-brandcap-blue"></div>
+				<div class="grid-group_20 temp-brandcap-purple"></div>
+				<div class="grid-group_20 temp-brandcap-red"></div>
+				<div class="grid-group_20 temp-brandcap-orange"></div>
+				<div class="grid-group_20 temp-brandcap-green"></div>
+			</div>
+			<div class="grid-group_100">
+				<div class="zone-event_preview pink">
+					<h1 class="oi-title" data-bind="text: selectedPartyTitle(), event: {change: titleChange}"></h1>
+					<h2 class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></h2>
+					<ul class="ol-supnav">
+						<li class='loggedin' data-bind="text: formattedLoggedInName(), click: logInOutOfFacebook"></li>
+						<!--li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li-->
+					</ul>
+					<ul class="ol-navigation">
+						<li><textarea class="oi-where" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick, event: {change: whereChange}"></textarea></li>
+						<li><textarea class="oi-when" data-bind="text: formattedTimeFull.length > 0 ? formattedLocation : 'When', click: whenClick, event: {change: whenChange}"></textarea></li>
+						<li><div data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
+					</ul>
+				</div>
 			</div>
 			<div class="grid-group_100">
 				<div class="grid-task">
@@ -62,14 +71,14 @@
 					</textarea>
 				</div>
 			</div>
-            <div>
-                <ul data-bind='template: { name: "addFriendTemplate", foreach: unselectedFriends }'></ul>
-                <ul data-bind='template: { name: "removeFriendTemplate", foreach: selectedPartyUsers }'></ul>
-            </div>
+            
 		</div>
 	</div>
 <div id="fb-root"></div>
-
+<div>
+	<ul data-bind='template: { name: "addFriendTemplate", foreach: unselectedFriends }'></ul>
+	<ul data-bind='template: { name: "removeFriendTemplate", foreach: selectedPartyUsers }'></ul>
+</div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
