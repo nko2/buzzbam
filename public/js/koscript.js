@@ -101,7 +101,7 @@ function titleClick() {
 }
 function titleChange() {
   if (viewModel.selectedParty()) {
-    viewModel.selectedParty.title($('.oi-title').text());
+    viewModel.selectedParty().title($('.oi-title').text());
   }
 }
 
@@ -109,7 +109,7 @@ function descriptionClick() {
 }
 function descriptionChange() {
   if (viewModel.selectedParty()) {
-    viewModel.selectedParty.description($('.oi-description').text());
+    viewModel.selectedParty().description($('.oi-description').text());
   }
 }
 
