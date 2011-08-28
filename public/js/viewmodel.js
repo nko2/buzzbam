@@ -216,7 +216,7 @@ viewModel.addFriend = function(userId) {
         }
         selectedParty.users.push(new user({
           userId: friends[i].userId,
-          fullName: rfriends[i].fullName,
+          fullName: friends[i].fullName,
         }));
         break;
       }
