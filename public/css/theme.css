@@ -123,7 +123,7 @@ Theme Object > List
 .site-default .ol-supnav > li {
 	cursor: pointer;
 	color: white;
-	font-size: 15px;
+	font-size: 16px;
 }
 
 
@@ -179,6 +179,14 @@ Theme Object > Content
 .site-default .oc-icon {
 }
 
+.site-default .oc-legal {
+	color: #999;
+	font-style: oblique;
+	margin-top: 40px;
+	font-size: 12px;
+	text-align: right;
+}
+
 /*
 Theme Object > Action 
 **************************************************************************************************/
@@ -208,6 +216,11 @@ Theme Object > Action
 }
 
 .site-default .oa-login {
+}
+
+.site-default .oa-link {
+	color: #00BBE0;
+	cursor: pointer;
 }
 
 /*
@@ -289,35 +302,89 @@ Zones
 .site-default .zone-portal_header .ol-supnav {
 	position: absolute;
 	top: 4px;
-	right: 0;
+	right: 10px;
 	line-height: 32px;
 }
 
 .site-default .zone-portal_header .os-icon {
 	width: 32px;
 	height: 32px;
-	background: red;
+	background: transparent url(images/social_facebook.png) no-repeat;
 	display: inline-block;
 	text-indent: -9999px;
-	margin-left: 5px;
+	margin-left: 10px;
 }
 
 /* ZONE: event_list*/
 .site-default .zone-event_list {
-	padding: 20px 0;
+	background: #f7fcfe;
+	margin: 40px 10px 20px 10px;
+	height: 280px;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.site-default .zone-event_list .oc-h2 {
+	font-size: 22px;
+	font-weight: normal;
+	color: #f7fcfe;
+	line-height: 40px;
+	padding-bottom: 0px;
+	height: 40px;
+	background: #b3e1e8;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;}
+
+.site-default .zone-event_list .temp-events {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 240px;
 }
 
 .site-default .zone-event_list .og-event {
+	cursor: pointer;
 	margin-bottom: 10px;
 }
 
+.site-default .zone-event_list .oi-title{
+	color: #00bbe0;
+	font-size: 18px;
+	font-weight: normal;
+}
+
 .site-default .zone-event_list .oi-location{
-	color: #999;
+	color: #848484;
+	font-size: 12px;
+}
+
+.site-default .zone-event_list .oi-location:after{
+	content: " ~";
 }
 
 .site-default .zone-event_list .oi-datetime{
-	color: #999;
+	color: #848484;
+	font-size: 12px;
 }
+
+.site-default .zone-event_list .on-login{
+	color: #8E8E8E;
+	font-size: 16px;
+}
+
 
 /*
 Images
@@ -348,7 +415,6 @@ Images
 	background: transparent url(images/button_call_to_action.png) no-repeat bottom left;
 }
 
-
 .site-default .image-img_event_flow {
 	background: transparent url(images/img_event_flow.png) no-repeat;
 	width: 371px;
@@ -358,6 +424,12 @@ Images
 	left: 58px;
 }
 
+.site-default .image-content_pitch {
+	background: transparent url(images/content_pitch.png) no-repeat;
+	width: 960px;
+	height: 180px;
 }
+
+
 
 

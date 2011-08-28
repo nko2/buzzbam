@@ -37,23 +37,35 @@
 		<div class="grid-group_50">
 			<div class="zone-event_list">
 				<h2 class="oc-h2">
-					Public Events
+					Community Events
 				</h2>
-				<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: publicParties}"></ul>
+				<div class="temp-events" >
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: publicParties}">
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="grid-group_50">
 			<div class="zone-event_list">
 				<h2 class="oc-h2">
-					My Events
+					Your Events
 				</h2>
-				<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}"></ul>
+				<div class="temp-events" >
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}">
+						<li class="on-login">
+							You can <span class="oa-link">log in</span> to see your events or create your own.
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div class="grid-group_100">
+		<div class="image-content_pitch"></div>
+	</div>
+	<div class="grid-group_100">
 		<div class="oc-legal">
-			Created by Team Buzzbam
+			Created by Team Buzzbam: Quetzal Bradley, Jason Falk, David Wolfe and Henry Hiltner.
 		</div>
 	</div>
 </div>
