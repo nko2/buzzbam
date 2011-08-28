@@ -83,6 +83,9 @@ var viewModel = {
   parties: ko.observableArray(parties),
   publicParties: ko.observableArray(publicParties),
   selectedParty: ko.observable(),
+  whereVisible: ko.observable(false);
+  whenVisible: ko.observable(false);
+  whereVisible: ko.observable(false);
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
