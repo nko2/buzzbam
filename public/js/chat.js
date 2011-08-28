@@ -34,7 +34,7 @@ function prepareChat()
 
 $(document).ready(function() {
   var prepared = false;
-  viewModel.currentParty.subscribe(function (newValue) {
+  viewModel.selectedParty.subscribe(function (newValue) {
     if (!prepared) {
       prepared = true;
       prepareChat();
