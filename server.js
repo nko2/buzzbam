@@ -142,8 +142,8 @@ app.get('/newparty', function(req, res) {
       role: "admin",
       rsvp: "yes"
     }],
-    when: {},
-    where: {}
+    when: '',
+    where: ''
   };
 
   uuid.get(function(uuid){
