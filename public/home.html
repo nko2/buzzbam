@@ -54,7 +54,7 @@
 				</h2>
 				<div class="temp-events" >
 					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}">
-						<li class="on-login" data-bind="fadeVisible: plannerViewModel.isLoggedIn()" >
+						<li class="on-login" data-bind="fadeVisible: !plannerViewModel.isLoggedIn()" >
 							You can <span class="oa-link">log in</span> to see your events or create your own.
 						</li>
 					</ul>
