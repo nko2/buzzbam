@@ -75,8 +75,8 @@ viewModel.redirectToParty = function(partyId) {
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
-  if (viewModel.user() && viewModel.isLoggedIn()) {
-    var name = viewModel.user().fullName;
+  if (model.isLoggedIn) {
+    var name = user.fullName;
     return "Logout, " + name;
   } else {
     return "Log in";
