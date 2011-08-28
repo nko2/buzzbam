@@ -97,6 +97,7 @@ function loadData() {
     });
 };
 
+window.plannerViewModel = viewModel;
 
 // READY
 $(document).ready(function() {
