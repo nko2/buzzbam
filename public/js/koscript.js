@@ -83,7 +83,7 @@ function updateParty()
   });
 }
 
-function addItem() {
-  server.newItem('New Topic');
+function addItem(message) {
+  server.newItem(message);
 }
 
