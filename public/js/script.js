@@ -17,6 +17,20 @@ function log(x) {
 var server = (function() {
   var that = {};
 
+  var uuids = [];
+
+  function getUuid(callback) {
+    if (uuids.length > 0) {
+      callback(uuids.pop());
+    }
+    else {
+      $.getJSON('uuids', function(ids) {
+        uuids = ids;
+        getUuid(callback);
+      });
+    }
+  }
+
   // returns {first_name,last_name,name,id, ... }
   that.getUserInfo = function(id, callback) {
     //console.log('getUserInfo');
@@ -29,19 +43,59 @@ var server = (function() {
     $.getJSON('friends', callback);
   };
 
-  that.newItem = function(partyid, description, callback) {
+  that.newItem = function(description) {
     //console.log('newItem');
-    $.post('newitem', {id:partyid,description:description}, callback, 'json');
+    getUuid(function(uuid){
+
+      var newItem = {
+        task: true,
+        done: false,
+        partyid: viewModel.selectedParty().id,
+        description: description
+      };
+
+      $.post('newitem', {uuid:uuid,item:JSON.stringify(newItem)}, function(){}, 'json');
+
+      newItem._id = uuid;
+      parseItem(newItem);
+    });
   };
 
-  that.newChat = function(partyid, message, callback) {
+  that.newChat = function(message) {
     //console.log('newChat');
-    $.post('newchat', {partyid:partyid, message:message}, callback, 'json');
+    getUuid(function(uuid){
+      var user = viewModel.user();
+      var newChat = {
+        partyid: viewModel.selectedParty().id,
+        user: user.userId,
+        name: user.fullName,
+        message: message,
+        time: new Date()
+      };
+      $.post('newcomment', {uuid:uuid, comment:JSON.stringify(newChat)}, function(){}, 'json');
+
+      newChat._id = uuid;
+      parseComment(newChat);
+    });
   };
 
-  that.newComment = function(itemid, message, callback) {
+  that.newComment = function(itemid, message) {
     //console.log('newComment');
-    $.post('newcomment', {itemid:itemid, message:message}, callback, 'json');
+    getUuid(function(uuid){
+      var user = viewModel.user();
+      var newComment = {
+        partyid: viewModel.selectedParty().id,
+        itemid: itemid,
+        user: user.userId,
+        name: user.fullName,
+        message: message,
+        time: new Date()
+      };
+      $.post('newcomment', {uuid:uuid, comment:JSON.stringify(newComment)}, function(){}, 'json');
+
+      newComment._id = uuid;
+      parseComment(newComment);
+    });
   };
 
   that.newParty = function(title, description, callback) {
