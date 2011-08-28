@@ -46,6 +46,9 @@ function couchPost(path, body, callback) {
 }
 
 function partyHasUser(party, user) {
+  if (party.public) {
+    return true;
+  }
   for (var userIndex in party.users) {
     var partyUser = party.users[userIndex];
     if (partyUser.id == user.id) {
@@ -64,7 +67,18 @@ function getItems(session, partyid, callback) {
       couchGet('/items/_design/parties/_view/items', {key:partyid}, callback);
     }
   });
-}
+} 
+
+function getComments(session, partyid, callback) {
+  getParty(session, partyid, function(party) {
+    if (party.error) {
+      callback({error:"permission denied"});
+    }
+    else {
+      couchGet('/chat/_design/comments/_view/comments', {key:partyid}, callback);
+    }
+  });
+} 
 
 function updateParty(session, party, callback) {
   var path = '/party/'+party.id;
@@ -89,8 +103,21 @@ function getParty(session, partyid, callback) {
   });
 }
 
+function getComment(session, chatid, callback) {
+  couchGet('/chat/'+chatid, function(comment) {
+    getParty(session, comment.partyid, function(party) {
+      if (party.error) {
+        callback({error:"permission denied"});
+      }
+      else {
+        callback(comment);
+      }
+    });
+  });
+}
+
 function getItem(session, itemid, callback) {
-  client.get('/items/'+itemid, function(item) {
+  couchGet('/items/'+itemid, function(item) {
     getParty(session, item.partyid, function(party) {
       if (party.error) {
         callback({error:"permission denied"});
@@ -121,6 +148,28 @@ function longPollParties(session, userid, since, callback) {
       feed: 'longpoll'
     };
     couchGet('/party/_changes', params, callback);
+  }
+}
+
+function longPollComments(session, partyid, since, callback) {
+  if (!since) {
+    couchGet('/chat', function(db) {
+      if (db.error) {
+        callback(db);
+      }
+      else {
+        longPollItems(session, partyid, db.committed_update_seq, callback);
+      }
+    });
+  }
+  else {
+    var params = {
+      filters: 'comments/myparty',
+      partyid: partyid,
+      since: since,
+      feed: 'longpoll'
+    };
+    couchGet('/chat/_changes', params, callback);
   }
 }
 
