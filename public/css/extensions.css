@@ -3,6 +3,16 @@
  * Defines framework extensions
  */
 
+/* Alignment */
+.x-align_right { float: right !important; }
+.x-align_left { float: left !important; }
+.x-align_none { float: none !important; }
+
+.x-align_center {
+	margin: 0 auto !important;
+	display: block !important;
+}
+
 /* Margin (increments of 18px) */
 .x-margin_0_0 { margin: 0; }
 .x-margin_0_25 { margin: 5px !important; }

@@ -61,13 +61,20 @@
 								</ul>
 							</div>
 							<div class="grid-todo zone-todo">
+								<h2 class="nc-h2">To-dos</h2>
 								<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedPartyTodos }">
 								
 								
 								
-								
-									<!--li data-bind="text: description">Task 1</li-->
-								
+									<!-- START :: SAMPLE CODE -->
+									<li data-bind="text: description"><label><input type="checkbox"> Task 1<label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 2<label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 3<label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 4<label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 5<label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> This is a really long to-do name.<label></li>
+									<li data-bind="text: description"><label><input type="checkbox"> Task 7<label></li>
+									<!-- END :: SAMPLE CODE -->
 								
 								
 								
@@ -75,9 +82,25 @@
 								</ul>
 							</div>
 						</div>
-						<div class="grid-posts zone-posts">
-							<div data-bind="click: addItem">Add Topic</div>
-							<div data-bind='template: { name: "topicTemplate", foreach: items }'></div>
+						<div class="grid-posts">
+							<div class="zone-posts x-clearfix">
+								<h2 class="oc-h2 x-align_left">Message Posts</h2>
+								<div class="oa-button x-align_right" data-bind="click: addItem">new post</div>
+								<!--div data-bind='template: { name: "topicTemplate", foreach: items }'-->
+								
+								
+								<!-- START :: SAMPLE CODE -->
+								<div class="og-post">
+									<div class="oi-title">Test Message</div>
+									<span class="oi-creator">Jason Falk</span><span class="oi-datetime">Sunday, August 28, 2011</span>
+								</div>
+								<!-- END :: SAMPLE CODE -->
+								
+								
+								
+								
+								<!--/div-->
+							</div>
 						</div>
 					</div>
 				</div>
@@ -87,10 +110,10 @@
 					</textarea>
 					Chat
 				</div>
-				<div class="grid-users zone-users">
-					  <ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
-					  Users
-				</div>
+				<!--div class="grid-users zone-users">
+					<ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
+					Users
+				</div-->
 
 			</div>
 		</div>
