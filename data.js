@@ -142,7 +142,7 @@ function longPollParties(session, userid, since, callback) {
   }
   else {
     var params = {
-      filters: 'parties/mydoc',
+      filter: 'parties/mydoc',
       userid: userid,
       since: since,
       feed: 'longpoll'
@@ -164,7 +164,7 @@ function longPollComments(session, partyid, since, callback) {
   }
   else {
     var params = {
-      filters: 'comments/myparty',
+      filter: 'comments/myparty',
       partyid: partyid,
       since: since,
       feed: 'longpoll'
@@ -186,7 +186,7 @@ function longPollItems(session, partyid, since, callback) {
   }
   else {
     var params = {
-      filters: 'parties/myparty',
+      filter: 'parties/myparty',
       partyid: partyid,
       since: since,
       feed: 'longpoll'
