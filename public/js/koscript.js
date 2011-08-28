@@ -69,9 +69,25 @@ function createNewParty() {
 
 function whereClick() {
 }
+function whereChange() {
+}
 
 function whenClick() {
 }
+function whenChange() {
+}
 
 function whoClick() {
+}
+function whoChange() {
+}
+
+function titleClick() {
+}
+function titleChange() {
+}
+
+function descriptionClick() {
+}
+function descriptionChange() {
 }

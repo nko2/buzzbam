@@ -22,15 +22,15 @@
 	<div class="grid-page">
 		<div class="grid-container">
 			<div class="grid-group_100 c999">
-				<h1 class="oi-title" data-bind="text: selectedParty.title"></h1>
-				<h2 class="oi-description" data-bind="text: selectedParty.description"></h2>
+				<h1 class="oi-title" data-bind="text: selectedPartyTitle, event: {change: titleChange}"></h1>
+				<h2 class="oi-description" data-bind="text: selectedPartyDescription, event: {change: descriptionChange}"></h2>
 				<ul class="ol-supnav">
 					<li class='loggedin' data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
 				</ul>
 				<ul class="ol-navigation">
-					<li><textarea class="role_disabled" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick"></textarea></li>
-					<li><textarea class="role_disabled" data-bind="text: formattedTimeFull.length > 0 ? formattedLocation : 'When', click: whenClick"></textarea></li>
-					<li><div class="role_disabled" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
+					<li><textarea class="oi-where" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick, event: {change: whereChange}"></textarea></li>
+					<li><textarea class="oi-when" data-bind="text: formattedTimeFull.length > 0 ? formattedLocation : 'When', click: whenClick, event: {change: whenChange}"></textarea></li>
+					<li><div data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
 				</ul>
 			</div>
 			<div class="grid-group_100">
