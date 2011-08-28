@@ -238,7 +238,8 @@ app.get('/item', function(req, res) {
 
 app.get('/items', function(req, res) {
   var partyid = req.param('partyid');
-  data.getItems(req.session, partyid, function(items) {
+  var since = req.param('since');
+  data.getItems(req.session, partyid, since, function(items) {
     if (items.error) {
       res.send(403);
     }
