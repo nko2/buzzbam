@@ -94,32 +94,12 @@
   </li>
 </script>
 
-<<<<<<< HEAD
 <script type="text/x-jquery-tmpl" id="partyTemplate">
     <li class="og-event">
         <div class="oi-title" data-bind="text: title, click: function() { plannerViewModel.redirectToParty(_id) }"></div>
         <span class="oi-location" data-bind="text: where"></span>
         <span class="oi-datetime" data-bind="text: when"></span>
     </li>
-=======
-<script type="text/x-jquery-tmpl" id="whoTemplate">
-    <span data-bind="text: name"></span>
-</script>
-
-<script type="text/x-jquery-tmpl" id="checklistTemplate">
-    <li data-bind="text: description"></li>
-</script>
-
-<script type="text/x-jquery-tmpl" id="topicTemplate">
-    <span data-bind="text: description"></span>
-    <ul data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
-    <textarea id="commentta"></textarea>
-    <div data-bind="click: function() { plannerViewModel.addComment(this, 'New comment'); }">Add Comment</div>
-</script>
-
-<script type="text/x-jquery-tmpl" id="commentTemplate">
-    <li><span data-bind="text: name"></span><span data-bind="text: message"></span></li>
->>>>>>> d8707efa0d731884c4213c669a3644143c7c13f3
 </script>
 
 </body>
