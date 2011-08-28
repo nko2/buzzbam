@@ -537,9 +537,6 @@ Zones
 	font-size: 12px;
 }
 
-
-
-
 .site-default .zone-posts > .og-post  {
 	cursor: pointer;
 	margin-bottom: 10px;
@@ -565,6 +562,17 @@ Zones
 .site-default .zone-posts > .og-post .oi-datetime {
 	color: #848484;
 	font-size: 12px;
+}
+
+.site-default .zone-posts > textarea {
+	resize: none;
+	border: 1px solid #dcf3f9;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	margin-left: 30px;
+	width: 168px;
+	padding: 5px;
 }
 
 
