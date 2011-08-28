@@ -41,9 +41,9 @@ var user = function (opt) {
 
 var friend = function (opt) {
   var that = this;
-	that.userId = opt.userId;
-	that.fullName = opt.fullName;
-	that.remove = function () { viewModel.friends.remove(that); }
+  that.userId = opt.userId;
+  that.fullName = opt.fullName;
+  that.remove = function () { viewModel.friends.remove(that); }
 }
 
 var item = function (opt) {
@@ -59,6 +59,7 @@ var item = function (opt) {
 var comment = function (opt) {
   var that = this;
   that.id = opt._id;
+  that.partyId = opt.partyid;
   that.itemId = opt.itemid;
   that.userId = opt.user;
   that.userName = opt.name;
@@ -174,10 +175,7 @@ viewModel.redirectToParty = function(partyId) {
 viewModel.addComment = function(item, message) {
   if (item) {
     server.newComment(item.id, message, function(data) {
-      var comment = parseComment(data);
-      comment.itemId = item.id;
-      comment.userId = viewModel.user().id;
-      item.comments.push(comment);
+      parseComment(data);
     });
   }
 };

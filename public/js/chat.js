@@ -1,22 +1,7 @@
 
 function loadChat(chatid)
 {
-  server.getComment(chatid, function(chat) {
-    if (chat.itemid) {
-      var selected = viewModel.selectedParty();
-      var items = selected.items();
-      for (var index in items) {
-        var item = items[index];
-        if (item.id == chat.itemid) {
-          item.comments.push(new comment(chat));
-          break;
-        }
-      }
-    }
-    else {
-      viewModel.chats.push(chat);
-    }
-  });
+  server.getComment(chatid, parseComment);
 }
 
 function prepareChat(id,seq)
