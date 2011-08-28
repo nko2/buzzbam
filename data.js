@@ -24,7 +24,17 @@ function countdownFn(n) {
   };
 }
 
-function load(path, seq, callback) {
+function makeUpdater(storage, id, seq)
+{
+  return function(doc) {
+    storage[id] = {
+      seq: seq,
+      doc: doc
+    };
+  };
+}
+
+function load(path, seq, storage) {
   var params = {};
   if (seq) {
     params.since = seq,
@@ -32,16 +42,16 @@ function load(path, seq, callback) {
   }
   couchGet(path+'/_changes', params, function(initial) {
     for (var index in initial.results) {
-      var id = initial.results[index].id;
+      var change = initial.results[index];
 
       var fn = function(x) { return x; };
       if (seq == undefined) {
         countdown++;
         fn = countdownFn;
       } 
-      couchGet(path + '/' + id, fn(callback));
+      couchGet(path + '/' + change.id, fn(makeUpdater(storage, change.id, change.seq)));
     }
-    load(path, initial.last_seq, callback);
+    load(path, initial.last_seq, storage);
   });
 }
 
@@ -54,17 +64,9 @@ function pend(action) {
   }
 }
 
-load('/party', undefined, function(party) {
-  parties[party._id] = party;
-});
-
-load('/items', undefined, function(item) {
-  items[item._id] = item;
-});
-
-load('/chat', undefined, function(comment) {
-  comments[comment._id] = comment;
-});
+load('/party', undefined, parties);
+load('/items', undefined, items);
+load('/chat', undefined, comments);
 
 // call as couchGet(path, callback)
 //   or as couchGet(path, params, callback)
@@ -129,10 +131,10 @@ function getItems(session, partyid, callback) {
     else {
       var results = [];
       for (var id in items) {
-        var item = items[id];
+        var item = items[id].doc;
         if (item.partyid === partyid) {
-	  results.push(item._id);
-	}
+          results.push(item._id);
+        }
       }
       callback(results);
     }
@@ -144,7 +146,7 @@ function getParties(session, callback) {
     var userid = session.user ? session.user.id : '';
     var results = [];
     for (var id in parties) {
-      var party = parties[id];
+      var party = parties[id].doc;
       if (partyHasUser(party, session.user)) { 
         results.push(party._id);
       }
@@ -161,10 +163,10 @@ function getComments(session, partyid, callback) {
     else {
       var results = [];
       for (var id in comments) {
-        var comment = comments[id];
+        var comment = comments[id].doc;
         if (comment.partyid === partyid) {
-	  results.push(comment._id);
-	}
+          results.push(comment._id);
+        }
       }
       callback(results);
     }
@@ -186,8 +188,8 @@ function updateParty(session, party, callback) {
 function getParty(session, partyid, callback) {
   pend(function(){
     var party = parties[partyid];
-    if (party && partyHasUser(party, session.user)) {
-      callback(party);
+    if (party && partyHasUser(party.doc, session.user)) {
+      callback(party.doc);
     }
     else {
       callback({error:"permission denied"});
@@ -198,28 +200,38 @@ function getParty(session, partyid, callback) {
 function getComment(session, chatid, callback) {
   pend(function(){
     var comment = comments[chatid];
-    getParty(session, comment.partyid, function(party) {
-      if (!comment || party.error) {
-        callback({error:"permission denied"});
-      }
-      else {
-        callback(comment);
-      }
-    });
+    if (!comment) {
+      callback({error:"permission denied"});
+    }
+    else {
+      getParty(session, comment.doc.partyid, function(party) {
+        if (party.error) {
+          callback({error:"permission denied"});
+        }
+        else {
+          callback(comment.doc);
+        }
+      });
+    }
   });
 }
 
 function getItem(session, itemid, callback) {
   pend(function(){
     var item = items[itemid];
-    getParty(session, item.partyid, function(party) {
-      if (!item || party.error) {
-        callback({error:"permission denied"});
-      }
-      else {
-        callback(item);
-      }
-    });
+    if (!item) {
+      callback({error:"permission denied"});
+    }
+    else {
+      getParty(session, item.doc.partyid, function(party) {
+        if (party.error) {
+          callback({error:"permission denied"});
+        }
+        else {
+          callback(item.doc);
+        }
+      });
+    }
   });
 }
 
