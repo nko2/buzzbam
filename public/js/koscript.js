@@ -1,43 +1,38 @@
-function parseParties(data) {
-  var newParties = [];
-  for (var i in data) {
-    newParties.push(new partyInfo({
-      id: data[i].id,
-      isPublic: data[i].public,
-      title: data[i].title,
-      description: data[i].description,
-      userIds: data[i].users,
-      itemIds: data[i].items,
-      whereId: data[i].whereId,
-      whenId: data[i].whenId,
-    }));
-  }
-  return newParties;
-}
+function parseParty(data) {
+  var newParty = new partyInfo({
+      id: data.id,
+      isPublic: data.public,
+      title: data.title,
+      description: data.description,
+      userIds: data.users,
+      itemIds: data.items,
+      whereId: data.whereId,
+      whenId: data.whenId,
+    });
 
-function populateParties(data) {
-  var newParties = parseParties(data.parties);
-  var publicParties = [];
-  var userParties = [];
-  
-  for (var i in newParties) {
-    var party = newParties[i];
-    if (party.isPublic) {
-      publicParties.push(party);
-    } else {
-      userParties.push(party);
-    }
-  }
-  viewModel.parties(userParties);
-  viewModel.publicParties(publicParties);
-  if (viewModel.parties.count > 0) {
-    viewModel.selectedParty(viewModel.parties[0]);
+  if (party.isPublic) {
+    viewModel.publicParties.push(party);
+  } else {
+    viewModel.userParties.push(party);
   }
 };
 
-function populatePublicParties(data) {
-  var newParties = parseParties(data);
-  viewModel.publicParties(newParties);
+function populateParties(data) {
+  if (!data) {
+    return;
+  }
+  
+  if (data.parties) {
+    for (var i in data.parties) {
+      server.getParty(data[i], parseParty);
+    }
+  }
+  
+  if (data.public) {
+    for (var i in data.public) {
+      server.getParty(data[i], parseParty);
+    }
+  }
 };
 
 function populateFriends(data) {
