@@ -85,10 +85,12 @@ var partyInfo = function (opt) {
   this.whenInfo = new whenInfo(opt.when ? opt.when : {});
   var whereInfoC = this.whereInfo;
   this.formattedLocation = ko.dependentObservable(function () {
-          return whereInfoC.location;
-      }
+      return whereInfoC.location;
     }, this);
   var whenInfoC = this.whenInfo;
+  this.formattedDateTimeFull = ko.dependentObservable(function () {
+      return "";
+    }, this);
 };
   
 var viewModel = {
