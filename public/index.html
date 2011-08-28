@@ -54,7 +54,7 @@
                       <ul data-bind='template: { name: "friendTemplate", foreach: friends }'></ul>
                     </div>
 					<div class="grid-chat pink">
-						Chat
+                      <ul data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
 					</div>
 				</div>
 			</div>
@@ -78,6 +78,12 @@
 <script src="js/script.js"></script>
 <script src="js/index.jqscript.js"></script>
     
+<script type="text/x-jquery-tmpl" id="chatTemplate">
+  <li>
+   <span class="op-name" data-bind="text: name"></span> <span data-bind="text: message"></span>
+  </li>
+</script>
+
 <script type="text/x-jquery-tmpl" id="friendTemplate">
   <li>
     <span data-bind="text: fullName"></span>

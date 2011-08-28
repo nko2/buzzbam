@@ -201,6 +201,7 @@ exports.longPollComments = longPollComments;
 exports.getParty = getParty;
 exports.getItem = getItem;
 exports.getComment = getComment;
+exports.getComments = getComments;
 exports.getItems = getItems;
 exports.couchGet = couchGet;
 exports.couchPost = couchPost;

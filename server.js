@@ -172,6 +172,7 @@ app.post('/newchat', function(req, res) {
         var comment = {
           partyid: partyid,
           user: req.session.user.id,
+          name: req.session.user.name,
           message: message,
           time: new Date()
         };
@@ -198,6 +199,7 @@ app.post('/newcomment', function(req, res) {
           partyid: item.partyid,
           itemid: itemid,
           user: req.session.user.id,
+          name: req.session.user.name,
           message: message,
           time: new Date()
         };
