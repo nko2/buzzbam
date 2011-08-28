@@ -178,7 +178,9 @@ $(document).ready(function() {
   var uri = parseUri(window.location.search);
   if (uri && uri.queryKey && uri.queryKey.partyId) {
     server.getParty(uri.queryKey.partyId, function(data) {
-      parseParty(data)
+      var newParty = parseParty(data);
+      // select the new party by default
+      viewModel.selectedParty(newParty);
     });
   }
   
