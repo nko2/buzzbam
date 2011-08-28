@@ -28,23 +28,27 @@
 					<li class='loggedin' data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
 				</ul>
 				<ul class="ol-navigation">
-					<li><textarea class="role_disabled" data-bind="text: formattedLocation, click: whereClick">Where</textarea></li>
-					<li><textarea class="role_disabled" data-bind="text: formattedTimeFull, click: whenClick">When</textarea></li>
+					<li><textarea class="role_disabled" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick"></textarea></li>
+					<li><textarea class="role_disabled" data-bind="text: formattedTimeFull.length > 0 ? formattedLocation : 'When', click: whenClick"></textarea></li>
 					<li><div class="role_disabled" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
 				</ul>
 			</div>
 			<div class="grid-group_100">
 				<div class="grid-task">
 					<div class="grid-progress fff">
-						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedParty.tasks }"></ul>
+						<ul class="ol-checklist">
+                            <li>Got Where?</li>
+                            <li>Got When?</li>
+                            <li>Got Who?</li>
+                        </ul>
 					</div>
 					<div class="grid-todo fff">
-						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedParty.todos }"></ul>
+						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedPartyTodos }"></ul>
 					</div>
 				</div>
 				<div class="grid-collaborate">
 					<div class="grid-posts fff">
-						<ul data-bind='template: { name: "postTemplate", foreach: selectdParty.items }'></ul>
+						<ul data-bind='template: { name: "postTemplate", foreach: selectedPartyItems }'></ul>
 					</div>
 					<div class="grid-users fff">
                       <ul data-bind='template: { name: "friendTemplate", foreach: friends }'></ul>

@@ -75,5 +75,3 @@ function whenClick() {
 
 function whoClick() {
 }
-
-
