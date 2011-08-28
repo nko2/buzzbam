@@ -18,23 +18,18 @@
 	<link rel="stylesheet" href="css/extensions.css">
 <script src="js/libs/modernizr-2.0.min.js"></script> <script src="js/libs/respond.min.js"></script> <script src="js/libs/knockout-1.2.1.debug.js"></script> 
 </head>
-<body class="site-default v1 fff">
+<body class="site-default v1">
 <div class="grid-container_portal">
-	<div class="grid-group_100 zone-portal_header c999">
-		<ul class="ol-supnav">
-			<li data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
-		</ul>
-		<h1 class="oc-logo">PartyPlanner</h1>
-	</div>
-	<div class="grid-group_100 ddd">
-		<div class="grid-group_30 ddd">
-			<div class="oa-button image-button_call_to_action"
-                 data-bind="click: createNewParty">
-				Create an event
+	<div class="grid-group_100">
+		<div class="zone-portal_header">
+			<ul class="ol-supnav">
+				<li data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
+			</ul>
+			<h1 class="oc-logo">PartyPlanner</h1>
+			<div class="image-text_start_a_party"></div>
+			<div class="oa-button image-button_call_to_action" data-bind="click: createNewParty">
+				start a party
 			</div>
-		</div>
-		<div class="grid-group_70 ddd">
-			<p>Create events with your friends.</p>
 		</div>
 	</div>
 	<div class="grid-group_100">
