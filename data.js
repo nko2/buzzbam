@@ -24,7 +24,7 @@ function couchGet(path, params, callback) {
     }
   };
   if (config.couch.basicauth) {
-    headers.Authorization = "Basic " + config.count.basicauth;
+    options.headers.Authorization = "Basic " + config.couch.basicauth;
   }
   client.get(options, callback);
 }
@@ -40,7 +40,7 @@ function couchPost(path, body, callback) {
     }
   };
   if (config.couch.basicauth) {
-    headers.Authorization = "Basic " + config.count.basicauth;
+    options.headers.Authorization = "Basic " + config.couch.basicauth;
   }
   client.post(options, JSON.stringify(body), callback);
 }
