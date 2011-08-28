@@ -28,9 +28,9 @@
 					<li class='loggedin' data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
 				</ul>
 				<ul class="ol-navigation">
-					<li><textarea class="role_disabled" data-bind="text: selectedParty.whereInfo.location">Where</textarea></li>
-					<li><textarea class="role_disabled" data-bind="text: selectedParty.formattedTimeFull">When</textarea></li>
-					<li><textarea class="role_disabled" data-bind="template: { name: 'whoTemplate', foreach: selectedParty.users">Who</textarea></li>
+					<li><textarea class="role_disabled" data-bind="text: selectedParty.whereInfo.location, click: whereClick">Where</textarea></li>
+					<li><textarea class="role_disabled" data-bind="text: selectedParty.formattedTimeFull, click: whenClick">When</textarea></li>
+					<li><div class="role_disabled" data-bind="template: { name: 'whoTemplate', foreach: selectedParty.users }, click: whoClick">Who</div></li>
 				</ul>
 			</div>
 			<div class="grid-group_100">
@@ -70,7 +70,7 @@
 <script src="js/koscript.js"></script>
 <script src="js/viewmodel.js"></script>
 <script src="js/script.js"></script>
-<script src="js/index.script.js"></script>
+<script src="js/index.jqscript.js"></script>
     
 <script type="text/x-jquery-tmpl" id="friendTemplate">
   <li>

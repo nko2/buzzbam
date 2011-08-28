@@ -67,4 +67,13 @@ function createNewParty() {
   window.location = 'http://partyplanner.no.de/index.html';
 };
 
+function whereClick() {
+}
+
+function whenClick() {
+}
+
+function whoClick() {
+}
+
 

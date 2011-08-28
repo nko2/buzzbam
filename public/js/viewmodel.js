@@ -105,5 +105,8 @@ viewModel.formattedLocation = ko.dependentObservable(function () {
 }, viewModel);
 
 viewModel.logInOutOfFacebook = logInOutOfFacebook;
+viewModel.whereClick = whereClick;
+viewModel.whenClick = whenClick;
+viewModel.whoClick = whoClick;
 
 ko.applyBindings(viewModel);
