@@ -80,44 +80,18 @@ function whoChange() {
 function titleClick() {
 }
 function titleChange() {
-  if (viewModel.selectedParty()) {
-    viewModel.selectedParty().title($('.oi-title').val());
-    updateParty();
-  }
+  modelUpdateTitle($('.oi-title').val());
 }
 
 function descriptionClick() {
 }
 function descriptionChange() {
-  if (viewModel.selectedParty()) {
-    viewModel.selectedParty().description($('.oi-description').val());
-    updateParty();
-  }
+  modelUpdateDescription($('.oi-description').val());
 }
 
 function updateParty()
 {
-  var selected = viewModel.selectedParty();
-
-  var source = selected.source;
-  source.public = selected.isPublic;
-  source.title = selected.title();
-  source.description = selected.description();
-  source.users = [];
-
-  var sourceUsers = selected.users();
-  for (var idx in sourceUsers) {
-    var src = sourceUsers[idx];
-    var user = {
-      userid: src.userId,
-      name: src.fullName,
-      role: src.role,
-      rsvp: src.rsvp
-    };
-    source.users.push(user);
-  }
-
-  server.updateParty(selected.id, source, function(result) {
+  server.updateParty(model.party._id, model.party, function(result) {
   });
 }
 

@@ -9,6 +9,20 @@ var model =
   friends: []
 };
 
+function modelUpdateTitle(title)
+{
+  model.party.title = title;
+  viewModel.selectedParty().title(title);
+  updateParty();
+}
+
+function modelUpdateDescription(description)
+{
+  model.party.description = description;
+  viewModel.selectedParty().description(description);
+  updateParty();
+}
+
 function modelSetFriends(friends)
 {
   model.friends = friends;
