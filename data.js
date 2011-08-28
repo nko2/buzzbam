@@ -147,14 +147,14 @@ function getParties(session, since, callback) {
     var last_seq = since;
     for (var id in parties) {
       var party = parties[id];
-      if (party.seq > last_seq && partyHasUser(party.doc, session.user)) { 
+      if (party.seq > last_seq) { 
         results.push(id);
         last_seq = Math.max(last_seq, party.seq);
       }
     }
     callback({last_seq:last_seq,parties:results});
   });
-} 
+}
 
 function getComments(session, partyid, since, callback) {
   if (!since) {
