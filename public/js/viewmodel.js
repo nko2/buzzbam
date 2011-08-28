@@ -83,6 +83,12 @@ var partyInfo = function (opt) {
   });
   this.whereInfo = new whereInfo(opt.where ? opt.where : {});
   this.whenInfo = new whenInfo(opt.when ? opt.when : {});
+  var whereInfoC = this.whereInfo;
+  this.formattedLocation = ko.dependentObservable(function () {
+          return whereInfoC.location;
+      }
+    }, this);
+  var whenInfoC = this.whenInfo;
 };
   
 var viewModel = {
@@ -109,6 +115,7 @@ viewModel.formattedLoggedInName = ko.dependentObservable(function () {
 viewModel.formattedLocation = ko.dependentObservable(function () {
   if (viewModel.selectedParty() &&
       viewModel.selectedParty().whereInfo) {
+      return whereInfo.location;
   }
 }, viewModel);
 

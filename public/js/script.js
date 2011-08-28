@@ -160,7 +160,7 @@ var server_local = (function() {
   };
 
   that.getParties = function(callback) {
-    callback([]);
+    callback({parties:[{id:100, title: 'Test1 title', description:'Description'}]});
   };
 
   that.getPublicParties = function(callback) {

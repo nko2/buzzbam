@@ -25,7 +25,7 @@
 				<h1 class="oi-title" data-bind="text: selectedPartyTitle(), event: {change: titleChange}"></h1>
 				<h2 class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></h2>
 				<ul class="ol-supnav">
-					<li class='loggedin' data-bind="text: formattedLoggedInName(), click: logInOutOfFacebook"></li>
+					<li class='loggedin' data-bind="text: formattedLoggedInName(), click: logInOutOfFacebookIndex"></li>
 				</ul>
 				<ul class="ol-navigation">
 					<li><textarea class="oi-where" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick, event: {change: whereChange}"></textarea></li>
