@@ -16,6 +16,20 @@ function modelUpdateTitle(title)
   updateParty();
 }
 
+function modelUpdateWhen(when)
+{
+  model.party.when = when;
+  viewModel.selectedParty().when(when);
+  updateParty();
+}
+
+function modelUpdateWhere(where)
+{
+  model.party.where = where;
+  viewModel.selectedParty().where(where);
+  updateParty();
+}
+
 function modelUpdateDescription(description)
 {
   model.party.description = description;
