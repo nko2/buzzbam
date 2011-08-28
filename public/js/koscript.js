@@ -28,6 +28,10 @@ function populateParties(result) {
   for (var i in data) {
     server.getParty(data[i], parseParty);
   }
+
+  setTimeout(function(){
+    server.getParties(result.last_seq, populateParties);
+  }, 2000);
 };
 
 function populateFriends(data) {
