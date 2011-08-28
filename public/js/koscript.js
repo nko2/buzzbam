@@ -121,8 +121,26 @@ function addItem() {
   }
 }
 
+var orphanComments = [];
+
 function parseItem(data) {
   var newItem = new item(data);
+
+  // load orphan comments if they arrived first
+  if (orphanComments.length > 0) {
+    var copy = orphanComments;
+    orphanComments = [];
+    for (var index in copy) {
+      var orphan = copy[index];
+      if (orphan.itemId == newItem.id) {
+        addCommentToItem(newItem, orphan);     
+      }
+      else {
+        orphanComments.push(orphan);
+      }
+    }
+  }
+
   var selectedParty = viewModel.selectedParty();
   if (selectedParty && selectedParty.id === newItem.partyid) {
     var existingItems = selectedParty.items();
@@ -137,11 +155,36 @@ function parseItem(data) {
   }
 }
 
+function addCommentToItem(item, newComment)
+{
+  var comments = item.comments();
+  for (var commentIndex in comments) {
+    var existingComment = comments[commentIndex];
+    if (existingComment.id == newComment.id) {
+      return; // dup
+    }
+  }
+  item.comments.push(newComment);
+}
+
 function parseComment(data) {
-  return new comment({
-     id: data._id,
-     text: data.text,
-     time: data.time,
-  });
+  var newComment = new comment(data);
+  var selectedParty = viewModel.selectedParty();
+  if (selectedParty && selectedParty.id === newComment.partyId) {
+    if (newComment.itemId) {
+      var items = selectedParty.items();
+      for (var index in items) {
+        var item = items[index];
+        if (item.id == newComment.itemId) {
+          addCommentToItem(item, newComment);
+          break;
+        }
+      }
+      orphanComments.push(newComment);
+    }
+    else {
+      viewModel.chats.push(newComment);
+    }
+  }
 }
 
