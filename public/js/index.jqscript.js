@@ -1,13 +1,11 @@
 
 $(document).ready(function(){
-  $('.grid-chatentry').keydown(function(e){
+  $('.zone-chat textarea').keydown(function(e){
     if (e.which == 13) {
-      var text = $('.grid-chatentry').val();
-      $('.grid-chatentry').val('');
+      var text = $('.zone-chat textarea').val();
+      $('.zone-chat textarea').val('');
       server.newChat(text);
+      return false;
     }
   });
-
 });
-
-
