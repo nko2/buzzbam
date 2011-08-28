@@ -56,9 +56,8 @@ var comment = function (opt) {
   this.userId = opt.userId;
   this.text = opt.text;
   this.time = opt.time ? opt.time : Date.now();
-  
   this.getUserInfo = function (callback) {
-    server.getUserInfo(this.userId, callback);
+    server.getUserInfo(opt.userId, callback);
   }
 };
 
@@ -166,6 +165,11 @@ viewModel.selectedPartyTitle = function () {
   }
   return "";
 }
+viewModel.redirectToParty = function(partyId) {
+  window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
+}
+
+window.plannerViewModel = viewModel;
 
 $(document).ready(function() {
   if (window.location.hash === '#debug') {

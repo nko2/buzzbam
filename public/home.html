@@ -84,7 +84,7 @@
 
 <script type="text/x-jquery-tmpl" id="partyTemplate">
     <li class="og-event">
-        <div class="oi-title" data-bind="text: title"></div>
+        <div class="oi-title" data-bind="text: title, click: function() { plannerViewModel.redirectToParty(id) }"></div>
         <span class="oi-location" data-bind="text: formattedLocation()"></span>
         <span class="oi-datetime" data-bind="text: formattedDateTimeFull()"></span>
     </li>

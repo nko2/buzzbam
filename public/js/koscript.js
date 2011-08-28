@@ -107,3 +107,4 @@ function descriptionChange() {
     viewModel.selectedParty.description($('.oi-description').text());
   }
 }
+
