@@ -18,47 +18,55 @@
 	<link rel="stylesheet" href="css/extensions.css">
 <script src="js/libs/modernizr-2.0.min.js"></script> <script src="js/libs/respond.min.js"></script> <script src="js/libs/knockout-1.2.1.debug.js"></script> 
 </head>
-<body class="site-default v1 fff">
+<body class="site-default v1">
 <div class="grid-container_portal">
-	<div class="grid-group_100 zone-portal_header c999">
-		<ul class="ol-supnav">
-			<li data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
+	<div class="grid-group_100">
+		<div class="zone-portal_header">
+			<ul class="ol-supnav">
+				<li data-bind="text: formattedLoggedInName, click: logInOutOfFacebook">Log in<span class="os-icon">Facebook</span></li>
             <li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li>
-		</ul>
-		<h1 class="oc-logo">PartyPlanner</h1>
-	</div>
-	<div class="grid-group_100 ddd">
-		<div class="grid-group_30 ddd">
-			<div class="oa-button image-button_call_to_action"
-                 data-bind="click: createNewParty">
-				Create an event
+			</ul>
+			<h1 class="oc-logo">PartyPlanner</h1>
+			<div class="image-img_event_flow"></div>
+			<div class="image-text_start_a_party"></div>
+			<div class="oa-button image-button_call_to_action" data-bind="click: createNewParty">
+				start a party
 			</div>
-		</div>
-		<div class="grid-group_70 ddd">
-			<p>Create events with your friends.</p>
 		</div>
 	</div>
 	<div class="grid-group_100">
 		<div class="grid-group_50">
-			<div class="zone-event_list eee">
+			<div class="zone-event_list">
 				<h2 class="oc-h2">
-					Public Events
+					Community Events
 				</h2>
-				<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: publicParties}"></ul>
+				<div class="temp-events" >
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: publicParties}">
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class="grid-group_50">
-			<div class="zone-event_list eee">
+			<div class="zone-event_list">
 				<h2 class="oc-h2">
-					My Events
+					Your Events
 				</h2>
-				<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}"></ul>
+				<div class="temp-events" >
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}">
+						<li class="on-login">
+							You can <span class="oa-link">log in</span> to see your events or create your own.
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
+	</div>
+	<div class="grid-group_100">
+		<div class="image-content_pitch"></div>
 	</div>
 	<div class="grid-group_100">
 		<div class="oc-legal">
-			Created by Team Buzzbam
+			Created by Team Buzzbam: Quetzal Bradley, Jason Falk, David Wolfe and Henry Hiltner.
 		</div>
 	</div>
 </div>

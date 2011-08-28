@@ -9,8 +9,8 @@ Fonts
 **************************************************************************************************/
 
 /* Set Fonts */
-.site-default { font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
-.site-default h1, .site-default .nc-h1, .site-default h2, .site-default .nc-h2, .site-default h3, .site-default .nc-h3, .site-default h4, .site-default .nc-h4, .site-default h5, .site-default .nc-h5, .site-default h6, .site-default .nc-h6 { font-family: "Segoe UI", Arial, Helvetica, sans-serif; }
+.site-default { font-family: Georgia, Times, "Times New Roman", serif; }
+.site-default h1, .site-default .nc-h1, .site-default h2, .site-default .nc-h2, .site-default h3, .site-default .nc-h3, .site-default h4, .site-default .nc-h4, .site-default h5, .site-default .nc-h5, .site-default h6, .site-default .nc-h6 { font-family: Georgia, Times, "Times New Roman", serif; }
 .site-default code { font-family: "Courier New", Courier, monospace; }
 
 /* Set Colors */
@@ -79,7 +79,9 @@ Links
 Foundation
 **************************************************************************************************
 **************************************************************************************************/
-.site-default { }
+.site-default {
+	background: transparent url(images/bg_page.png) repeat-x;
+}
 
 .site-default .grid-container { }
 
@@ -120,6 +122,8 @@ Theme Object > List
 
 .site-default .ol-supnav > li {
 	cursor: pointer;
+	color: white;
+	font-size: 16px;
 }
 
 
@@ -175,6 +179,14 @@ Theme Object > Content
 .site-default .oc-icon {
 }
 
+.site-default .oc-legal {
+	color: #999;
+	font-style: oblique;
+	margin-top: 40px;
+	font-size: 12px;
+	text-align: right;
+}
+
 /*
 Theme Object > Action 
 **************************************************************************************************/
@@ -206,11 +218,18 @@ Theme Object > Action
 .site-default .oa-login {
 }
 
+.site-default .oa-link {
+	color: #00BBE0;
+	cursor: pointer;
+}
+
 /*
 Theme Nodes > Social 
 **************************************************************************************************/
 
-
+.site-default .os-icon {
+	
+}
 
 /*
 Theme Nodes > Item 
@@ -266,35 +285,151 @@ Zones
 
 /* ZONE: portal_header*/
 .site-default .zone-portal_header {
-	height: 40px;
+	background: transparent url(images/bg_portal_header.png) no-repeat;
+	height: 321px;
 }
 
 .site-default .zone-portal_header .oc-logo {
+	background: transparent url(images/logo.png) no-repeat;
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 81px;
+	left: 640px;
+	width: 301px; 
+	height: 83px;
+	text-indent: -9999px;
 }
 
 .site-default .zone-portal_header .ol-supnav {
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: 4px;
+	right: 10px;
+	line-height: 32px;
 }
 
+.site-default .zone-portal_header .os-icon {
+	width: 32px;
+	height: 32px;
+	background: transparent url(images/social_facebook.png) no-repeat;
+	display: inline-block;
+	text-indent: -9999px;
+	margin-left: 10px;
+}
 
 /* ZONE: event_list*/
 .site-default .zone-event_list {
-	padding: 20px 0;
+	background: #f7fcfe;
+	margin: 40px 10px 20px 10px;
+	height: 280px;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.site-default .zone-event_list .oc-h2 {
+	font-size: 22px;
+	font-weight: normal;
+	color: #f7fcfe;
+	line-height: 40px;
+	padding-bottom: 0px;
+	height: 40px;
+	background: #b3e1e8;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;}
+
+.site-default .zone-event_list .temp-events {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 240px;
 }
 
 .site-default .zone-event_list .og-event {
+	cursor: pointer;
 	margin-bottom: 10px;
 }
 
+.site-default .zone-event_list .oi-title{
+	color: #00bbe0;
+	font-size: 18px;
+	font-weight: normal;
+}
+
 .site-default .zone-event_list .oi-location{
-	color: #999;
+	color: #848484;
+	font-size: 12px;
+}
+
+.site-default .zone-event_list .oi-location:after{
+	content: " ~";
 }
 
 .site-default .zone-event_list .oi-datetime{
-	color: #999;
+	color: #848484;
+	font-size: 12px;
 }
+
+.site-default .zone-event_list .on-login{
+	color: #8E8E8E;
+	font-size: 16px;
+}
+
+
+/*
+Images
+**************************************************************************************************
+**************************************************************************************************/
+
+.site-default .image-text_start_a_party {
+	background: transparent url(images/text_start_a_party.png) no-repeat;
+	width: 450px;
+	height: 36px;
+	position: absolute;
+	top: 210px;
+	right: 11px;
+}
+
+
+.site-default .image-button_call_to_action {
+	background: transparent url(images/button_call_to_action.png) no-repeat;
+	width: 188px;
+	height: 44px;
+	position: absolute;
+	top: 255px;
+	right: 19px;
+	text-indent: -9999px;
+}
+
+.site-default .image-button_call_to_action:hover {
+	background: transparent url(images/button_call_to_action.png) no-repeat bottom left;
+}
+
+.site-default .image-img_event_flow {
+	background: transparent url(images/img_event_flow.png) no-repeat;
+	width: 371px;
+	height: 315px;
+	position: absolute;
+	top: 35px;
+	left: 58px;
+}
+
+.site-default .image-content_pitch {
+	background: transparent url(images/content_pitch.png) no-repeat;
+	width: 960px;
+	height: 180px;
+}
+
+
+
+
