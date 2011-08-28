@@ -602,10 +602,22 @@ Zones
 }
 
 .site-default .zone-posts span.any-mess {
+	color: #6da3ae;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.site-default .zone-posts span.any-mess:after {
+	content: ": " !important;
+}
+
+.site-default .zone-posts span.any-mess + span {
 	color: #848484;
 	font-size: 12px;
 	font-weight: normal;
 }
+
+
 
 .site-default .zone-posts span + div {
 	color: #848484;
@@ -618,7 +630,7 @@ Zones
 	font-size: 12px;
 	font-weight: normal;
 	height: 410px;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
 }
 
