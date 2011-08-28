@@ -25,6 +25,7 @@ $(document).ready(function() {
     if (!prepared) {
       prepared = true;
       prepareChat(newValue.id, 0);
+      prepareItems(newValue.id, 0);
     }
   });
 });

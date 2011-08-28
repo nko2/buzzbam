@@ -48,9 +48,9 @@ var friend = function (opt) {
 
 var item = function (opt) {
   var that = this;
-  that.id = opt.id;
-  that.isTodo = ko.observable(opt.isTodo);
-  that.isDone = ko.observable(opt.isDone);
+  that.id = opt._id;
+  that.isTodo = ko.observable(opt.task);
+  that.isDone = ko.observable(opt.done);
   that.description = ko.observable(opt.description);
   that.comments = ko.observableArray(opt.comments ? opt.comments : []);
 };
