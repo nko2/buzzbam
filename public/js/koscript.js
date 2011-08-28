@@ -17,7 +17,19 @@ function parseParties(data) {
 
 function populateParties(data) {
   var newParties = parseParties(data.parties);
-  viewModel.parties(newParties);
+  var publicParties = [];
+  var userParties = [];
+  
+  for (var i in newParties) {
+    var party = newParties[i];
+    if (party.isPublic) {
+      publicParties.push(party);
+    } else {
+      userParties.push(party);
+    }
+  }
+  viewModel.parties(userParties);
+  viewModel.publicParties(publicParties);
   if (viewModel.parties.count > 0) {
     viewModel.selectedParty(viewModel.parties[0]);
   }
