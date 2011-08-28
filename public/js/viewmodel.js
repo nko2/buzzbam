@@ -95,6 +95,7 @@ var viewModel = {
   whereVisible: ko.observable(false),
   whenVisible: ko.observable(false),
   whereVisible: ko.observable(false),
+  chats: ko.observableArray([]),
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {

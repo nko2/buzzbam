@@ -341,6 +341,11 @@ app.get('/logout', function(req, res) {
 
 app.get('/login', function(req, res) {
 
+  var next = req.param('next');
+  if (!next) {
+    next = 'home';
+  }
+
   var error = req.param('error');
   if (error) {
     // XXX TODO
@@ -374,7 +379,7 @@ app.get('/login', function(req, res) {
       client.get({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
         req.session.user.name = result.name;
         req.session.user.id = result.id;
-        res.redirect('/index.html');
+        res.redirect('/'+next+'.html');
       });
     });
   });

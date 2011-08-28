@@ -6,6 +6,7 @@ function updateUserData() {
     server.getParties(populateParties);
     if (data.me.id) {
       server.getUserInfo(data.me.id, populateUserInfo);
+      prepareChat();
     }
   });
 }
@@ -38,7 +39,7 @@ var server = (function() {
   };
 
   // returns [commentid,commentid,...]
-  that.longPollItemChanges = function(partyid, callback) {
+  that.longPollCommentChanges = function(partyid, callback) {
     $.getJSON('longpoll/comments', {partyid:partyid, since:sinceItems}, function(changes) {
       sinceItems = changes.last_seq;
       callback(changes.comments);
@@ -103,8 +104,8 @@ var server = (function() {
     $.getJSON('comments', {partyid:partyid}, callback);
   };
 
-  that.getComment = function(comment, callback) {
-    $.getJSON('comment', {comment:comment}, callback);
+  that.getComment = function(commentid, callback) {
+    $.getJSON('comment', {commentid:commentid}, callback);
   };
 
   return that;

@@ -197,8 +197,10 @@ function longPollItems(session, partyid, since, callback) {
 
 exports.longPollParties = longPollParties;
 exports.longPollItems = longPollItems;
+exports.longPollComments = longPollComments;
 exports.getParty = getParty;
 exports.getItem = getItem;
+exports.getComment = getComment;
 exports.getItems = getItems;
 exports.couchGet = couchGet;
 exports.couchPost = couchPost;
