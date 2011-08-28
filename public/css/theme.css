@@ -407,9 +407,13 @@ Zones
 /* ZONE: task */
 
 
+.site-default .zone-todo {
+	padding: 10px 0 0 0;
+}
+
 .site-default .zone-todo .ol-checklist {
 	margin: 10px 10px 0 10px;
-	padding: 10px 0 10px 0;
+	padding: 0 0 10px 0;
 }
 
 .site-default .zone-todo .ol-checklist li {
@@ -417,7 +421,7 @@ Zones
 	color: #00aedd;
 	list-style-type: none;
 	line-height: 20px;
-	padding-left: 40px;
+	padding-left: 15px;
 	cursor: pointer;
 }
 
@@ -442,7 +446,7 @@ Zones
 	min-height: 480px;
 	z-index: 900;
 	position: absolute;
-	right: 60px;
+	right: 20px;
 	top: 20px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -472,6 +476,80 @@ Zones
 .site-default .zone-todo .ol-checklist {
 	margin: 0;
 }
+
+/* ZONE: posts*/
+.site-default .zone-posts {
+	padding: 16px 15px 15px 15px;
+}
+
+.site-default .zone-posts .oa-button {
+	background: #0ec700;
+	-webkit-box-shadow: 0px 1px 1px 1px #cecece;
+	-moz-box-shadow: 0px 1px 1px 1px #cecece;
+	box-shadow: 0px 1px 1px 1px #cecece;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	color: #fff;
+}
+
+
+.site-default .zone-event_list .og-event {
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+.site-default .zone-event_list .oi-title{
+	color: #00bbe0;
+	font-size: 18px;
+	font-weight: normal;
+}
+
+.site-default .zone-event_list .oi-location{
+	color: #848484;
+	font-size: 12px;
+}
+
+.site-default .zone-event_list .oi-location:after{
+	content: " ~";
+}
+
+.site-default .zone-event_list .oi-datetime{
+	color: #848484;
+	font-size: 12px;
+}
+
+
+
+
+.site-default .zone-posts > .og-post  {
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+}
+
+.site-default .zone-posts > .og-post .oi-title {
+	color: #00bbe0;
+	font-size: 18px;
+	font-weight: normal;
+}
+}
+
+.site-default .zone-posts > .og-post .oi-creator {
+	color: #848484;
+	font-size: 12px;
+}
+
+.site-default .zone-posts > .og-post .oi-creator:after {
+	content: " ~";
+}
+
+.site-default .zone-posts > .og-post .oi-datetime {
+	color: #848484;
+	font-size: 12px;
+}
+
+
 
 /* ZONE: progress*/
 .site-default .zone-checklist  .ol-checklist {

@@ -28,8 +28,8 @@
 .grid-task { float: left; position: relative; width: 200px; }
 .grid-progress { float: left; position: relative; width: 200px; }
 .grid-todo { float: left; position: relative; width: 200px; }
-.grid-collaborate { float: left; position: relative; width: 700px; }
-.grid-posts { float: left; position: relative; width: 480px; }
+.grid-collaborate { float: left; position: relative; width: 740px; }
+.grid-posts { float: left; position: relative; width: 520px; }
 .grid-users { float: left; position: relative; width: 220px; }
 .grid-chat { float: left; position: relative; width: 220px; }
 
