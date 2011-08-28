@@ -53,7 +53,7 @@ var item = function (opt) {
   that.isTodo = ko.observable(opt.task);
   that.isDone = ko.observable(opt.done);
   that.description = ko.observable(opt.description);
-  that.comments = ko.observableArray(opt.comments ? opt.comments : []);
+  that.comments = ko.observableArray([]);
 };
 
 var comment = function (opt) {
