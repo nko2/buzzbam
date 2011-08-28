@@ -179,7 +179,7 @@ var server_local = (function() {
   };
 
   that.getParties = function(callback) {
-    callback({parties:[{id:100, title: 'Test1 title', description:'Description', public:true}]});
+    callback({parties:['12313452355234532','234523452353242345']});
   };
 
   that.getPublicParties = function(callback) {
