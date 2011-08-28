@@ -64,8 +64,8 @@
 						<div class="grid-posts">
 							<div class="zone-posts x-clearfix">
 								<h2 class="oc-h2 x-align_left">Message Posts</h2>
-                                <textarea id="topicta"></textarea>
 								<div class="oa-button x-align_right" data-bind="click: function () { addItem($('#topicta').val()); $('#topicta').val('')}">new post</div>
+                                <textarea id="oi-ta topicta"></textarea>
 								<div data-bind='template: { name: "topicTemplate", foreach: items }'>
 								
 								
@@ -148,8 +148,8 @@
 
 <script type="text/x-jquery-tmpl" id="topicTemplate">
     <span data-bind="text: description"></span>
-    <textarea id="commentta"></textarea>
-    <div data-bind="click: function() { plannerViewModel.addComment(this, $('#commentta').val()); $('#commentta').val('') }">Add Comment</div>
+    <div data-bind="click: function() { plannerViewModel.addComment(this, $('#commentta').val()); $('#commentta').val('') }">add comment</div>
+    <textarea class="oi-ta" id="commentta"></textarea>
     <ul data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
 </script>
 
