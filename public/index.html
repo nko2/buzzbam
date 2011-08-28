@@ -58,6 +58,8 @@
 					<div class="grid-chat pink">
                       <ul data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
 					</div>
+					<textarea class="grid-chatentry pink">
+					</textarea>
 				</div>
 			</div>
 		</div>
@@ -83,7 +85,7 @@
     
 <script type="text/x-jquery-tmpl" id="chatTemplate">
   <li>
-    <span class="op-name" data-bind="text: name"></span> <span data-bind="text: message"></span>
+    <span class="op-name" data-bind="text: userName"></span> <span data-bind="text: text"></span>
   </li>
 </script>
 

@@ -62,7 +62,7 @@ var comment = function (opt) {
   that.partyId = opt.partyid;
   that.itemId = opt.itemid;
   that.userId = opt.user;
-  that.userName = opt.name;
+  that.userName = opt.name ? opt.name : 'Anonymous';
   that.text = opt.message;
   that.time = opt.time ? opt.time : Date.now();
 };
