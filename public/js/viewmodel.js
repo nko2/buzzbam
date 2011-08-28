@@ -175,13 +175,12 @@ $(document).ready(function() {
   if (window.location.hash === '#debug') {
     server = server_local;
   }
-  var partyId = $.url.param("partyId");
-  if (partyId) {
-    server.getParty(partyId, function(data) {
+  var uri = parseUri(window.location.search);
+  if (uri && uri.queryKey && uri.queryKey.partyId) {
+    server.getParty(uri.queryKey.partyId, function(data) {
       parseParty(data)
     });
   }
-  
   
   ko.applyBindings(viewModel);
   updateUserData();
