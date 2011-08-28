@@ -6,29 +6,25 @@ function loadChat(chatid)
   });
 }
 
-function getChats()
-{
-  server.longPollCommentChanges("59a7245936b94ea159abbbd75a001000", function(chats) {
-
-    for (var index in chats) {
-      var chatid = chats[index];
-      loadChat(chatid);
-    }
-
-    // get more
-    getChats();
-  });
-}
-
-function prepareChat()
+function prepareChat(id,seq)
 {
   // get it started
-  server.getComments("59a7245936b94ea159abbbd75a001000", function (chats) {
+  server.getComments(id, seq, function (result) {
+    var chats = result.comments;
     for (var index in chats) {
       var chatid = chats[index];
       loadChat(chatid);
     }
+    setTimeout(function(){prepareChat(id, result.last_seq);}, 500);
   });
-  getChats();
 }
 
+$(document).ready(function() {
+  var prepared = false;
+  viewModel.selectedParty.subscribe(function (newValue) {
+    if (!prepared) {
+      prepared = true;
+      prepareChat(newValue.id, 0);
+    }
+  });
+});

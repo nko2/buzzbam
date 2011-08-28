@@ -4,6 +4,70 @@ var config = require('./config');
 var client = require('./client');
 var qs = require('querystring');
 
+var parties = {};
+var items = {};
+var comments = {};
+
+var countdown = 0;
+
+var pendingActions = [];
+
+function countdownFn(n) {
+  return function(x) {
+    n(x);
+    countdown--;
+    if (countdown <= 0) {
+      for (var index in pendingActions) {
+        pendingActions[index]();
+      }
+    }
+  };
+}
+
+function makeUpdater(storage, id, seq)
+{
+  return function(doc) {
+    storage[id] = {
+      seq: seq,
+      doc: doc
+    };
+  };
+}
+
+function load(path, seq, storage) {
+  var params = {};
+  if (seq) {
+    params.since = seq,
+    params.feed = 'longpoll'
+  }
+  couchGet(path+'/_changes', params, function(initial) {
+    for (var index in initial.results) {
+      var change = initial.results[index];
+
+      var fn = function(x) { return x; };
+      if (seq == undefined) {
+        countdown++;
+        fn = countdownFn;
+      } 
+      couchGet(path + '/' + change.id, fn(makeUpdater(storage, change.id, change.seq)));
+    }
+    load(path, initial.last_seq, storage);
+  });
+}
+
+function pend(action) {
+  if (countdown == 0) {
+    action();
+  }
+  else {
+    pendingActions.push(action);
+  }
+}
+
+load('/party', undefined, parties);
+load('/items', undefined, items);
+load('/chat', undefined, comments);
+
 // call as couchGet(path, callback)
 //   or as couchGet(path, params, callback)
 function couchGet(path, params, callback) {
@@ -46,36 +110,80 @@ function couchPost(path, body, callback) {
 }
 
 function partyHasUser(party, user) {
+  var id = user ? user.id : undefined;
   if (party.public) {
     return true;
   }
   for (var userIndex in party.users) {
     var partyUser = party.users[userIndex];
-    if (partyUser.id == user.id) {
+    if (partyUser.id == id) {
       return true;
     }
   }
   return false;
 }
 
-function getItems(session, partyid, callback) {
+function getItems(session, partyid, since, callback) {
+  if (!since) {
+    since = 0;
+  }
   getParty(session, partyid, function(party) {
     if (party.error) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/items/_design/parties/_view/items', {key:JSON.stringify(partyid)}, callback);
+      var results = [];
+      var last_seq = since;
+      for (var id in items) {
+        var item = items[id];
+        if (item.seq > last_seq && item.doc.partyid === partyid) {
+          results.push(id);
+          last_seq = Math.max(last_seq, item.seq);
+        }
+      }
+      callback({last_seq:last_seq,items:results});
     }
   });
 } 
 
-function getComments(session, partyid, callback) {
+function getParties(session, since, callback) {
+  if (!since) {
+    since = 0;
+  }
+  pend(function(){
+    var userid = session.user ? session.user.id : '';
+    var results = [];
+    var last_seq = since;
+    for (var id in parties) {
+      var party = parties[id];
+      if (party.seq > last_seq && partyHasUser(party.doc, session.user)) { 
+        results.push(id);
+        last_seq = Math.max(last_seq, party.seq);
+      }
+    }
+    callback({last_seq:last_seq,parties:results});
+  });
+} 
+
+function getComments(session, partyid, since, callback) {
+  if (!since) {
+    since = 0;
+  }
   getParty(session, partyid, function(party) {
     if (party.error) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/chat/_design/comments/_view/comments', {key:JSON.stringify(partyid)}, callback);
+      var results = [];
+      var last_seq = since;
+      for (var id in comments) {
+        var comment = comments[id];
+        if (comment.seq > last_seq && comment.doc.partyid === partyid) {
+          results.push(id);
+          last_seq = Math.max(last_seq, comment.seq);
+        }
+      }
+      callback({last_seq:last_seq,comments:results});
     }
   });
 } 
@@ -93,9 +201,10 @@ function updateParty(session, party, callback) {
 }
 
 function getParty(session, partyid, callback) {
-  couchGet('/party/'+partyid, function(party) {
-    if (partyHasUser(party, session.user)) {
-      callback(party);
+  pend(function(){
+    var party = parties[partyid];
+    if (party && partyHasUser(party.doc, session.user)) {
+      callback(party.doc);
     }
     else {
       callback({error:"permission denied"});
@@ -104,101 +213,45 @@ function getParty(session, partyid, callback) {
 }
 
 function getComment(session, chatid, callback) {
-  couchGet('/chat/'+chatid, function(comment) {
-    getParty(session, comment.partyid, function(party) {
-      if (party.error) {
-        callback({error:"permission denied"});
-      }
-      else {
-        callback(comment);
-      }
-    });
+  pend(function(){
+    var comment = comments[chatid];
+    if (!comment) {
+      callback({error:"permission denied"});
+    }
+    else {
+      getParty(session, comment.doc.partyid, function(party) {
+        if (party.error) {
+          callback({error:"permission denied"});
+        }
+        else {
+          callback(comment.doc);
+        }
+      });
+    }
   });
 }
 
 function getItem(session, itemid, callback) {
-  couchGet('/items/'+itemid, function(item) {
-    getParty(session, item.partyid, function(party) {
-      if (party.error) {
-        callback({error:"permission denied"});
-      }
-      else {
-        callback(item);
-      }
-    });
+  pend(function(){
+    var item = items[itemid];
+    if (!item) {
+      callback({error:"permission denied"});
+    }
+    else {
+      getParty(session, item.doc.partyid, function(party) {
+        if (party.error) {
+          callback({error:"permission denied"});
+        }
+        else {
+          callback(item.doc);
+        }
+      });
+    }
   });
 }
 
-function longPollParties(session, userid, since, callback) {
-  if (!since) {
-    couchGet('/party', function(db) {
-      if (db.error) {
-        callback(db);
-      }
-      else {
-        longPollParties(session, userid, db.committed_update_seq, callback);
-      }
-    });
-  }
-  else {
-    var params = {
-      filter: 'parties/mydoc',
-      userid: userid,
-      since: since,
-      feed: 'longpoll'
-    };
-    couchGet('/party/_changes', params, callback);
-  }
-}
-
-function longPollComments(session, partyid, since, callback) {
-  if (!since) {
-    couchGet('/chat', function(db) {
-      if (db.error) {
-        callback(db);
-      }
-      else {
-        longPollComments(session, partyid, db.committed_update_seq, callback);
-      }
-    });
-  }
-  else {
-    var params = {
-      filter: 'comments/myparty',
-      partyid: partyid,
-      since: since,
-      feed: 'longpoll'
-    };
-    couchGet('/chat/_changes', params, callback);
-  }
-}
-
-function longPollItems(session, partyid, since, callback) {
-  if (!since) {
-    couchGet('/items', function(db) {
-      if (db.error) {
-        callback(db);
-      }
-      else {
-        longPollItems(session, partyid, db.committed_update_seq, callback);
-      }
-    });
-  }
-  else {
-    var params = {
-      filter: 'parties/myparty',
-      partyid: partyid,
-      since: since,
-      feed: 'longpoll'
-    };
-    couchGet('/items/_changes', params, callback);
-  }
-}
-
-exports.longPollParties = longPollParties;
-exports.longPollItems = longPollItems;
-exports.longPollComments = longPollComments;
 exports.getParty = getParty;
+exports.getParties = getParties;
 exports.getItem = getItem;
 exports.getComment = getComment;
 exports.getComments = getComments;

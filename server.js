@@ -47,56 +47,6 @@ function map(input, fn) {
 
 // Routes
 
-app.get('/longpoll/comments', function(req, res) {
-  var partyid = req.param('partyid');
-  var since = req.param('since');
-  data.getParty(req.session, partyid, function(party) {
-    if (party.error) {
-      res.send(403);
-    }
-    else {
-      data.longPollComments(req.session, partyid, since, function(changes) {
-	var result = {
-	  last_seq: changes.last_seq,
-	  comments: map(changes.results, function(x) { return x.id; })
-	};
-	res.send(result);
-      });
-    }
-  });
-});
-
-app.get('/longpoll/items', function(req, res) {
-  var partyid = req.param('partyid');
-  var since = req.param('since');
-  data.getParty(req.session, partyid, function(party) {
-    if (party.error) {
-      res.send(403);
-    }
-    else {
-      data.longPollItems(req.session, partyid, since, function(changes) {
-	var result = {
-	  last_seq: changes.last_seq,
-	  items: map(changes.results, function(x) { return x.id; })
-	};
-	res.send(result);
-      });
-    }
-  });
-});
-
-app.get('/longpoll/parties', function(req, res) {
-  var userid = req.session.user.id;
-  var since = req.param('since');
-  data.longPollParties(req.session, userid, since, function(changes) {
-    var result = {
-      last_seq: changes.last_seq,
-      parties: map(changes.results, function(x) { return x.id; })
-    };
-    res.send(result);
-  });
-});
-
 app.get('/user', function(req, res) {
   var id = req.param('id');
   client.get({host: 'graph.facebook.com', port: 443, path: '/'+id+'?access_token=' + req.session.user.access_token}, function(result) {
@@ -249,15 +199,6 @@ app.get('/party', function(req, res) {
   });
 });
 
-function viewValues(viewResult) {
-  var results = [];
-  var rows = viewResult.rows;
-  for (var row in rows) {
-    results.push(rows[row].value);
-  }
-  return results;
-}
-
 app.get('/comment', function(req, res) {
   var commentid = req.param('commentid');
   data.getComment(req.session, commentid, function(comment) {
@@ -272,12 +213,13 @@ app.get('/comment', function(req, res) {
 
 app.get('/comments', function(req, res) {
   var partyid = req.param('partyid');
-  data.getComments(req.session, partyid, function(items) {
+  var since = req.param('since');
+  data.getComments(req.session, partyid, since, function(items) {
     if (items.error) {
       res.send(403);
     }
     else {
-      res.send(JSON.stringify(viewValues(items)));
+      res.send(JSON.stringify(items));
     }
   });
 });
@@ -301,22 +243,16 @@ app.get('/items', function(req, res) {
       res.send(403);
     }
     else {
-      res.send(JSON.stringify(viewValues(items)));
+      res.send(JSON.stringify(items));
     }
   });
 });
 
 app.get('/parties', function(req, res) {
   var id = req.session.user ? req.session.user.id : '';
-  data.couchGet('/party/_design/parties/_view/public', function(publicParties) {
-    var path = '/party/_design/parties/_view/parties';
-    data.couchGet(path, {key: JSON.stringify(id)}, function(parties) {
-      var result = {
-        'public': viewValues(publicParties),
-        'parties': viewValues(parties)
-      };
-      res.send(JSON.stringify(result));
-    });
+  var since = req.param('since');
+  data.getParties(req.session, since, function(parties) {
+    res.send(JSON.stringify(parties));
   });
 });
 

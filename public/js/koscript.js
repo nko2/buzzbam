@@ -1,6 +1,6 @@
 function parseParty(data) {
   var newParty = new partyInfo({
-      id: data.id,
+      id: data._id,
       isPublic: data.public,
       title: data.title,
       description: data.description,
@@ -15,26 +15,23 @@ function parseParty(data) {
   } else {
     viewModel.parties.push(newParty);
   }
-  // select the new party by default
-  viewModel.selectedParty(newParty);
+  
+  return newParty;
 };
 
-function populateParties(data) {
-  if (!data) {
+function populateParties(result) {
+  if (!result) {
     return;
   }
+  var data = result.parties;
   
-  if (data.parties) {
-    for (var i in data.parties) {
-      server.getParty(data.parties[i], parseParty);
-    }
+  for (var i in data) {
+    server.getParty(data[i], parseParty);
   }
-  
-  if (data.public) {
-    for (var i in data.public) {
-      server.getParty(data.public[i], parseParty);
-    }
-  }
+
+  setTimeout(function(){
+    server.getParties(result.last_seq, populateParties);
+  }, 2000);
 };
 
 function populateFriends(data) {
@@ -80,7 +77,7 @@ function whereClick() {
 }
 function whereChange() {
   if (viewModel.selectedParty()) {
-    viewModel.selectedParty().title($('.oi-where').text());
+    viewModel.selectedParty().whereInfo.location($('.oi-where').val());
   }
 }
 
@@ -108,5 +105,35 @@ function descriptionChange() {
   if (viewModel.selectedParty()) {
     viewModel.selectedParty.description($('.oi-description').text());
   }
+}
+
+function addItem() {
+  var selectedParty = viewModel.selectedParty();
+  if (selectedParty) {
+    var partyId = selectedParty.id;
+    server.newItem(partyId, 'New Topic', parseItem);
+  }
+}
+
+function parseItem(data) {
+  var selectedParty = viewModel.selectedParty();
+  if (selectedParty) {
+    var newItem = new item({
+       id: data._id,
+       isTodo: data.isTodo,
+       isDone: data.isDone,
+       description: data.description,
+       comments: data.comments,
+    });
+    selectedParty.items.push(newItem);
+  }
+}
+
+function parseComment(data) {
+  return new comment({
+     id: data._id,
+     text: data.text,
+     time: data.time,
+  });
 }
 
