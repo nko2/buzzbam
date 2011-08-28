@@ -160,7 +160,8 @@ var server_local = (function() {
   };
 
   that.getParties = function(callback) {
-    callback({parties:['12313452355234532','234523452353242345']});
+    callback({parties:['12313452355234532','234523452353242345'],
+              public:['3245234532243553242345','2345532432452354']});
   };
 
   that.getPublicParties = function(callback) {
