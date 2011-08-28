@@ -88,7 +88,7 @@ var server = (function() {
       since = undefined;
     }
     console.log('getItems');
-    $.getJSON('parties', {partyid:partyid,since:since}, callback);
+    $.getJSON('items', {partyid:partyid,since:since}, callback);
   };
 
   that.getItem = function(itemid, callback) {
