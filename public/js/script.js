@@ -17,11 +17,6 @@ function log(x) {
 var server = (function() {
   var that = {};
 
-  // these should be undefined to start
-  var sinceParties;
-  var sinceItems;
-  var sinceChats;
-
   // returns {first_name,last_name,name,id, ... }
   that.getUserInfo = function(id, callback) {
     //console.log('getUserInfo');

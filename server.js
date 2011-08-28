@@ -102,7 +102,14 @@ app.post('/newitem', function(req, res) {
 
       uuid.get(function(uuid){
         data.couchPost('/items/'+uuid, item, function(result) {
-          res.send(result);
+          if (result.ok) {
+            data.couchGet('/items/'+uuid, function(result) {
+              res.send(result);
+            });
+          }
+          else {
+            res.send(result);
+          }
         });
       });
     }
@@ -127,7 +134,14 @@ app.post('/newchat', function(req, res) {
           time: new Date()
         };
         data.couchPost('/chat/'+uuid, comment, function(result) {
-          res.send(JSON.stringify(result));
+          if (result.ok) {
+            data.couchGet('/chat/'+uuid, function(result) {
+              res.send(result);
+            });
+          }
+          else {
+            res.send(result);
+          }
         });
       });
     }
@@ -181,7 +195,14 @@ app.get('/newparty', function(req, res) {
 
   uuid.get(function(uuid){
     data.couchPost('/party/'+uuid, party, function(result) {
-      res.send(result);
+      if (result.ok) {
+        data.couchGet('/party/'+uuid, function(result) {
+          res.send(result);
+        });
+      }
+      else {
+        res.send(result);
+      }
     });
   });
 

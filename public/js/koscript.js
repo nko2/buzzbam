@@ -119,15 +119,17 @@ function addItem() {
 }
 
 function parseItem(data) {
+  var newItem = new item(data);
   var selectedParty = viewModel.selectedParty();
-  if (selectedParty) {
-    var newItem = new item({
-       id: data._id,
-       isTodo: data.isTodo,
-       isDone: data.isDone,
-       description: data.description,
-       comments: data.comments,
-    });
+  if (selectedParty && selectedParty.id === newItem.partyid) {
+    var existingItems = selectedParty.items();
+    for (var index in existingItems) {
+      var existing = existingItems[index];
+      if (existing.id == newItem.id) {
+        // ignore duplicates
+        return;
+      }
+    }
     selectedParty.items.push(newItem);
   }
 }
