@@ -59,7 +59,7 @@
 				<div class="grid-collaborate">
 					<div class="grid-posts fff">
                         <div data-bind="click: addItem">Add Topic</div>
-						<div data-bind='template: { name: "topicTemplate", foreach: selectedPartyItems }'></div>
+						<div data-bind='template: { name: "topicTemplate", foreach: items }'></div>
 					</div>
 					<div class="grid-users fff">
                       <ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
@@ -89,6 +89,7 @@
 <script src="js/libs/parseuri.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script src="js/facebook.js"></script>
+<script src="js/model.js"></script>
 <script src="js/koscript.js"></script>
 <script src="js/chat.js"></script>
 <script src="js/items.js"></script>
@@ -99,30 +100,30 @@
     
 <script type="text/x-jquery-tmpl" id="chatTemplate">
   <li>
-    <span class="op-name" data-bind="text: userName"></span> <span data-bind="text: text"></span>
+    <span class="op-name" data-bind="text: name"></span> <span data-bind="text: message"></span>
   </li>
 </script>
 
 <script type="text/x-jquery-tmpl" id="friendTemplate">
   <li>
-    <span data-bind="text: fullName"></span>
+    <span data-bind="text: name"></span>
   </li>
 </script>
 
 <script type="text/x-jquery-tmpl" id="addFriendTemplate">
   <li>
-    <span data-bind="text: fullName, click: function () { plannerViewModel.addFriend(userId) }"></span>
+    <span data-bind="text: name, click: function () { plannerViewModel.addFriend(userId) }"></span>
   </li>
 </script>
 
 <script type="text/x-jquery-tmpl" id="removeFriendTemplate">
   <li>
-    <span data-bind="text: fullName, click: function () { plannerViewModel.removeFriend(userId) }"></span>
+    <span data-bind="text: name, click: function () { plannerViewModel.removeFriend(userId) }"></span>
   </li>
 </script>
 
 <script type="text/x-jquery-tmpl" id="whoTemplate">
-    <span data-bind="text: fullName"></span>
+    <span data-bind="text: name"></span>
 </script>
 
 <script type="text/x-jquery-tmpl" id="checklistTemplate">
@@ -136,7 +137,7 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="commentTemplate">
-    <li><span data-bind="text: userName"></span><span data-bind="text: text"></span></li>
+    <li><span data-bind="text: name"></span><span data-bind="text: message"></span></li>
 </script>
 
 </body>

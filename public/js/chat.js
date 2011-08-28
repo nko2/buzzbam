@@ -1,7 +1,7 @@
 
 function loadChat(chatid)
 {
-  server.getComment(chatid, parseComment);
+  server.getComment(chatid, modelNewComment);
 }
 
 function prepareChat(id,seq)
@@ -17,13 +17,3 @@ function prepareChat(id,seq)
   });
 }
 
-$(document).ready(function() {
-  var prepared = false;
-  viewModel.selectedParty.subscribe(function (newValue) {
-    if (!prepared) {
-      prepared = true;
-      prepareChat(newValue.id, 0);
-      prepareItems(newValue.id, 0);
-    }
-  });
-});

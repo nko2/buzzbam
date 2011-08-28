@@ -1,29 +1,6 @@
-var parties = [];
-var publicParties = [];
-var friends = [];
 
-var whereInfo = function (opt) {
-  var that = this;
-  that.id = opt.id;
-  that.location = ko.observable(opt.location);
-};
 
-var whenInfo = function (opt) {
-  var that = this;
-  that.id = opt.id;
-  that.startTime = ko.observable(opt.startTime);
-  that.endTime = ko.observable(opt.endTime);
-  
-  that.formattedTimeDateFull = ko.dependentObservable(function () {
-    if (that.startTime && that.endTime) {
-      return that.startTime + ' ' + that.endTime;
-    } else if (that.startTime) {
-      return that.startTime;
-    }
-    else return '';
-  });
-};
-
+/*
 var user = function (opt) {
   var that = this;
   that.id = opt.id;
@@ -46,36 +23,23 @@ var friend = function (opt) {
   that.inParty = ko.observable(false);
   that.remove = function () { viewModel.friends.remove(that); }
 }
+*/
 
-var item = function (opt) {
+var itemInfo = function (id) {
   var that = this;
-  that.id = opt._id;
-  that.partyid = opt.partyid;
-  that.isTodo = ko.observable(opt.task);
-  that.isDone = ko.observable(opt.done);
-  that.description = ko.observable(opt.description);
+  that.id = id;
+  that.task = ko.observable(true);
+  that.done = ko.observable(false);
+  that.description = ko.observable('');
   that.comments = ko.observableArray([]);
 };
 
-var comment = function (opt) {
+var partyInfo = function () {
   var that = this;
-  that.id = opt._id;
-  that.partyId = opt.partyid;
-  that.itemId = opt.itemid;
-  that.userId = opt.user;
-  that.userName = opt.name ? opt.name : 'Anonymous';
-  that.text = opt.message;
-  that.time = opt.time ? opt.time : Date.now();
-};
-
-var partyInfo = function (opt) {
-  var that = this;
-  that.id = opt.id;
-  that.isPublic = opt.isPublic;
-  that.title = ko.observable(opt.title);
-  that.description = ko.observable(opt.description);
-  that.users = ko.observableArray([]);//[new user(opt.creator)]);
-  that.userIds = ko.observableArray(opt.userIds);
+  that.isPublic = ko.observable(false);
+  that.title = ko.observable('');
+  that.description = ko.observable('');
+  that.users = ko.observableArray([]);
   that.items = ko.observableArray([]);
   that.todos = ko.dependentObservable(function() {
     var newTodos = [];
@@ -87,33 +51,25 @@ var partyInfo = function (opt) {
     }
     return newTodos;
   });
-  that.whereInfo = new whereInfo(opt.where ? opt.where : {});
-  that.whenInfo = new whenInfo(opt.when ? opt.when : {});
-  that.formattedLocation = ko.dependentObservable(function () {
-      return that.whereInfo.location;
-    }, that);
+  that.where = ko.observable('');
+  that.when = ko.observable('');
   that.formattedDateTimeFull = ko.dependentObservable(function () {
       return "";
     }, that);
-  that.source = opt.source;
 };
   
 var viewModel = {
   user: ko.observable(),
   isLoggedIn: ko.observable(false),
-  friends: ko.observableArray(friends),
-  parties: ko.observableArray(parties),
-  publicParties: ko.observableArray(publicParties),
+  friends: ko.observableArray([]),
   selectedParty: ko.observable(new partyInfo({})),
-  whereVisible: ko.observable(false),
-  whenVisible: ko.observable(false),
-  whereVisible: ko.observable(false),
+  items: ko.observableArray([]),
   chats: ko.observableArray([]),
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
   if (viewModel.user() && viewModel.isLoggedIn()) {
-    var name = viewModel.user().fullName;
+    var name = viewModel.user().name;
     return "Logout, " + name;
   } else {
     return "Log in";
@@ -191,9 +147,10 @@ viewModel.unselectedFriends = ko.dependentObservable(function () {
     for (var i in friends) {
       if (!hash[friends[i].userId]) {
         unselectedFriends.push(friends[i]);
-        friends[i].inParty(true);
+        // XXX TODO
+        //friends[i].inParty(true);
       } else {
-        friends[i].inParty(false);
+        //friends[i].inParty(false);
       }
     }
     return unselectedFriends;
@@ -259,9 +216,7 @@ $(document).ready(function() {
   var uri = parseUri(window.location.search);
   if (uri && uri.queryKey && uri.queryKey.partyId) {
     server.getParty(uri.queryKey.partyId, function(data) {
-      var newParty = parseParty(data);
-      // select the new party by default
-      viewModel.selectedParty(newParty);
+      modelSetParty(data);
     });
   }
   
