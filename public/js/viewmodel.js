@@ -200,6 +200,7 @@ viewModel.removeFriend = function(userId) {
 viewModel.redirectToParty = function(partyId) {
   window.location = 'http://partyplanner.no.de/party.html?partyId=' + partyId;
 };
+
 viewModel.addComment = function(item, message) {
   if (item && item.id && message && message.length > 0) {
     server.newComment(item.id, message);
