@@ -50,6 +50,24 @@ function modelSetParty(party)
 
   prepareChat(party._id, 0);
   prepareItems(party._id, 0);
+  checkNewParty();
+}
+
+function getRevisionPrefix(rev)
+{
+  return parseInt(rev.split('-')[0]);
+}
+
+function checkNewParty()
+{
+  server.getParty(model.party._id, function(newParty) {
+    newPrefix = getRevisionPrefix(newParty._rev);
+    oldPrefix = getRevisionPrefix(model.party._rev);
+    if (newPrefix > oldPrefix) {
+      modelSetParty(newParty);
+    }
+    setTimeout(checkNewParty, 1500);
+  });
 }
 
 function modelSetFriends(friends)
