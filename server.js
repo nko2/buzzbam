@@ -120,6 +120,7 @@ app.post('/newcomment', function(req, res) {
       res.send(403);
     }
     else {
+      data.shortcutComment(uuid, comment);
       data.couchPost('/chat/'+uuid, comment, function(result) {
         res.send(result);
       });
