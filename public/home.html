@@ -54,7 +54,7 @@
 				</h2>
 				<div class="temp-events" >
 					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}">
-						<li class="on-login">
+						<li class="on-login" data-bind="fadeVisible: plannerViewModel.isLoggedIn()" >
 							You can <span class="oa-link">log in</span> to see your events or create your own.
 						</li>
 					</ul>
@@ -85,6 +85,7 @@
 <script src="js/koscript.js"></script>
 <script src="js/viewmodel.js"></script>
 <script src="js/script.js"></script>
+<script src="js/kohandlers.js"></script>
 <script src="js/home.jqscript.js"></script>
 
 <script type="text/x-jquery-tmpl" id="friendTemplate">
