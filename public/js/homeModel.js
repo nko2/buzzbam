@@ -90,7 +90,7 @@ function loadData() {
   }
   server.getUserAndFriends(function(data) {
       modelSetUser(data.me);
-      model.isLoggedIn(data.me.id ? true : false);
+      modelSetIsLoggedIn(data.me.id ? true : false);
     });
   server.getParties(function(partyIds) {
       for (var i in partyIds) {
