@@ -1,6 +1,5 @@
 exports.couch = {
-  user:'admin',
-  pass: 'Xy123!@#',
+  //basicauth: new Buffer('admin:Xy123123').toString('base64'),
   server: 'buzzbam.iriscouch.com'
 };
 exports.fb = {

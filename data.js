@@ -2,6 +2,48 @@
 
 var config = require('./config');
 var client = require('./client');
+var qs = require('querystring');
+
+// call as couchGet(path, callback)
+//   or as couchGet(path, params, callback)
+function couchGet(path, params, callback) {
+  if (!callback) {
+    callback = params;
+    params = undefined;
+  }
+  var querystring = qs.stringify(params)
+  if (querystring.length > 0) {
+    querystring = '?' + querystring;
+  }
+  var options = {
+    host: config.couch.server,
+    port: 443,
+    path: path + querystring,
+    headers: {
+      Host: config.couch.server
+    }
+  };
+  if (config.couch.basicauth) {
+    headers.Authorization = "Basic " + config.count.basicauth;
+  }
+  client.get(options, callback);
+}
+
+function couchPost(path, body, callback) {
+  var options = {
+    host: config.couch.server,
+    port: 443,
+    path: path,
+    method: 'PUT',
+    headers: {
+      Host: config.couch.server
+    }
+  };
+  if (config.couch.basicauth) {
+    headers.Authorization = "Basic " + config.count.basicauth;
+  }
+  client.post(options, JSON.stringify(body), callback);
+}
 
 function partyHasUser(party, user) {
   for (var userIndex in party.users) {
@@ -19,28 +61,16 @@ function getItems(session, partyid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      var options = {
-	host: config.couch.server,
-	port: 443,
-	path: '/items/_design/parties/_view/items?key="'+partyid+'"'
-      };
-      client.get(options, callback);
+      couchGet('/items/_design/parties/_view/items', {key:partyid}, callback);
     }
   });
 }
 
 function updateParty(session, party, callback) {
-  var options = {
-    host: config.couch.server,
-    port: 443,
-    path: '/party/'+party.id
-  };
-  client.get(options, function(origParty) {
+  var path = '/party/'+party.id;
+  couchGet(path, function(origParty) {
     if (partyHasUser(origParty, session.user)) {
-      options.method = 'PUT';
-      client.post(options, JSON.stringify(party), function(result) {
-        callback(result);
-      });
+      couchPost(path, party, callback);
     }
     else {
       callback({error:"permission denied"});
@@ -49,12 +79,7 @@ function updateParty(session, party, callback) {
 }
 
 function getParty(session, partyid, callback) {
-  var options = {
-    host: config.couch.server,
-    port: 443,
-    path: '/party/'+partyid
-  };
-  client.get(options, function(party) {
+  couchGet('/party/'+partyid, function(party) {
     if (partyHasUser(party, session.user)) {
       callback(party);
     }
@@ -65,12 +90,7 @@ function getParty(session, partyid, callback) {
 }
 
 function getItem(session, itemid, callback) {
-  var options = {
-    host: config.couch.server,
-    port: 443,
-    path: '/items/'+itemid
-  };
-  client.get(options, function(item) {
+  client.get('/items/'+itemid, function(item) {
     getParty(session, item.partyid, function(party) {
       if (party.error) {
         callback({error:"permission denied"});
@@ -84,12 +104,7 @@ function getItem(session, itemid, callback) {
 
 function longPollParties(session, userid, since, callback) {
   if (!since) {
-    var options = {
-      host: config.couch.server,
-      port: 443,
-      path: '/party'
-    };
-    client.get(options, function(db) {
+    couchGet('/party', function(db) {
       if (db.error) {
         callback(db);
       }
@@ -99,25 +114,19 @@ function longPollParties(session, userid, since, callback) {
     });
   }
   else {
-    var options = {
-      host: config.couch.server,
-      port: 443,
-      path: '/party/_changes?filters=parties/mydoc&userid='+userid+'&since='+since+'&feed=longpoll'
+    var params = {
+      filters: 'parties/mydoc',
+      userid: userid,
+      since: since,
+      feed: 'longpoll'
     };
-    client.get(options, function(changes) {
-      callback(changes);
-    });
+    couchGet('/party/_changes', params, callback);
   }
 }
 
 function longPollItems(session, partyid, since, callback) {
   if (!since) {
-    var options = {
-      host: config.couch.server,
-      port: 443,
-      path: '/items'
-    };
-    client.get(options, function(db) {
+    couchGet('/items', function(db) {
       if (db.error) {
         callback(db);
       }
@@ -127,14 +136,13 @@ function longPollItems(session, partyid, since, callback) {
     });
   }
   else {
-    var options = {
-      host: config.couch.server,
-      port: 443,
-      path: '/items/_changes?filters=parties/myparty&partyid='+partyid+'&since='+since+'&feed=longpoll'
+    var params = {
+      filters: 'parties/myparty',
+      partyid: partyid,
+      since: since,
+      feed: 'longpoll'
     };
-    client.get(options, function(changes) {
-      callback(changes);
-    });
+    couchGet('/items/_changes', params, callback);
   }
 }
 
@@ -143,4 +151,7 @@ exports.longPollItems = longPollItems;
 exports.getParty = getParty;
 exports.getItem = getItem;
 exports.getItems = getItems;
+exports.couchGet = couchGet;
+exports.couchPost = couchPost;
+
 

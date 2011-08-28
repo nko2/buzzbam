@@ -132,13 +132,7 @@ app.post('/newitem', function(req, res) {
       };
 
       uuid.get(function(uuid){
-        var options = {
-          host:'buzzbam.iriscouch.com',
-          port:443,
-          path:'/items/'+uuid,
-          method:'PUT'
-        };
-        client.post(options, JSON.stringify(item), function(result) {
+        data.couchPost('/items/'+uuid, item, function(result) {
           res.send(result);
         });
       });
@@ -163,14 +157,7 @@ app.post('/newcomment', function(req, res) {
         message: message,
         time: new Date()
       });
-      var updated = JSON.stringify(item);
-      var options = {
-        host: config.couch.server,
-        port: 443,
-        path: '/items/'+itemid,
-        method: 'PUT'
-      };
-      client.post(options, updated, function(result) {
+      data.couchPost('/items/'+itemid, item, function(result) {
         res.send(JSON.stringify(result));
       });
     }
@@ -196,13 +183,7 @@ app.get('/newparty', function(req, res) {
   };
 
   uuid.get(function(uuid){
-    var options = {
-      host:'buzzbam.iriscouch.com',
-      port:443,
-      path:'/party/'+uuid,
-      method:'PUT'
-    };
-    client.post(options, JSON.stringify(party), function(result) {
+    data.couchPost('/party/'+uuid, party, function(result) {
       res.send(result);
     });
   });
@@ -244,13 +225,9 @@ app.get('/items', function(req, res) {
 
 app.get('/parties', function(req, res) {
   var id = req.session.user ? req.session.user.id : '';
-  client.get({host:'buzzbam.iriscouch.com',port:443,path:'/party/_design/parties/_view/public'}, function(publicParties) {
-    var options = {
-      host:'buzzbam.iriscouch.com',
-      port:443,
-      path:'/party/_design/parties/_view/parties?key="'+id+'"'
-    };
-    client.get(options, function(parties) {
+  data.couchGet('/party/_design/parties/_view/public', function(publicParties) {
+    var path = '/party/_design/parties/_view/parties';
+    data.couchGet(path, {key: id}, function(parties) {
       var result = {
         'public': viewValues(publicParties),
         'parties': viewValues(parties)
