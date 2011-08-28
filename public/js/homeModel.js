@@ -1,8 +1,8 @@
 // MODEL
 var model = {
-  parties: [];
-  user: undefined;
-  isLoggedIn: false;
+  parties: [],
+  user: undefined,
+  isLoggedIn: false,
 };
 
 function modelSetParties(parties) {
@@ -22,9 +22,9 @@ function modelSetIsLoggedIn(isLoggedIn) {
 
 // VIEWMODEL
 var viewModel = {
-  parties: ko.observableCollection([]),
-  user: ko.observable();
-  isLoggedIn: ko.observable(false);
+  parties: ko.observableArray([]),
+  user: ko.observable(),
+  isLoggedIn: ko.observable(false),
 };
 
 viewModel.logInOutOfFacebook = function() {
@@ -57,7 +57,7 @@ viewModel.getPublicParties = ko.dependentObservable(function() {
     }
   };
   return publicParties;
-}
+});
 
 viewModel.getPrivateParties = ko.dependentObservable(function() {
   var parties = viewModel.parties();
@@ -68,11 +68,20 @@ viewModel.getPrivateParties = ko.dependentObservable(function() {
     }
   };
   return privateParties;
-}
+});
 
 viewModel.redirectToParty = function(partyId) {
   window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
 };
+
+viewModel.formattedLoggedInName = ko.dependentObservable(function () {
+  if (viewModel.user() && viewModel.isLoggedIn()) {
+    var name = viewModel.user().fullName;
+    return "Logout, " + name;
+  } else {
+    return "Log in";
+  }
+}, viewModel);
 
 // FUNCTIONS
 function loadData() {

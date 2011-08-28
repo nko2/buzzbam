@@ -23,8 +23,8 @@
 	<div class="grid-group_100">
 		<div class="zone-portal_header">
 			<ul class="ol-supnav">
-				<li style="padding-top: 3px;"><iframe data-bind="fadeVisible: plannerViewModel.isLoggedIn()" src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li>
-				<li data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
+				<li style="padding-top: 3px;"><iframe data-bind="fadeVisible: isLoggedIn" src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li>
+				<li data-bind="text: formattedLoggedInName(), click: logInOutOfFacebook"></li>
 				<li class="x-padding_left_0_0" data-bind="click: logInOutOfFacebook"><span class="os-icon"></span></li>
 			</ul>
 			<h1 class="oc-logo">PartyPlanner</h1>
