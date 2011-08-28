@@ -52,9 +52,17 @@ function populateUserInfo(data) {
   });
 }
 
-function logInOutOfFacebook() {
+function logInOutOfFacebookIndex() {
+  logInOutOfFacebook('index');
+}
+
+function logInOutOfFacebookHome() {
+  logInOutOfFacebook('home');
+}
+
+function logInOutOfFacebook(next) {
   if (!viewModel.isLoggedIn()) {
-    window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
+    window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login?next=' + next;
   } else {
     FB.logout(function(resp) {
       viewModel.user(new user({}));
