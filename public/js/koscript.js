@@ -70,6 +70,9 @@ function createNewParty() {
 function whereClick() {
 }
 function whereChange() {
+  if (viewModel.selectedParty()) {
+    viewModel.selectedParty().title($('.oi-where').text());
+  }
 }
 
 function whenClick() {
@@ -85,9 +88,15 @@ function whoChange() {
 function titleClick() {
 }
 function titleChange() {
+  if (viewModel.selectedParty()) {
+    viewModel.selectedParty.title($('.oi-title').text());
+  }
 }
 
 function descriptionClick() {
 }
 function descriptionChange() {
+  if (viewModel.selectedParty()) {
+    viewModel.selectedParty.description($('.oi-description').text());
+  }
 }

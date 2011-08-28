@@ -65,14 +65,15 @@ var comment = function (opt) {
 var partyInfo = function (opt) {
   this.id = opt.id;
   this.isPublic = opt.isPublic;
-  this.title = opt.title;
-  this.description = opt.description;
+  this.title = ko.observable(opt.title);
+  this.description = ko.observable(opt.description);
   this.users = ko.observableArray([]);//[new user(opt.creator)]);
   this.userIds = ko.observableArray(opt.userIds);
   this.items = ko.observableArray([]);
+  var itemsC = this.items;
   this.todos = ko.dependentObservable(function() {
     var newTodos = [];
-    var curItems = this.items();
+    var curItems = itemsC();
     for (var i in curItems) {
       if (curItems[i].isTodo()) {
         newTodos.push(curItems[i]);
