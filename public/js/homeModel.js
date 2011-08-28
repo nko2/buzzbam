@@ -1,14 +1,14 @@
 // MODEL
 var model = {
   parties: [],
-  user: undefined,
+  user: {},
   isLoggedIn: false,
 };
 
-function modelSetParties(parties) {
-  model.parties = parties;
-  viewModel.parties(parties);
-};
+function modelAddParty(party) {
+  model.parties.push(party);
+  viewModel.parties(model.parties);
+}
 
 function modelSetUser(user) {
   model.user = user;
@@ -28,23 +28,23 @@ var viewModel = {
 };
 
 viewModel.logInOutOfFacebook = function() {
-  if (!viewModel.isLoggedIn()) {
+  if (!model.isLoggedIn) {
     window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
   } else {
     FB.logout(function(resp) {
-      viewModel.user(new user({}));
-      viewModel.isLoggedIn(false);
+      modelSetUser({});
+      modelSetIsLoggedIn(false);
     });
   }
 };
 
 viewModel.createNewParty = function() {
   // get information from form
-  var title = "default title";
-  var description = "default description";
-  server.newParty(title, description, function(data) {
-      var newParty = parseParty(data);
-      window.location = 'index.html?partyId=' + newParty.id;
+  var title = "Your party title";
+  var description = "Your party description";
+  server.newParty(title, description, function(party) {
+      modelAddParty(party);
+      window.location = 'index.html?partyId=' + data._id;
     });
 };
 
@@ -92,8 +92,10 @@ function loadData() {
       modelSetUser(data.me);
       model.isLoggedIn(data.me.id ? true : false);
     });
-  server.getParties(function(parties) {
-      modelSetParties(parties);
+  server.getParties(function(partyIds) {
+      for (var i in partyIds) {
+        server.getParty(partyIds[i], modelAddParty);
+      }
     });
 };
 
