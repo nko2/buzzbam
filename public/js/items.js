@@ -1,8 +1,8 @@
 
 function loadItem(itemid)
 {
-  server.getItem(itemid, function(i) {
-    viewModel.selectedParty().items.push(new item(i));
+  server.getItem(itemid, function(item) {
+    parseItem(item);
   });
 }
 
