@@ -30,8 +30,8 @@
 .grid-todo { float: left; position: relative; width: 200px; }
 .grid-collaborate { float: left; position: relative; width: 760px; }
 .grid-posts { float: left; position: relative; width: 560px; }
-.grid-users { float: left; position: relative; width: 200px; }
-.grid-chat { float: left; position: relative; width: 200px; display: none;}
+.grid-users { float: left; position: relative; width: 200px; display: none; }
+.grid-chat { float: left; position: relative; width: 200px; }
 
 /***********************/
 /* Assigned Clearfixes */
