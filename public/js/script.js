@@ -167,7 +167,7 @@ var server_local = (function() {
 
   that.getParty = function(id, callback) {
     callback({
-      id:id,
+      _id:id,
       title:'Title',
       description:'Description',
       users:[],

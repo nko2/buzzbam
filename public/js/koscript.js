@@ -1,6 +1,6 @@
 function parseParty(data) {
   var newParty = new partyInfo({
-      id: data.id,
+      id: data._id,
       isPublic: data.public,
       title: data.title,
       description: data.description,
