@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div class="grid-chat zone-chat">
-					  <ul class="na-chad" data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
+					  <ul class="na-chat" data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
 					<textarea class=""></textarea>
 				</div>
 				<!--div class="grid-users zone-users">
@@ -140,14 +140,14 @@
 </script>
 
 <script type="text/x-jquery-tmpl" id="topicTemplate">
-    <span data-bind="text: description"></span>
-    <div data-bind="click: function() { plannerViewModel.addComment(this, $('#commentta').val()); $('#commentta').val('') }">add comment</div>
+    <span class="any-desc" data-bind="text: description"></span>
+    <div class="any-comm" data-bind="click: function() { plannerViewModel.addComment(this, $('#commentta').val()); $('#commentta').val('') }">add comment</div>
     <textarea class="oi-ta" id="commentta"></textarea>
     <ul class="na-comm" data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
 </script>
 
 <script type="text/x-jquery-tmpl" id="commentTemplate">
-    <li><span data-bind="text: name"></span><span data-bind="text: message"></span></li>
+    <li><span class="any-mess" data-bind="text: name"></span><span data-bind="text: message"></span></li>
 </script>
 
 </body>
