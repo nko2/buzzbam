@@ -75,7 +75,7 @@ viewModel.redirectToParty = function(partyId) {
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
-  if (model.isLoggedIn) {
+  if (viewModel.isLoggedIn()) {
     var name = user.fullName;
     return "Logout, " + name;
   } else {
@@ -85,9 +85,6 @@ viewModel.formattedLoggedInName = ko.dependentObservable(function () {
 
 // FUNCTIONS
 function loadData() {
-  if (window.location.hash === '#debug') {
-    server = server_local;
-  }
   server.getUserAndFriends(function(data) {
       modelSetUser(data.me);
       modelSetIsLoggedIn(data.me.id ? true : false);
