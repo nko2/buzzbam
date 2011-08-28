@@ -22,16 +22,20 @@
 	<div class="grid-page">
 		<div class="grid-container">
 			<div class="grid-group_100">
-				<div class="grid-group_20 temp-brandcap-blue"></div>
-				<div class="grid-group_20 temp-brandcap-purple"></div>
-				<div class="grid-group_20 temp-brandcap-red"></div>
-				<div class="grid-group_20 temp-brandcap-orange"></div>
-				<div class="grid-group_20 temp-brandcap-green"></div>
+				<div class="grid-group_20 temp-brandcap-blue">
+				</div>
+				<div class="grid-group_20 temp-brandcap-purple">
+				</div>
+				<div class="grid-group_20 temp-brandcap-red">
+				</div>
+				<div class="grid-group_20 temp-brandcap-orange">
+				</div>
+				<div class="grid-group_20 temp-brandcap-green">
+				</div>
 			</div>
 			<div class="grid-group_100">
 				<div class="zone-event_preview pink">
-					<textarea class="oi-title" data-bind="text: selectedPartyTitle(), event: {change: titleChange}"></textarea>
-					<textarea class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></textarea>
+			<textarea class="oi-title" data-bind="text: selectedPartyTitle(), event: {change: titleChange}"></textarea> <textarea class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></textarea> 
 					<ul class="ol-supnav">
 						<li class='loggedin' data-bind="text: formattedLoggedInName(), click: logInOutOfFacebook"></li>
 						<!--li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li-->
@@ -44,34 +48,40 @@
 				</div>
 			</div>
 			<div class="grid-group_100">
-				<div class="grid-task">
-					<div class="grid-progress fff">
-						<ul class="ol-checklist">
-                            <li>Got Where?</li>
-                            <li>Got When?</li>
-                            <li>Got Who?</li>
-                        </ul>
-					</div>
-					<div class="grid-todo fff">
-						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedPartyTodos }"></ul>
-					</div>
-				</div>
 				<div class="grid-collaborate">
-					<div class="grid-posts fff">
-                        <div data-bind="click: addItem">Add Topic</div>
-						<div data-bind='template: { name: "topicTemplate", foreach: selectedPartyItems }'></div>
+					<div class="zone-collaborate">
+						
+						<div class="grid-task zone-task">
+							<div class="grid-progress">
+								<ul class="ol-checklist">
+									<li>Got Where?</li>
+									<li>Got When?</li>
+									<li>Got Who?</li>
+								</ul>
+							</div>
+							<div class="grid-todo zone-todo">
+								<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedPartyTodos }"></ul>
+							</div>
+						</div>
+						<div class="grid-posts zone-posts">
+							<div data-bind="click: addItem">Add Topic</div>
+							<div data-bind='template: { name: "topicTemplate", foreach: selectedPartyItems }'></div>
+						</div>
+						
 					</div>
-					<div class="grid-users fff">
-                      <ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
-                    </div>
-					<div class="grid-chat pink">
-                      <ul data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
-					</div>
-					<textarea class="grid-chatentry pink">
-					</textarea>
 				</div>
+				<div class="grid-chat zone-chat">
+					  <ul data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
+					<textarea class="grid-chatentry">
+					</textarea>
+					Chat
+				</div>
+				<div class="grid-users zone-users">
+					  <ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
+					  Users
+				</div>
+
 			</div>
-            
 		</div>
 	</div>
 <div id="fb-root"></div>

@@ -375,6 +375,60 @@ Zones
 }
 
 
+/* ZONE: task */
+.site-default .zone-task.grid-task {
+	min-height: 500px;
+	z-index: 1000;
+	background: ;
+}
+
+/* ZONE: collaborate */
+.site-default .zone-collaborate {
+	position: relative;
+	min-height: 500px;
+	z-index: 1000;
+	background: #fff;
+	margin: 10px 0 0 20px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 1px 2px 2px #d8d8d8;
+	-moz-box-shadow: 0px 1px 2px 2px #d8d8d8;
+	box-shadow: 0px 1px 2px 2px #d8d8d8;
+}
+
+/* ZONE: chat */
+.site-default .zone-chat.grid-chat {
+	background: #eff8fa;
+	min-height: 480px;
+	z-index: 900;
+	position: absolute;
+	right: 60px;
+	top: 20px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 1px 1px 1px #e5e5e5;
+	-moz-box-shadow: 0px 1px 1px 1px #e5e5e5;
+	box-shadow: 0px 1px 1px 1px #e5e5e5;
+}
+
+/* ZONE: users */
+.site-default .zone-users.grid-users {
+	background: #e8f5f9;
+	min-height: 480px;
+	z-index: 800;
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-box-shadow: 0px 1px 1px 1px #e5e5e5;
+	-moz-box-shadow: 0px 1px 1px 1px #e5e5e5;
+	box-shadow: 0px 1px 1px 1px #e5e5e5;
+}
+
 /* ZONE: todo*/
 .site-default .zone-todo .ol-checklist {
 	margin: 0;
