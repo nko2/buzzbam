@@ -14,7 +14,7 @@ function log(x) {
   console.log(x);
 }
 
-var server2 = (function() {
+var server = (function() {
   var that = {};
 
   // these should be undefined to start
@@ -86,76 +86,68 @@ var server2 = (function() {
   return that;
 })();
 
-var server = (function() {
+var server_local = (function() {
   var that = {};
-
-  // these should be undefined to start
-  var sinceParties;
-  var sinceItems;
 
   // returns [partyid,partyid,...]
   that.longPollPartyChanges = function(callback) {
-      callback({});
+      callback([]);
   };
 
   // returns [itemid,itemid,...]
   that.longPollItemChanges = function(partyid, callback) {
-    $.getJSON('longpoll/items', {partyid:partyid, since:sinceItems}, function(changes) {
-      sinceItems = changes.last_seq;
-      callback(changes.items);
-    });
   };
 
   // returns {first_name,last_name,name,id, ... }
   that.getUserInfo = function(id, callback) {
-    $.getJSON('user', {id:id}, callback);
+    callback({id:id,name:'Anonymous'});
   };
 
   // returns {me:{id?,name},friends:[{id,name}*]}
   that.getUserAndFriends = function(callback) {
-    $.getJSON('friends', callback);
+    callback({me:{name:'Anoymous'},friends:[]});
   };
 
   that.newItem = function(partyid, description, callback) {
-    $.post('newitem', {id:partyid,description:description}, callback, 'json');
+    callback({});
   };
 
   that.newComment = function(itemid, message, callback) {
-    $.post('newcomment', {id:itemid, message:message}, callback, 'json');
+    callback({});
   };
 
   that.newParty = function(title, description, callback) {
-    var data = { title: title };
-    if (description) {
-      data.description = description;
-    }
-    $.getJSON('newparty', data, callback);
+    callback({});
   };
 
   that.getParty = function(id, callback) {
-    $.getJSON('party', {id:id}, callback);
+    callback({
+      id:id,
+      title:'Title',
+      description:'Description',
+      users:[],
+      where:{},
+      when:{}
+    });
   };
 
   that.updateParty = function(id, party, callback) {
-    $.post('updateparty', {party:party}, callback, 'json');
+    callback({});
   };
 
   that.getParties = function(callback) {
-    $.getJSON('parties', callback);
+    callback([]);
   };
 
   that.getPublicParties = function(callback) {
-    $.getJSON('parties', {public:true}, callback);
+    callback([]);
   };
 
   that.getItems = function(partyid, callback) {
-    $.getJSON('parties', {id:partyid}, callback);
+    callback([]);
   };
 
   return that;
 })();
 
-$(document).ready(function() {
-  updateUserData();
-});
 

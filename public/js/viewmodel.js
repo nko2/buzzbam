@@ -116,5 +116,9 @@ viewModel.whenClick = whenClick;
 viewModel.whoClick = whoClick;
 
 $(document).ready(function() {
+  if (window.location.hash === '#debug') {
+    server = server_local;
+  }
   ko.applyBindings(viewModel);
+  updateUserData();
 });
