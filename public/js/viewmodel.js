@@ -110,9 +110,9 @@ var viewModel = {
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
   if (viewModel.user() && viewModel.isLoggedIn()) {
     var name = viewModel.user().fullName;
-    return "Logout (" + name + ")";
+    return "Logout, " + name;
   } else {
-    return "Log into Facebook";
+    return "Log in";
   }
 }, viewModel);
 
@@ -189,6 +189,11 @@ $(document).ready(function() {
   }
   var uri = parseUri(window.location.search);
   if (uri && uri.queryKey && uri.queryKey.partyId) {
+    if (uri.queryKey.partyId == 'new') {
+      server.newParty(title, description, function(data) {
+          
+        });
+    }
     server.getParty(uri.queryKey.partyId, function(data) {
       var newParty = parseParty(data);
       // select the new party by default
