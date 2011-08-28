@@ -106,7 +106,7 @@ viewModel.formattedLocation = ko.dependentObservable(function () {
 viewModel.formattedTimeFull = ko.dependentObservable(function () {
   if (viewModel.selectedParty() &&
       viewModel.selectedParty().whenInfo) {
-      
+    
   }
 }, viewModel);
 
@@ -115,4 +115,6 @@ viewModel.whereClick = whereClick;
 viewModel.whenClick = whenClick;
 viewModel.whoClick = whoClick;
 
-ko.applyBindings(viewModel);
+$(document).ready(function() {
+  ko.applyBindings(viewModel);
+});
