@@ -103,7 +103,7 @@ function descriptionChange() {
   }
 }
 
-function addPost() {
+function addItem() {
   var selectedParty = viewModel.selectedParty();
   if (selectedParty) {
     var partyId = selectedParty.id;
@@ -115,8 +115,21 @@ function parseItem(data) {
   var selectedParty = viewModel.selectedParty();
   if (selectedParty) {
     var newItem = new item({
-       
+       id: data._id,
+       isTodo: data.isTodo,
+       isDone: data.isDone,
+       description: data.description,
+       comments: data.comments,
     });
+    selectedParty.items.push(newItem);
   }
+}
+
+function parseComment(data) {
+  return new comment({
+     id: data._id,
+     text: data.text,
+     time: data.time,
+  });
 }
 

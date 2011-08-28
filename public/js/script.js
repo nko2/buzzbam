@@ -122,12 +122,25 @@ var server_local = (function() {
     callback({me:{name:'Anoymous'},friends:[]});
   };
 
+  var curItemId = 0;
   that.newItem = function(partyid, description, callback) {
-    callback({});
+    callback({
+        _id: curItemId++,
+        isTodo: curItemId%2 == 0,
+        isDone: curItemId%3 == 0,
+        description: description + curItemId,
+        comments: [],
+      });
   };
 
   that.newComment = function(itemid, message, callback) {
-    callback({});
+    callback({
+        _id: curItemId++,
+        userId: viewModel.user().id,
+        text: message,
+        itemId: itemid,
+        time: Date.now(),
+      });
   };
 
   that.newParty = function(title, description, callback) {
@@ -141,6 +154,7 @@ var server_local = (function() {
       description:'Description',
       users:[],
       where:{},
+      items:[],
       when:{}
     });
   };
