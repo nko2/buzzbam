@@ -169,6 +169,58 @@ viewModel.selectedPartyTitle = ko.dependentObservable(function () {
   }
   return "";
 });
+viewModel.selectedPartyUsers = ko.dependentObservable(function () {
+  if (viewModel.selectedParty()) {
+    return viewModel.selectedParty().users();
+  }
+  return "";
+});
+viewModel.unselectedFriends = ko.dependentObservable(function () {
+  if (viewModel.selectedParty()) {
+    var unselectedFriends = [];
+    var hash = [];
+    var selectedUsers = viewModel.selectedParty().users();
+    // populate hash
+    for (var i in selectedUsers) {
+      hash[selectedUsers[i].userId] = true;
+    }
+    var friends = viewModel.friends();
+    // compare hash
+    for (var i in friends) {
+      if (hash[friends[i].userId]) {
+        unselectedFriends.push(friends[i]);
+      }
+    }
+    return unselectedFriends;
+  }
+  return [];
+});
+viewModel.addFriend = function(userId) {
+  var selectedParty = viewModel.selectedParty();
+  if (selectedParty) {
+    var removed = viewModel.friends.remove(function(item) {
+        return item.userId == userId;
+      });
+    if (removed.length > 0) {
+      selectedParty.users.push(new user({
+          userId: removed[0].userId,
+          fullName: removed[0].fullName,
+        }));
+    }
+  }
+}
+viewModel.removeFriend = function(userId) {
+  var selectedParty = viewModel.selectedParty();
+  if (selectedParty) {
+    var removed = selectedParty.users.remove(function(item) {
+        return item.userId == userId;
+      });
+    viewModel.friends.push(new friend({
+          userId: removed[0].userId,
+          fullName: removed[0].fullName,
+        }));
+  }
+}
 viewModel.redirectToParty = function(partyId) {
   window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
 };

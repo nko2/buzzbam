@@ -53,7 +53,7 @@
 						<div data-bind='template: { name: "topicTemplate", foreach: selectedPartyItems }'></div>
 					</div>
 					<div class="grid-users fff">
-                      <ul data-bind='template: { name: "friendTemplate", foreach: friends }'></ul>
+                      <ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
                     </div>
 					<div class="grid-chat pink">
                       <ul data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
@@ -62,6 +62,10 @@
 					</textarea>
 				</div>
 			</div>
+            <div>
+                <ul data-bind='template: { name: "addFriendTemplate", foreach: unselectedFriends }'></ul>
+                <ul data-bind='template: { name: "removeFriendTemplate", foreach: selectedPartyUsers }'></ul>
+            </div>
 		</div>
 	</div>
 <div id="fb-root"></div>
@@ -93,6 +97,18 @@
 <script type="text/x-jquery-tmpl" id="friendTemplate">
   <li>
     <span data-bind="text: fullName"></span>
+  </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="addFriendTemplate">
+  <li>
+    <span data-bind="text: fullName, click: function () { plannerViewModel.addFriend(userId) }"></span>
+  </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="removeFriendTemplate">
+  <li>
+    <span data-bind="text: fullName, click: function () { plannerViewModel.removeFriend(userId) }"></span>
   </li>
 </script>
 
