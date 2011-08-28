@@ -573,7 +573,7 @@ Zones
 	font-size: 12px;
 }
 
-.site-default .zone-posts > textarea {
+.site-default .zone-posts textarea {
 	resize: none;
 	border: 1px solid #dcf3f9;
 	-webkit-border-radius: 3px;
@@ -584,6 +584,17 @@ Zones
 	padding: 5px;
 }
 
+.site-default .zone-posts span {
+	color: #00bbe0;
+	font-size: 18px;
+	font-weight: normal;
+}
+
+.site-default .zone-posts span + div {
+	color: #848484;
+	font-size: 12px;
+	font-weight: normal;
+}
 
 
 /* ZONE: progress*/
