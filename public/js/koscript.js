@@ -113,7 +113,9 @@ function addPost() {
 function parseItem(data) {
   var selectedParty = viewModel.selectedParty();
   if (selectedParty) {
-    var newItem = new item([]);
+    var newItem = new item({
+       
+    });
   }
 }
 
