@@ -2,7 +2,7 @@
 function loadItem(itemid)
 {
   server.getItem(itemid, function(item) {
-    parseItem(item);
+    modelNewItem(item);
   });
 }
 

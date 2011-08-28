@@ -197,7 +197,7 @@ function getComments(session, partyid, since, callback) {
 } 
 
 function updateParty(session, party, callback) {
-  var path = '/party/'+party.id;
+  var path = '/party/'+party._id;
   couchGet(path, function(origParty) {
     if (partyHasUser(origParty, session.user)) {
       couchPost(path, party, callback);
@@ -264,6 +264,7 @@ exports.getItem = getItem;
 exports.getComment = getComment;
 exports.getComments = getComments;
 exports.getItems = getItems;
+exports.updateParty = updateParty;
 exports.couchGet = couchGet;
 exports.couchPost = couchPost;
 exports.shortcutComment = shortcutComment;

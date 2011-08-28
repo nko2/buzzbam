@@ -1,24 +1,3 @@
-function parseParty(data) {
-  var newParty = new partyInfo({
-      id: data._id,
-      isPublic: data.public,
-      title: data.title,
-      description: data.description,
-      userIds: data.users,
-      itemIds: data.items,
-      whereId: data.whereId,
-      whenId: data.whenId,
-      source: data
-    });
-
-  if (newParty.isPublic) {
-    viewModel.publicParties.push(newParty);
-  } else {
-    viewModel.parties.push(newParty);
-  }
-  
-  return newParty;
-};
 
 function populateParties(result) {
   if (!result) {
@@ -123,7 +102,7 @@ function updateParty()
   var source = selected.source;
   source.public = selected.isPublic;
   source.title = selected.title();
-  source.description = selection.description();
+  source.description = selected.description();
   source.users = [];
 
   var sourceUsers = selected.users();
@@ -144,79 +123,5 @@ function updateParty()
 
 function addItem() {
   server.newItem('New Topic');
-}
-
-var orphanComments = [];
-
-function parseItem(data) {
-  var newItem = new item(data);
-
-  // load orphan comments if they arrived first
-  if (orphanComments.length > 0) {
-    var copy = orphanComments;
-    orphanComments = [];
-    for (var index in copy) {
-      var orphan = copy[index];
-      if (orphan.itemId == newItem.id) {
-        addCommentToItem(newItem, orphan);     
-      }
-      else {
-        orphanComments.push(orphan);
-      }
-    }
-  }
-
-  var selectedParty = viewModel.selectedParty();
-  if (selectedParty && selectedParty.id === newItem.partyid) {
-    var existingItems = selectedParty.items();
-    for (var index in existingItems) {
-      var existing = existingItems[index];
-      if (existing.id == newItem.id) {
-        // ignore duplicates
-        return;
-      }
-    }
-    selectedParty.items.push(newItem);
-  }
-}
-
-function addCommentToItem(item, newComment)
-{
-  var comments = item.comments();
-  for (var commentIndex in comments) {
-    var existingComment = comments[commentIndex];
-    if (existingComment.id == newComment.id) {
-      return; // dup
-    }
-  }
-  item.comments.push(newComment);
-}
-
-function parseComment(data) {
-  var newComment = new comment(data);
-  var selectedParty = viewModel.selectedParty();
-  if (selectedParty && selectedParty.id === newComment.partyId) {
-    if (newComment.itemId) {
-      var items = selectedParty.items();
-      for (var index in items) {
-        var item = items[index];
-        if (item.id == newComment.itemId) {
-          addCommentToItem(item, newComment);
-          break;
-        }
-      }
-      orphanComments.push(newComment);
-    }
-    else {
-      var existingChats = viewModel.chats();
-      for (var index in existingChats) {
-        var existing = existingChats[index];
-        if (existing.id == newComment.id) {
-          return; // dup
-        }
-      }
-      viewModel.chats.push(newComment);
-    }
-  }
 }
 

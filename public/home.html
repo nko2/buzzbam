@@ -23,7 +23,7 @@
 	<div class="grid-group_100">
 		<div class="zone-portal_header">
 			<ul class="ol-supnav">
-				<li style="padding-top: 3px;"><iframe data-bind="fadeVisible: plannerViewModel.isLoggedIn()" src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li>
+				<li style="padding-top: 3px;"><iframe data-bind="fadeVisible: isLoggedIn" src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li>
 				<li data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
 				<li class="x-padding_left_0_0" data-bind="click: logInOutOfFacebook"><span class="os-icon"></span></li>
 			</ul>
@@ -42,7 +42,7 @@
 					Community Events
 				</h2>
 				<div class="temp-events" >
-					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: publicParties}">
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: getPublicParties}">
 					</ul>
 				</div>
 			</div>
@@ -53,9 +53,9 @@
 					Your Events
 				</h2>
 				<div class="temp-events" >
-					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}">
-						<li class="on-login" data-bind="fadeVisible: !plannerViewModel.isLoggedIn()" >
-							You can <span class="oa-link">log in</span> to see your events or create your own.
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: getPrivateParties}">
+						<li class="on-login" data-bind="fadeVisible: !isLoggedIn()" >
+							You can <span class="oa-link" data-bind="click: logInOutOfFacebook">log in</span> to see your events or create your own.
 						</li>
 					</ul>
 				</div>
@@ -83,7 +83,7 @@
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script src="js/facebook.js"></script>
 <script src="js/koscript.js"></script>
-<script src="js/viewmodel.js"></script>
+<script src="js/homeModel.js"></script>
 <script src="js/script.js"></script>
 <script src="js/kohandlers.js"></script>
 <script src="js/home.jqscript.js"></script>
@@ -97,8 +97,8 @@
 <script type="text/x-jquery-tmpl" id="partyTemplate">
     <li class="og-event">
         <div class="oi-title" data-bind="text: title, click: function() { plannerViewModel.redirectToParty(id) }"></div>
-        <span class="oi-location" data-bind="text: formattedLocation()"></span>
-        <span class="oi-datetime" data-bind="text: formattedDateTimeFull()"></span>
+        <span class="oi-location" data-bind="text: where"></span>
+        <span class="oi-datetime" data-bind="text: where"></span>
     </li>
 </script>
 

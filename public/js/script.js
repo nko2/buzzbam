@@ -1,12 +1,9 @@
 function updateUserData() {
   server.getUserAndFriends(function(data) {
-    viewModel.isLoggedIn(data.me.id ? true : false);
-    viewModel.user(new user({ fullName: data.me.name }));
-    populateFriends(data.friends);
-    server.getParties(populateParties);
-    if (data.me.id) {
-      server.getUserInfo(data.me.id, populateUserInfo);
-    }
+
+    modelSetUser(data.me);
+    modelSetFriends(data.friends);
+
   });
 }
 
@@ -50,51 +47,51 @@ var server = (function() {
       var newItem = {
         task: true,
         done: false,
-        partyid: viewModel.selectedParty().id,
+        partyid: model.party._id,
         description: description
       };
 
       $.post('newitem', {uuid:uuid,item:JSON.stringify(newItem)}, function(){}, 'json');
 
       newItem._id = uuid;
-      parseItem(newItem);
+      modelNewItem(newItem);
     });
   };
 
   that.newChat = function(message) {
     //console.log('newChat');
     getUuid(function(uuid){
-      var user = viewModel.user();
+      var user = model.user;
       var newChat = {
-        partyid: viewModel.selectedParty().id,
-        user: user.userId,
-        name: user.fullName,
+        partyid: model.party._id,
+        user: user.id,
+        name: user.name,
         message: message,
         time: new Date()
       };
       $.post('newcomment', {uuid:uuid, comment:JSON.stringify(newChat)}, function(){}, 'json');
 
       newChat._id = uuid;
-      parseComment(newChat);
+      modelNewComment(newChat);
     });
   };
 
   that.newComment = function(itemid, message) {
     //console.log('newComment');
     getUuid(function(uuid){
-      var user = viewModel.user();
+      var user = model.user;
       var newComment = {
-        partyid: viewModel.selectedParty().id,
+        partyid: model.party._id,
         itemid: itemid,
-        user: user.userId,
-        name: user.fullName,
+        user: user.id,
+        name: user.name,
         message: message,
         time: new Date()
       };
       $.post('newcomment', {uuid:uuid, comment:JSON.stringify(newComment)}, function(){}, 'json');
 
       newComment._id = uuid;
-      parseComment(newComment);
+      modelNewComment(newComment);
     });
   };
 
@@ -194,7 +191,7 @@ var server_local = (function() {
   that.newComment = function(itemid, message, callback) {
     callback({
         _id: curItemId++,
-        userId: viewModel.user().id,
+        userId: model.user.id,
         text: message,
         itemId: itemid,
         time: Date.now(),
