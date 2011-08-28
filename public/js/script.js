@@ -55,7 +55,16 @@ var server = (function() {
 
   that.getParty = function(id, callback) {
     //console.log('getParty');
-    $.getJSON('party', {id:id}, callback);
+    $.getJSON('party', {id:id}, function(data) {
+        if (data && data._id) {
+          callback(data);
+        } else {
+          // try again since not in the middle-tier yet
+          setTimeout(function() {
+            that.getParty(id, callback);
+          }, 500);
+        }
+      });
   };
 
   that.updateParty = function(id, party, callback) {
@@ -158,7 +167,11 @@ var server_local = (function() {
     callback({});
   };
 
-  that.getParties = function(callback) {
+  that.getParties = function(since, callback) {
+    if (!callback) {
+      callback = since;
+      since = undefined;
+    }
     callback({parties:['12313452355234532','234523452353242345'],
               public:['3245234532243553242345','2345532432452354']});
   };
@@ -167,7 +180,11 @@ var server_local = (function() {
     callback([]);
   };
 
-  that.getItems = function(partyid, callback) {
+  that.getItems = function(partyid, since, callback) {
+    if (!callback) {
+      callback = since;
+      since = undefined;
+    }
     callback([]);
   };
 

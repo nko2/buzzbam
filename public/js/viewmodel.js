@@ -188,15 +188,6 @@ $(document).ready(function() {
   }
   var uri = parseUri(window.location.search);
   if (uri && uri.queryKey && uri.queryKey.partyId) {
-    if (uri.queryKey.partyId == 'new') {
-      var title = unescape(uri.queryKey.title);
-      var description = unescape(uri.queryKey.description);
-      server.newParty(title, description, function(data) {
-          var newParty = parseParty(data);
-          // select the new party by default
-          viewModel.selectedParty(newParty);
-        });
-    }
     server.getParty(uri.queryKey.partyId, function(data) {
       var newParty = parseParty(data);
       // select the new party by default

@@ -71,10 +71,12 @@ function logInOutOfFacebook() {
 
 function createNewParty() {
   // get information from form
-  var title = escape("default title");
-  var description = escape("default description");
-  window.location = 'index.html?partyId=new&title=' +
-                    title + '&description=' + description;
+  var title = "default title";
+  var description = "default description";
+  server.newParty(title, description, function(data) {
+      var newParty = parseParty(data);
+      window.location = 'index.html?partyId=' + newParty.id;
+    });
 };
 
 function whereClick() {
