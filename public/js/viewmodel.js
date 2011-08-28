@@ -95,6 +95,7 @@ var partyInfo = function (opt) {
   that.formattedDateTimeFull = ko.dependentObservable(function () {
       return "";
     }, that);
+  that.source = opt.source;
 };
   
 var viewModel = {
@@ -216,7 +217,7 @@ viewModel.addFriend = function(userId) {
         }
         selectedParty.users.push(new user({
           userId: friends[i].userId,
-          fullName: rfriends[i].fullName,
+          fullName: friends[i].fullName,
         }));
         break;
       }

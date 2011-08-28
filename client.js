@@ -7,7 +7,7 @@ var config = require('./config');
 
 function jsonGet(options, callback) {
   console.log({get: options});
-  https.get(options, function(response) {
+  var request = https.get(options, function(response) {
     var body = '';
     response.on('data', function(chunk) {
       body += chunk;
@@ -16,7 +16,11 @@ function jsonGet(options, callback) {
       console.log({getResponse: body});
       callback(JSON.parse(body));
     });
+    response.on('close', function(err) {
+      console.log({close:err});
+    });
   });
+  request.end();
 }
 
 function jsonPost(options, content, callback) {
@@ -33,6 +37,9 @@ function jsonPost(options, content, callback) {
     response.on('end', function() {
       console.log({postResponse: body});
       callback(JSON.parse(body));
+    });
+    response.on('close', function(err) {
+      console.log({close:err});
     });
   });
   request.write(content);
