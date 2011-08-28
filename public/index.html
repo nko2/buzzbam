@@ -35,14 +35,14 @@
 			</div>
 			<div class="grid-group_100">
 				<div class="zone-event_preview pink">
-			<textarea class="oi-title" data-bind="text: selectedPartyTitle(), event: {change: titleChange}"></textarea> <textarea class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></textarea> 
+			<textarea class="oi-title" data-bind="text: selectedParty().title, event: {change: titleChange}"></textarea> <textarea class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></textarea> 
 					<ul class="ol-supnav">
 						<li class='loggedin' data-bind="text: formattedLoggedInName(), click: logInOutOfFacebook"></li>
 						<!--li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li-->
 					</ul>
 					<ul class="ol-navigation">
-						<li><textarea class="oi-locaiton" data-bind="text: formattedLocation.length > 0 ? formattedLocation : 'Where', click: whereClick, event: {change: whereChange}"></textarea></li>
-						<li><textarea class="oi-timedate" data-bind="text: formattedTimeFull.length > 0 ? formattedLocation : 'When', click: whenClick, event: {change: whenChange}"></textarea></li>
+						<li><textarea class="oi-location" data-bind="text: selectedParty().where, click: whereClick, event: {change: whereChange}"></textarea></li>
+						<li><textarea class="oi-timedate" data-bind="text: selectedParty().when, click: whenClick, event: {change: whenChange}"></textarea></li>
 						<li><div class="oi-attendees" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
 					</ul>
 				</div>

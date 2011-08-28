@@ -9,6 +9,34 @@ var model =
   friends: []
 };
 
+function modelUpdateTitle(title)
+{
+  model.party.title = title;
+  viewModel.selectedParty().title(title);
+  updateParty();
+}
+
+function modelUpdateWhen(when)
+{
+  model.party.when = when;
+  viewModel.selectedParty().when(when);
+  updateParty();
+}
+
+function modelUpdateWhere(where)
+{
+  model.party.where = where;
+  viewModel.selectedParty().where(where);
+  updateParty();
+}
+
+function modelUpdateDescription(description)
+{
+  model.party.description = description;
+  viewModel.selectedParty().description(description);
+  updateParty();
+}
+
 function modelSetFriends(friends)
 {
   model.friends = friends;
@@ -36,6 +64,24 @@ function modelSetParty(party)
 
   prepareChat(party._id, 0);
   prepareItems(party._id, 0);
+  checkNewParty();
+}
+
+function getRevisionPrefix(rev)
+{
+  return parseInt(rev.split('-')[0]);
+}
+
+function checkNewParty()
+{
+  server.getParty(model.party._id, function(newParty) {
+    newPrefix = getRevisionPrefix(newParty._rev);
+    oldPrefix = getRevisionPrefix(model.party._rev);
+    if (newPrefix > oldPrefix) {
+      modelSetParty(newParty);
+    }
+    setTimeout(checkNewParty, 1500);
+  });
 }
 
 function modelSetFriends(friends)
