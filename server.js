@@ -249,15 +249,6 @@ app.get('/party', function(req, res) {
   });
 });
 
-function viewValues(viewResult) {
-  var results = [];
-  var rows = viewResult.rows;
-  for (var row in rows) {
-    results.push(rows[row].value);
-  }
-  return results;
-}
-
 app.get('/comment', function(req, res) {
   var commentid = req.param('commentid');
   data.getComment(req.session, commentid, function(comment) {
@@ -277,7 +268,7 @@ app.get('/comments', function(req, res) {
       res.send(403);
     }
     else {
-      res.send(JSON.stringify(viewValues(items)));
+      res.send(JSON.stringify(items));
     }
   });
 });
@@ -301,7 +292,7 @@ app.get('/items', function(req, res) {
       res.send(403);
     }
     else {
-      res.send(JSON.stringify(viewValues(items)));
+      res.send(JSON.stringify(items));
     }
   });
 });
