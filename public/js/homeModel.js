@@ -52,7 +52,7 @@ viewModel.getPublicParties = ko.dependentObservable(function() {
   var parties = viewModel.parties();
   var publicParties = [];
   for (var i in parties) {
-    if (parties[i].isPublic) {
+    if (parties[i].public) {
       publicParties.push(parties[i]);
     }
   };
@@ -63,7 +63,7 @@ viewModel.getPrivateParties = ko.dependentObservable(function() {
   var parties = viewModel.parties();
   var privateParties = [];
   for (var i in parties) {
-    if (!parties[i].isPublic) {
+    if (!parties[i].public) {
       privateParties.push(parties[i]);
     }
   };
