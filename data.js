@@ -4,6 +4,8 @@ var config = require('./config');
 var client = require('./client');
 var qs = require('querystring');
 
+var data = {};
+
 var parties = {};
 var items = {};
 var comments = {};

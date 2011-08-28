@@ -74,7 +74,7 @@ app.get('/friends', function(req, res) {
 
 app.post('/updateparty', function(req,res) {
   var party = req.param('party');
-  data.updateParty(req.seession, party, function(result) {
+  data.updateParty(req.session, party, function(result) {
     if (result.error) {
       res.send(403);
     }

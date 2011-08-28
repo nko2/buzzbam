@@ -8,6 +8,7 @@ function parseParty(data) {
       itemIds: data.items,
       whereId: data.whereId,
       whenId: data.whenId,
+      source: data
     });
 
   if (newParty.isPublic) {
@@ -101,7 +102,8 @@ function titleClick() {
 }
 function titleChange() {
   if (viewModel.selectedParty()) {
-    viewModel.selectedParty.title($('.oi-title').text());
+    viewModel.selectedParty().title($('.oi-title').val());
+    updateParty();
   }
 }
 
@@ -109,8 +111,35 @@ function descriptionClick() {
 }
 function descriptionChange() {
   if (viewModel.selectedParty()) {
-    viewModel.selectedParty.description($('.oi-description').text());
+    viewModel.selectedParty().description($('.oi-description').val());
+    updateParty();
   }
+}
+
+function updateParty()
+{
+  var selected = viewModel.selectedParty();
+
+  var source = selected.source;
+  source.public = selected.isPublic;
+  source.title = selected.title();
+  source.description = selection.description();
+  source.users = [];
+
+  var sourceUsers = selected.users();
+  for (var idx in sourceUsers) {
+    var src = sourceUsers[idx];
+    var user = {
+      userid: src.userId,
+      name: src.fullName,
+      role: src.role,
+      rsvp: src.rsvp
+    };
+    source.users.push(user);
+  }
+
+  server.updateParty(selected.id, source, function(result) {
+  });
 }
 
 function addItem() {
