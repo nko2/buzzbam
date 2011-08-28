@@ -84,6 +84,8 @@ function updateParty()
 }
 
 function addItem(message) {
-  server.newItem(message);
+  if (message && message.length > 0) {
+    server.newItem(message);
+  }
 }
 
