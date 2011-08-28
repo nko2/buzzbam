@@ -283,6 +283,54 @@ Zones
 	height: 222px;
 }
 
+.site-default .zone-event_preview .oi-title{
+	color: #0097BF;
+	font-size: 35px;
+	padding-top: 91px;
+	margin-left: 20px;
+	font-weight: normal;
+}
+
+.site-default .zone-event_preview .oi-description{
+	color: #848484;
+	font-size: 16px;
+	margin-left: 20px;
+	font-weight: normal;
+}
+
+.site-default .zone-event_preview .ol-supnav {
+	position: absolute;
+	top: 4px;
+	right: 10px;
+	height: 32px;
+}
+
+.site-default .zone-event_preview .ol-navigation {
+	height: 35px;
+	position: absolute;
+	bottom: -4px;
+	left: 30px;
+}
+
+.site-default .zone-event_preview .oi-timedate,.site-default .zone-event_preview .oi-locaiton, .site-default .zone-event_preview .oi-attendees {
+	resize: none;
+	border: 0 solid transparent;
+	background: transparent;
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 27px;
+	color: #00aedd;
+	text-align: abs-bottom;
+	width: 280px;;
+	height: 35px;
+	overflow: hidden;
+}
+
+.site-default .zone-event_preview .oi-attendees {
+	padding-top: 4px;
+	height: 31px;
+}
+
+
 /* ZONE: todo*/
 .site-default .zone-todo .ol-checklist {
 	margin: 0;
