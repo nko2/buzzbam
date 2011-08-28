@@ -462,6 +462,16 @@ Zones
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	margin-left: 30px;
+	width: 168px;
+	padding: 5px;
+}
+
+.site-default .zone-chat > ul > li {
+	list-style-type: none;
+}
+
+.site-default .zone-chat > ul > li .op-name {
+	color: #00bbe0;
 }
 
 /* ZONE: users */
