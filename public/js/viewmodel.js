@@ -70,11 +70,10 @@ var partyInfo = function (opt) {
   this.users = ko.observableArray();//[new user(opt.creator)]);
   this.userIds = ko.observableArray(opt.userIds);
   this.items = ko.observableArray([]);
-  this.tasks: ko.observableArray(tasks),
-  this.todos: ko.observableArray(todos),
+  this.tasks: ko.observableArray([]),
+  this.todos: ko.observableArray([]),
   this.whereInfo = new whereInfo(opt.where ? opt.where : {});
   this.whenInfo = new whenInfo(opt.when ? opt.when : {});
-  
 };
   
 var viewModel = {
