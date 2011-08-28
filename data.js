@@ -118,40 +118,23 @@ function couchPost(path, body, callback) {
 }
 
 function partyHasUser(party, user) {
-  var id = user ? user.id : undefined;
-  if (party.public) {
-    return true;
-  }
-  for (var userIndex in party.users) {
-    var partyUser = party.users[userIndex];
-    if (partyUser.id == id) {
-      return true;
-    }
-  }
-  return false;
+  return true;
 }
 
 function getItems(session, partyid, since, callback) {
   if (!since) {
     since = 0;
   }
-  getParty(session, partyid, function(party) {
-    if (party.error) {
-      callback({error:"permission denied"});
+  var results = [];
+  var last_seq = since;
+  for (var id in items) {
+    var item = items[id];
+    if (item.seq > last_seq && item.doc.partyid === partyid) {
+      results.push(id);
+      last_seq = Math.max(last_seq, item.seq);
     }
-    else {
-      var results = [];
-      var last_seq = since;
-      for (var id in items) {
-        var item = items[id];
-        if (item.seq > last_seq && item.doc.partyid === partyid) {
-          results.push(id);
-          last_seq = Math.max(last_seq, item.seq);
-        }
-      }
-      callback({last_seq:last_seq,items:results});
-    }
-  });
+  }
+  callback({last_seq:last_seq,items:results});
 } 
 
 function getParties(session, since, callback) {
@@ -177,46 +160,27 @@ function getComments(session, partyid, since, callback) {
   if (!since) {
     since = 0;
   }
-  getParty(session, partyid, function(party) {
-    if (party.error) {
-      callback({error:"permission denied"});
+  var results = [];
+  var last_seq = since;
+  for (var id in comments) {
+    var comment = comments[id];
+    if ((comment.seq < 0 || comment.seq > last_seq) && comment.doc.partyid === partyid) {
+      results.push(id);
+      last_seq = Math.max(last_seq, comment.seq);
     }
-    else {
-      var results = [];
-      var last_seq = since;
-      for (var id in comments) {
-        var comment = comments[id];
-        if ((comment.seq < 0 || comment.seq > last_seq) && comment.doc.partyid === partyid) {
-          results.push(id);
-          last_seq = Math.max(last_seq, comment.seq);
-        }
-      }
-      callback({last_seq:last_seq,comments:results});
-    }
-  });
+  }
+  callback({last_seq:last_seq,comments:results});
 } 
 
 function updateParty(session, party, callback) {
   var path = '/party/'+party._id;
-  couchGet(path, function(origParty) {
-    if (partyHasUser(origParty, session.user)) {
-      couchPost(path, party, callback);
-    }
-    else {
-      callback({error:"permission denied"});
-    }
-  });
+  couchPost(path, party, callback);
 }
 
 function getParty(session, partyid, callback) {
   pend(function(){
     var party = parties[partyid];
-    if (party && partyHasUser(party.doc, session.user)) {
-      callback(party.doc);
-    }
-    else {
-      callback({error:"permission denied"});
-    }
+    callback(party.doc);
   });
 }
 
@@ -227,14 +191,7 @@ function getComment(session, chatid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      getParty(session, comment.doc.partyid, function(party) {
-        if (party.error) {
-          callback({error:"permission denied"});
-        }
-        else {
-          callback(comment.doc);
-        }
-      });
+      callback(comment.doc);
     }
   });
 }
@@ -246,14 +203,7 @@ function getItem(session, itemid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      getParty(session, item.doc.partyid, function(party) {
-        if (party.error) {
-          callback({error:"permission denied"});
-        }
-        else {
-          callback(item.doc);
-        }
-      });
+      callback(item.doc);
     }
   });
 }
