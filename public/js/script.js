@@ -6,7 +6,9 @@ function updateUserData() {
     server.getParties(populateParties);
     if (data.me.id) {
       server.getUserInfo(data.me.id, populateUserInfo);
-      //prepareChat();
+      if ($('.grid-chat').length > 0) {
+        prepareChat();
+      }
     }
   });
 }
