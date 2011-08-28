@@ -632,6 +632,7 @@ Zones
 	height: 410px;
 	overflow-y: auto;
 	overflow-x: hidden;
+	margin-top: 10px;
 }
 
 
