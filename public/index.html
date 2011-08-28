@@ -43,7 +43,7 @@
 					<ul class="ol-navigation">
 						<li><textarea class="oi-location" data-bind="text: selectedParty().where, click: whereClick, event: {change: whereChange}"></textarea></li>
 						<li><textarea class="oi-timedate" data-bind="text: selectedParty().when, click: whenClick, event: {change: whenChange}"></textarea></li>
-						<li><div class="oi-attendees" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li>
+						<!--li><div class="oi-attendees" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li-->
 					</ul>
 				</div>
 			</div>
@@ -57,7 +57,7 @@
 									<li class="role-complete">Name your event</li>
 									<li class="role-complete">Set a time</li>
 									<li class="role-complete">Pick a location</li>
-									<li>Invite some guests</li>
+									<li class="role-complete">Invite some guests</li>
 								</ul>
 							</div>
 							<div class="grid-todo zone-todo">
@@ -92,20 +92,14 @@
 							<div class="zone-posts x-clearfix">
 								<h2 class="oc-h2 x-align_left">Message Posts</h2>
 								<div class="oa-button x-align_right" data-bind="click: addItem">new post</div>
-								<!--div data-bind='template: { name: "topicTemplate", foreach: items }'-->
+								<div data-bind='template: { name: "topicTemplate", foreach: items }'>
 								
 								
-								<!-- START :: SAMPLE CODE -->
-								<div class="og-post">
-									<div class="oi-title">Test Message</div>
-									<span class="oi-creator">Jason Falk</span><span class="oi-datetime">Sunday, August 28, 2011</span>
+								
+								
+								
+								
 								</div>
-								<!-- END :: SAMPLE CODE -->
-								
-								
-								
-								
-								<!--/div-->
 							</div>
 						</div>
 					</div>
