@@ -573,13 +573,24 @@ Zones
 	font-size: 12px;
 }
 
+.site-default .zone-posts > textarea {
+	resize: none;
+	border: 2px solid #00bbe0;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	margin-left: 30px;
+	width: 168px;
+	padding: 5px;
+}
+
 .site-default .zone-posts textarea {
 	resize: none;
 	border: 1px solid #dcf3f9;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	margin-left: 30px;
+	margin-left: 0;
 	width: 168px;
 	padding: 5px;
 }
@@ -590,11 +601,27 @@ Zones
 	font-weight: normal;
 }
 
+.site-default .zone-posts span.any-mess {
+	color: #848484;
+	font-size: 12px;
+	font-weight: normal;
+}
+
 .site-default .zone-posts span + div {
 	color: #848484;
 	font-size: 12px;
 	font-weight: normal;
 }
+
+.site-default .zone-posts .any-topic {
+	color: #848484;
+	font-size: 12px;
+	font-weight: normal;
+	height: 410px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
 
 
 /* ZONE: progress*/
