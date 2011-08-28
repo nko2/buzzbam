@@ -19,10 +19,11 @@ function parseParty(data) {
   return newParty;
 };
 
-function populateParties(data) {
-  if (!data) {
+function populateParties(result) {
+  if (!result) {
     return;
   }
+  var data = result.parties;
   
   for (var i in data) {
     server.getParty(data[i], parseParty);

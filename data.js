@@ -123,52 +123,67 @@ function partyHasUser(party, user) {
   return false;
 }
 
-function getItems(session, partyid, callback) {
+function getItems(session, partyid, since, callback) {
+  if (!since) {
+    since = 0;
+  }
   getParty(session, partyid, function(party) {
     if (party.error) {
       callback({error:"permission denied"});
     }
     else {
       var results = [];
+      var last_seq = since;
       for (var id in items) {
-        var item = items[id].doc;
-        if (item.partyid === partyid) {
-          results.push(item._id);
+        var item = items[id];
+        if (item.seq > last_seq && item.doc.partyid === partyid) {
+          results.push(id);
+          last_seq = Math.max(last_seq, item.seq);
         }
       }
-      callback(results);
+      callback({last_seq:last_seq,items:results});
     }
   });
 } 
 
-function getParties(session, callback) {
+function getParties(session, since, callback) {
+  if (!since) {
+    since = 0;
+  }
   pend(function(){
     var userid = session.user ? session.user.id : '';
     var results = [];
+    var last_seq = since;
     for (var id in parties) {
-      var party = parties[id].doc;
-      if (partyHasUser(party, session.user)) { 
-        results.push(party._id);
+      var party = parties[id];
+      if (party.seq > last_seq && partyHasUser(party.doc, session.user)) { 
+        results.push(id);
+        last_seq = Math.max(last_seq, party.seq);
       }
     }
-    callback(results);
+    callback({last_seq:last_seq,parties:results});
   });
 } 
 
-function getComments(session, partyid, callback) {
+function getComments(session, partyid, since, callback) {
+  if (!since) {
+    since = 0;
+  }
   getParty(session, partyid, function(party) {
     if (party.error) {
       callback({error:"permission denied"});
     }
     else {
       var results = [];
+      var last_seq = since;
       for (var id in comments) {
-        var comment = comments[id].doc;
-        if (comment.partyid === partyid) {
-          results.push(comment._id);
+        var comment = comments[id];
+        if (comment.seq > last_seq && comment.doc.partyid === partyid) {
+          results.push(id);
+          last_seq = Math.max(last_seq, comment.seq);
         }
       }
-      callback(results);
+      callback({last_seq:last_seq,comments:results});
     }
   });
 } 
@@ -235,75 +250,6 @@ function getItem(session, itemid, callback) {
   });
 }
 
-function longPollParties(session, userid, since, callback) {
-  if (!since) {
-    couchGet('/party', function(db) {
-      if (db.error) {
-        callback(db);
-      }
-      else {
-        longPollParties(session, userid, db.committed_update_seq, callback);
-      }
-    });
-  }
-  else {
-    var params = {
-      filter: 'parties/mydoc',
-      userid: userid,
-      since: since,
-      feed: 'longpoll'
-    };
-    couchGet('/party/_changes', params, callback);
-  }
-}
-
-function longPollComments(session, partyid, since, callback) {
-  if (!since) {
-    couchGet('/chat', function(db) {
-      if (db.error) {
-        callback(db);
-      }
-      else {
-        longPollComments(session, partyid, db.committed_update_seq, callback);
-      }
-    });
-  }
-  else {
-    var params = {
-      filter: 'comments/myparty',
-      partyid: partyid,
-      since: since,
-      feed: 'longpoll'
-    };
-    couchGet('/chat/_changes', params, callback);
-  }
-}
-
-function longPollItems(session, partyid, since, callback) {
-  if (!since) {
-    couchGet('/items', function(db) {
-      if (db.error) {
-        callback(db);
-      }
-      else {
-        longPollItems(session, partyid, db.committed_update_seq, callback);
-      }
-    });
-  }
-  else {
-    var params = {
-      filter: 'parties/myparty',
-      partyid: partyid,
-      since: since,
-      feed: 'longpoll'
-    };
-    couchGet('/items/_changes', params, callback);
-  }
-}
-
-exports.longPollParties = longPollParties;
-exports.longPollItems = longPollItems;
-exports.longPollComments = longPollComments;
 exports.getParty = getParty;
 exports.getParties = getParties;
 exports.getItem = getItem;

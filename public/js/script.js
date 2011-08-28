@@ -22,33 +22,6 @@ var server = (function() {
   var sinceItems;
   var sinceChats;
 
-  // returns [partyid,partyid,...]
-  that.longPollPartyChanges = function(callback) {
-    console.log('longPollPartyChanges');
-    $.getJSON('longpoll/parties', {since:sinceParties}, function(changes) {
-      sinceParties = changes.last_seq;
-      callback(changes.parties);
-    });
-  };
-
-  // returns [itemid,itemid,...]
-  that.longPollItemChanges = function(partyid, callback) {
-    console.log('longPollItemChanges');
-    $.getJSON('longpoll/items', {partyid:partyid, since:sinceItems}, function(changes) {
-      sinceItems = changes.last_seq;
-      callback(changes.items);
-    });
-  };
-
-  // returns [commentid,commentid,...]
-  that.longPollCommentChanges = function(partyid, callback) {
-    console.log('longPollCommentChanges');
-    $.getJSON('longpoll/comments', {partyid:partyid, since:sinceChats}, function(changes) {
-      sinceChats = changes.last_seq;
-      callback(changes.comments);
-    });
-  };
-
   // returns {first_name,last_name,name,id, ... }
   that.getUserInfo = function(id, callback) {
     console.log('getUserInfo');
@@ -95,9 +68,13 @@ var server = (function() {
     $.post('updateparty', {party:party}, callback, 'json');
   };
 
-  that.getParties = function(callback) {
+  that.getParties = function(since, callback) {
+    if (!callback) {
+      callback = since;
+      since = undefined;
+    }
     console.log('getParties');
-    $.getJSON('parties', callback);
+    $.getJSON('parties', {since:since}, callback);
   };
 
   that.getPublicParties = function(callback) {
@@ -105,9 +82,13 @@ var server = (function() {
     $.getJSON('parties', {public:true}, callback);
   };
 
-  that.getItems = function(partyid, callback) {
+  that.getItems = function(partyid, since, callback) {
+    if (!callback) {
+      callback = since;
+      since = undefined;
+    }
     console.log('getItems');
-    $.getJSON('parties', {partyid:partyid}, callback);
+    $.getJSON('parties', {partyid:partyid,since:since}, callback);
   };
 
   that.getItem = function(itemid, callback) {
@@ -115,9 +96,9 @@ var server = (function() {
     $.getJSON('item', {itemid:itemid}, callback);
   };
 
-  that.getComments = function(partyid, callback) {
+  that.getComments = function(partyid, since, callback) {
     console.log('getComments');
-    $.getJSON('comments', {partyid:partyid}, callback);
+    $.getJSON('comments', {partyid:partyid,since:since}, callback);
   };
 
   that.getComment = function(commentid, callback) {
@@ -130,18 +111,6 @@ var server = (function() {
 
 var server_local = (function() {
   var that = {};
-
-  // returns [partyid,partyid,...]
-  that.longPollPartyChanges = function(callback) {
-  };
-
-  // returns [itemid,itemid,...]
-  that.longPollItemChanges = function(partyid, callback) {
-  };
-  
-  // returns [commentid,commentid,...]
-  that.longPollCommentChanges = function(partyid, callback) {
-  };
 
   // returns {first_name,last_name,name,id, ... }
   that.getUserInfo = function(id, callback) {
