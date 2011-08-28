@@ -16,7 +16,7 @@ function parseParties(data) {
 }
 
 function populateParties(data) {
-  var newParties = parseParties(data);
+  var newParties = parseParties(data.parties);
   viewModel.parties(newParties);
   if (viewModel.parties.count > 0) {
     viewModel.selectedParty(viewModel.parties[0]);
