@@ -57,14 +57,12 @@ var item = function (opt) {
 
 var comment = function (opt) {
   var that = this;
-  that.id = opt.id;
-  that.itemId = opt.itemId;
-  that.userId = opt.userId;
-  that.text = opt.text;
+  that.id = opt._id;
+  that.itemId = opt.itemid;
+  that.userId = opt.user;
+  that.userName = opt.name;
+  that.text = opt.message;
   that.time = opt.time ? opt.time : Date.now();
-  that.getUserInfo = function (callback) {
-      server.getUserInfo(opt.userId, callback);
-    }
 };
 
 var partyInfo = function (opt) {
@@ -112,9 +110,9 @@ var viewModel = {
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
   if (viewModel.user() && viewModel.isLoggedIn()) {
     var name = viewModel.user().fullName;
-    return "Logout (" + name + ")";
+    return "Logout, " + name;
   } else {
-    return "Log into Facebook";
+    return "Log in";
   }
 }, viewModel);
 
@@ -191,6 +189,11 @@ $(document).ready(function() {
   }
   var uri = parseUri(window.location.search);
   if (uri && uri.queryKey && uri.queryKey.partyId) {
+    if (uri.queryKey.partyId == 'new') {
+      server.newParty(title, description, function(data) {
+          
+        });
+    }
     server.getParty(uri.queryKey.partyId, function(data) {
       var newParty = parseParty(data);
       // select the new party by default

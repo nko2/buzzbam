@@ -70,7 +70,10 @@ function logInOutOfFacebook() {
 };
 
 function createNewParty() {
-  window.location = 'http://partyplanner.no.de/index.html';
+  // get information from form
+  var title = "default title";
+  var description = "default description";
+  window.location = 'http://partyplanner.no.de/index.html?partyId=new&';
 };
 
 function whereClick() {
