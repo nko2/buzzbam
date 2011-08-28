@@ -13,7 +13,7 @@ function parseParty(data) {
   if (party.isPublic) {
     viewModel.publicParties.push(party);
   } else {
-    viewModel.userParties.push(party);
+    viewModel.parties.push(party);
   }
 };
 
@@ -24,13 +24,13 @@ function populateParties(data) {
   
   if (data.parties) {
     for (var i in data.parties) {
-      server.getParty(data[i], parseParty);
+      server.getParty(data.parties[i], parseParty);
     }
   }
   
   if (data.public) {
     for (var i in data.public) {
-      server.getParty(data[i], parseParty);
+      server.getParty(data.public[i], parseParty);
     }
   }
 };
