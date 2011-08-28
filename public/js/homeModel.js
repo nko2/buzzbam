@@ -52,7 +52,8 @@ viewModel.getPublicParties = ko.dependentObservable(function() {
   var parties = viewModel.parties();
   var publicParties = [];
   for (var i in parties) {
-    if (parties[i].public) {
+    var party = parties[i];
+    if (!party.users || party.users.length == 0 || party.users[0].id != model.user.id) {
       publicParties.push(parties[i]);
     }
   };
@@ -63,7 +64,8 @@ viewModel.getPrivateParties = ko.dependentObservable(function() {
   var parties = viewModel.parties();
   var privateParties = [];
   for (var i in parties) {
-    if (!parties[i].public) {
+    var party = parties[i];
+    if (party.users && party.users.length > 0 && party.users[0].id == model.user.id) {
       privateParties.push(parties[i]);
     }
   };
