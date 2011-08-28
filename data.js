@@ -64,7 +64,7 @@ function getItems(session, partyid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/items/_design/parties/_view/items', {key:partyid}, callback);
+      couchGet('/items/_design/parties/_view/items', {key:JSON.stringify(partyid)}, callback);
     }
   });
 } 
@@ -75,7 +75,7 @@ function getComments(session, partyid, callback) {
       callback({error:"permission denied"});
     }
     else {
-      couchGet('/chat/_design/comments/_view/comments', {key:partyid}, callback);
+      couchGet('/chat/_design/comments/_view/comments', {key:JSON.stringify(partyid)}, callback);
     }
   });
 } 
@@ -158,7 +158,7 @@ function longPollComments(session, partyid, since, callback) {
         callback(db);
       }
       else {
-        longPollItems(session, partyid, db.committed_update_seq, callback);
+        longPollComments(session, partyid, db.committed_update_seq, callback);
       }
     });
   }

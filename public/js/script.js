@@ -6,7 +6,7 @@ function updateUserData() {
     server.getParties(populateParties);
     if (data.me.id) {
       server.getUserInfo(data.me.id, populateUserInfo);
-      prepareChat();
+      //prepareChat();
     }
   });
 }
@@ -21,6 +21,7 @@ var server = (function() {
   // these should be undefined to start
   var sinceParties;
   var sinceItems;
+  var sinceChats;
 
   // returns [partyid,partyid,...]
   that.longPollPartyChanges = function(callback) {
@@ -43,8 +44,8 @@ var server = (function() {
   // returns [commentid,commentid,...]
   that.longPollCommentChanges = function(partyid, callback) {
     console.log('longPollCommentChanges');
-    $.getJSON('longpoll/comments', {partyid:partyid, since:sinceItems}, function(changes) {
-      sinceItems = changes.last_seq;
+    $.getJSON('longpoll/comments', {partyid:partyid, since:sinceChats}, function(changes) {
+      sinceChats = changes.last_seq;
       callback(changes.comments);
     });
   };
