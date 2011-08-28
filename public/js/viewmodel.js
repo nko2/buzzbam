@@ -90,7 +90,7 @@ var viewModel = {
   friends: ko.observableArray(friends),
   parties: ko.observableArray(parties),
   publicParties: ko.observableArray(publicParties),
-  selectedParty: ko.observable(),
+  selectedParty: ko.observable(new partyInfo({})),
   whereVisible: ko.observable(false),
   whenVisible: ko.observable(false),
   whereVisible: ko.observable(false),
@@ -122,6 +122,9 @@ viewModel.logInOutOfFacebook = logInOutOfFacebook;
 viewModel.whereClick = whereClick;
 viewModel.whenClick = whenClick;
 viewModel.whoClick = whoClick;
+viewModel.whereChange = whereChange;
+viewModel.whenChange = whenChange;
+viewModel.whoChange = whoChange;
 viewModel.selectedPartyUsers = function () {
   if (viewModel.selectedParty()) {
     return viewModel.selectedParty().users;
@@ -139,6 +142,18 @@ viewModel.selectedPartyItems = function () {
     return viewModel.selectedParty().items;
   }
   return [];
+}
+viewModel.selectedPartyDescription = function () {
+  if (viewModel.selectedParty()) {
+    return viewModel.selectedParty().description;
+  }
+  return "";
+}
+viewModel.selectedPartyTitle = function () {
+  if (viewModel.selectedParty()) {
+    return viewModel.selectedParty().title;
+  }
+  return "";
 }
 
 $(document).ready(function() {
