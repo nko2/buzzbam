@@ -52,7 +52,7 @@ viewModel.getPublicParties = ko.dependentObservable(function() {
   var parties = viewModel.parties();
   var publicParties = [];
   for (var i in parties) {
-    if (parties[i].isPublic) {
+    if (parties[i].public) {
       publicParties.push(parties[i]);
     }
   };
@@ -63,7 +63,7 @@ viewModel.getPrivateParties = ko.dependentObservable(function() {
   var parties = viewModel.parties();
   var privateParties = [];
   for (var i in parties) {
-    if (!parties[i].isPublic) {
+    if (!parties[i].public) {
       privateParties.push(parties[i]);
     }
   };
@@ -89,13 +89,15 @@ function loadData() {
       modelSetUser(data.me);
       modelSetIsLoggedIn(data.me.id ? true : false);
     });
-  server.getParties(function(partyIds) {
+  server.getParties(function(data) {
+      var partyIds = data.parties;
       for (var i in partyIds) {
         server.getParty(partyIds[i], modelAddParty);
       }
     });
 };
 
+window.plannerViewModel = viewModel;
 
 // READY
 $(document).ready(function() {

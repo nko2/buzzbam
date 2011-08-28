@@ -90,7 +90,6 @@ viewModel.formattedTimeFull = ko.dependentObservable(function () {
   }
 }, viewModel);
 
-viewModel.logInOutOfFacebook = logInOutOfFacebook;
 viewModel.whereClick = whereClick;
 viewModel.whenClick = whenClick;
 viewModel.whoClick = whoClick;
@@ -207,6 +206,17 @@ viewModel.addComment = function(item, message) {
   }
 };
 
+viewModel.logInOutOfFacebook = function() {
+  if (!model.isLoggedIn) {
+    window.location = 'https://www.facebook.com/dialog/oauth?client_id=225589484159909&redirect_uri=http://partyplanner.no.de/login';
+  } else {
+    FB.logout(function(resp) {
+      modelSetUser({});
+    });
+  }
+};
+
+
 window.plannerViewModel = viewModel;
 
 $(document).ready(function() {
@@ -223,3 +233,5 @@ $(document).ready(function() {
   ko.applyBindings(viewModel);
   updateUserData();
 });
+
+
