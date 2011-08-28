@@ -175,6 +175,13 @@ $(document).ready(function() {
   if (window.location.hash === '#debug') {
     server = server_local;
   }
+  var uri = parseUri(window.location.search);
+  if (uri && uri.queryKey && uri.queryKey.partyId) {
+    server.getParty(uri.queryKey.partyId, function(data) {
+      parseParty(data)
+    });
+  }
+  
   ko.applyBindings(viewModel);
   updateUserData();
 });
