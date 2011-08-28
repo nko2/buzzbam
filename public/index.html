@@ -2,100 +2,76 @@
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-	<title></title>
+	<title>Welcome to PartyPlanner</title>
 	<meta name="description" content="">
 	<meta name="author" content="Quetzal Bradley, Jason Falk, David Wolfe, Henry Hiltner">
-
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-
 	<link rel="stylesheet" href="css/grid.css">
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/theme.css">
 	<link rel="stylesheet" href="css/extensions.css">
+<script src="js/libs/modernizr-2.0.min.js"></script> <script src="js/libs/respond.min.js"></script> <script src="js/libs/knockout-1.2.1.debug.js"></script> 
 </head>
-<body class="site-default v1">
-	<div class="grid-page">
-		<div class="grid-container">
-			<div class="grid-group_100">
-				<div class="grid-group_20 temp-brandcap-blue">
-				</div>
-				<div class="grid-group_20 temp-brandcap-purple">
-				</div>
-				<div class="grid-group_20 temp-brandcap-red">
-				</div>
-				<div class="grid-group_20 temp-brandcap-orange">
-				</div>
-				<div class="grid-group_20 temp-brandcap-green">
-				</div>
-			</div>
-			<div class="grid-group_100">
-				<div class="zone-event_preview pink">
-			<textarea class="oi-title" data-bind="text: selectedParty().title, event: {change: titleChange}"></textarea> <textarea class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></textarea> 
-					<ul class="ol-supnav">
-						<li class='loggedin' data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
-						<!--li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li-->
-					</ul>
-					<ul class="ol-navigation">
-						<li><textarea class="oi-location" data-bind="text: selectedParty().where, click: whereClick, event: {change: whereChange}"></textarea></li>
-						<li><textarea class="oi-timedate" data-bind="text: selectedParty().when, click: whenClick, event: {change: whenChange}"></textarea></li>
-						<!--li><div class="oi-attendees" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li-->
-					</ul>
-				</div>
-			</div>
-			<div class="grid-group_100">
-				<div class="grid-collaborate">
-					<div class="zone-collaborate">
-						
-						<div class="grid-task zone-task">
-							<div class="grid-progress zone-progress">
-								<ul class="ol-checklist">
-									<li class="role-complete">Name your event</li>
-									<li class="role-complete">Set a time</li>
-									<li class="role-complete">Pick a location</li>
-									<li class="role-complete">Invite some guests</li>
-								</ul>
-							</div>
-						</div>
-						<div class="grid-posts">
-							<div class="zone-posts x-clearfix">
-								<h2 class="oc-h2 x-align_left">Message Posts</h2>
-								<div class="oa-button x-align_right" data-bind="click: addItem">new post</div>
-								<div data-bind='template: { name: "topicTemplate", foreach: items }'>
-								
-								
-								
-								
-								
-								
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="grid-chat zone-chat">
-					  <ul data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
-					<textarea class="grid-chatentry">
-					</textarea>
-					Chat
-				</div>
-				<!--div class="grid-users zone-users">
-					<ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
-					Users
-				</div-->
-
+<body class="site-default portal v1">
+<div class="grid-container_portal">
+	<div class="grid-group_100">
+		<div class="zone-portal_header">
+			<ul class="ol-supnav">
+				<li style="padding-top: 3px;"><iframe data-bind="fadeVisible: isLoggedIn" src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li>
+				<li data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
+				<li class="x-padding_left_0_0" data-bind="click: logInOutOfFacebook"><span class="os-icon"></span></li>
+			</ul>
+			<h1 class="oc-logo">PartyPlanner</h1>
+			<div class="image-img_event_flow"></div>
+			<div class="image-text_start_a_party"></div>
+			<div class="oa-button image-button_call_to_action" data-bind="click: createNewParty">
+				start a party
 			</div>
 		</div>
 	</div>
-<div id="fb-root"></div>
-<div>
-	<ul data-bind='template: { name: "addFriendTemplate", foreach: unselectedFriends }'></ul>
-	<ul data-bind='template: { name: "removeFriendTemplate", foreach: selectedPartyUsers }'></ul>
+	<div class="grid-group_100">
+		<div class="grid-group_50">
+			<div class="zone-event_list">
+				<h2 class="oc-h2">
+					Community Events
+				</h2>
+				<div class="temp-events" >
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: getPublicParties}">
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="grid-group_50">
+			<div class="zone-event_list">
+				<h2 class="oc-h2">
+					Your Events
+				</h2>
+				<div class="temp-events" >
+					<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: getPrivateParties}">
+						<li class="on-login" data-bind="fadeVisible: !isLoggedIn()" >
+							You can <span class="oa-link" data-bind="click: logInOutOfFacebook">log in</span> to see your events or create your own.
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="grid-group_100">
+		<div class="image-content_pitch"></div>
+	</div>
+	<div class="grid-group_100">
+		<div class="oc-legal">
+			Created by Team Buzzbam: Quetzal Bradley, Jason Falk, David Wolfe and Henry Hiltner.
+		</div>
+	</div>
 </div>
+<div id="fb-root"></div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
@@ -106,55 +82,24 @@
 <script src="js/libs/parseuri.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script src="js/facebook.js"></script>
-<script src="js/model.js"></script>
 <script src="js/koscript.js"></script>
-<script src="js/chat.js"></script>
-<script src="js/items.js"></script>
-<script src="js/viewmodel.js"></script>
+<script src="js/homeModel.js"></script>
 <script src="js/script.js"></script>
 <script src="js/kohandlers.js"></script>
-<script src="js/index.jqscript.js"></script>
-    
-<script type="text/x-jquery-tmpl" id="chatTemplate">
-  <li>
-    <span class="op-name" data-bind="text: name"></span> <span data-bind="text: message"></span>
-  </li>
-</script>
+<script src="js/home.jqscript.js"></script>
 
 <script type="text/x-jquery-tmpl" id="friendTemplate">
   <li>
-    <span data-bind="text: name"></span>
+    <span data-bind="text: fullName"></span>
   </li>
 </script>
 
-<script type="text/x-jquery-tmpl" id="addFriendTemplate">
-  <li>
-    <span data-bind="text: name, click: function () { plannerViewModel.addFriend(userId) }"></span>
-  </li>
-</script>
-
-<script type="text/x-jquery-tmpl" id="removeFriendTemplate">
-  <li>
-    <span data-bind="text: name, click: function () { plannerViewModel.removeFriend(userId) }"></span>
-  </li>
-</script>
-
-<script type="text/x-jquery-tmpl" id="whoTemplate">
-    <span data-bind="text: name"></span>
-</script>
-
-<script type="text/x-jquery-tmpl" id="checklistTemplate">
-    <li data-bind="text: description"></li>
-</script>
-
-<script type="text/x-jquery-tmpl" id="topicTemplate">
-    <span data-bind="text: description"></span>
-    <div data-bind="click: function() { plannerViewModel.addComment(this, 'New comment'); }">Add Comment</div>
-    <ul data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
-</script>
-
-<script type="text/x-jquery-tmpl" id="commentTemplate">
-    <li><span data-bind="text: name"></span><span data-bind="text: message"></span></li>
+<script type="text/x-jquery-tmpl" id="partyTemplate">
+    <li class="og-event">
+        <div class="oi-title" data-bind="text: title, click: function() { plannerViewModel.redirectToParty(_id) }"></div>
+        <span class="oi-location" data-bind="text: where"></span>
+        <span class="oi-datetime" data-bind="text: when"></span>
+    </li>
 </script>
 
 </body>

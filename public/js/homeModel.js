@@ -44,7 +44,7 @@ viewModel.createNewParty = function() {
   var description = "Your party description";
   server.newParty(title, description, function(party) {
       modelAddParty(party);
-      window.location = 'index.html?partyId=' + party._id;
+      window.location = 'party.html?partyId=' + party._id;
     });
 };
 
@@ -73,7 +73,7 @@ viewModel.getPrivateParties = ko.dependentObservable(function() {
 });
 
 viewModel.redirectToParty = function(partyId) {
-  window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
+  window.location = 'http://partyplanner.no.de/party.html?partyId=' + partyId;
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {

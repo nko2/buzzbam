@@ -44,7 +44,7 @@ function createNewParty() {
   var description = "default description";
   server.newParty(title, description, function(data) {
       var newParty = parseParty(data);
-      window.location = 'index.html?partyId=' + newParty.id;
+      window.location = 'party.html?partyId=' + newParty.id;
     });
 };
 

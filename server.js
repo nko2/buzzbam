@@ -287,7 +287,7 @@ app.get('/login', function(req, res) {
       client.get({host: 'graph.facebook.com', port: 443, path: '/me?access_token=' + req.session.user.access_token}, function(result) {
         req.session.user.name = result.name;
         req.session.user.id = result.id;
-        res.redirect('/home.html');
+        res.redirect('/index.html');
       });
     });
   });
@@ -296,7 +296,6 @@ app.get('/login', function(req, res) {
 
 app.get('/*', function(req, res){
   res.send(404);
-  //res.redirect('/index.html');
 });
 
 app.listen(80);

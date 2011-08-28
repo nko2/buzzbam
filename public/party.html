@@ -1,0 +1,161 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title></title>
+	<meta name="description" content="">
+	<meta name="author" content="Quetzal Bradley, Jason Falk, David Wolfe, Henry Hiltner">
+
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<link rel="stylesheet" href="css/grid.css">
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/extensions.css">
+</head>
+<body class="site-default v1">
+	<div class="grid-page">
+		<div class="grid-container">
+			<div class="grid-group_100">
+				<div class="grid-group_20 temp-brandcap-blue">
+				</div>
+				<div class="grid-group_20 temp-brandcap-purple">
+				</div>
+				<div class="grid-group_20 temp-brandcap-red">
+				</div>
+				<div class="grid-group_20 temp-brandcap-orange">
+				</div>
+				<div class="grid-group_20 temp-brandcap-green">
+				</div>
+			</div>
+			<div class="grid-group_100">
+				<div class="zone-event_preview pink">
+			<textarea class="oi-title" data-bind="text: selectedParty().title, event: {change: titleChange}"></textarea> <textarea class="oi-description" data-bind="text: selectedPartyDescription(), event: {change: descriptionChange}"></textarea> 
+					<ul class="ol-supnav">
+						<li class='loggedin' data-bind="text: formattedLoggedInName, click: logInOutOfFacebook"></li>
+						<!--li><iframe src="http://nodeknockout.com/iframe/buzzbam" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe></li-->
+					</ul>
+					<ul class="ol-navigation">
+						<li><textarea class="oi-location" data-bind="text: selectedParty().where, click: whereClick, event: {change: whereChange}"></textarea></li>
+						<li><textarea class="oi-timedate" data-bind="text: selectedParty().when, click: whenClick, event: {change: whenChange}"></textarea></li>
+						<!--li><div class="oi-attendees" data-bind="template: { name: 'whoTemplate', foreach: selectedPartyUsers }, click: whoClick">Who</div></li-->
+					</ul>
+				</div>
+			</div>
+			<div class="grid-group_100">
+				<div class="grid-collaborate">
+					<div class="zone-collaborate">
+						
+						<div class="grid-task zone-task">
+							<div class="grid-progress zone-progress">
+								<ul class="ol-checklist">
+									<li class="role-complete">Name your event</li>
+									<li class="role-complete">Set a time</li>
+									<li class="role-complete">Pick a location</li>
+									<li class="role-complete">Invite some guests</li>
+								</ul>
+							</div>
+						</div>
+						<div class="grid-posts">
+							<div class="zone-posts x-clearfix">
+								<h2 class="oc-h2 x-align_left">Message Posts</h2>
+								<div class="oa-button x-align_right" data-bind="click: addItem">new post</div>
+								<div data-bind='template: { name: "topicTemplate", foreach: items }'>
+								
+								
+								
+								
+								
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="grid-chat zone-chat">
+					  <ul data-bind='template: { name: "chatTemplate", foreach: chats }'></ul>
+					<textarea class="grid-chatentry">
+					</textarea>
+					Chat
+				</div>
+				<!--div class="grid-users zone-users">
+					<ul data-bind='template: { name: "friendTemplate", foreach: selectedPartyUsers }'></ul>
+					Users
+				</div-->
+
+			</div>
+		</div>
+	</div>
+<div id="fb-root"></div>
+<div>
+	<ul data-bind='template: { name: "addFriendTemplate", foreach: unselectedFriends }'></ul>
+	<ul data-bind='template: { name: "removeFriendTemplate", foreach: selectedPartyUsers }'></ul>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+
+<script src="js/libs/modernizr-2.0.min.js"></script>
+<script src="js/libs/respond.min.js"></script>
+<script src='js/libs/jquery.tmpl.js' type='text/javascript'></script>
+<script src="js/libs/knockout-1.2.1.debug.js"></script>
+<script src="js/libs/parseuri.js"></script>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script src="js/facebook.js"></script>
+<script src="js/model.js"></script>
+<script src="js/koscript.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/items.js"></script>
+<script src="js/viewmodel.js"></script>
+<script src="js/script.js"></script>
+<script src="js/kohandlers.js"></script>
+<script src="js/index.jqscript.js"></script>
+    
+<script type="text/x-jquery-tmpl" id="chatTemplate">
+  <li>
+    <span class="op-name" data-bind="text: name"></span> <span data-bind="text: message"></span>
+  </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="friendTemplate">
+  <li>
+    <span data-bind="text: name"></span>
+  </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="addFriendTemplate">
+  <li>
+    <span data-bind="text: name, click: function () { plannerViewModel.addFriend(userId) }"></span>
+  </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="removeFriendTemplate">
+  <li>
+    <span data-bind="text: name, click: function () { plannerViewModel.removeFriend(userId) }"></span>
+  </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="whoTemplate">
+    <span data-bind="text: name"></span>
+</script>
+
+<script type="text/x-jquery-tmpl" id="checklistTemplate">
+    <li data-bind="text: description"></li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="topicTemplate">
+    <span data-bind="text: description"></span>
+    <div data-bind="click: function() { plannerViewModel.addComment(this, 'New comment'); }">Add Comment</div>
+    <ul data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
+</script>
+
+<script type="text/x-jquery-tmpl" id="commentTemplate">
+    <li><span data-bind="text: name"></span><span data-bind="text: message"></span></li>
+</script>
+
+</body>
+</html>
