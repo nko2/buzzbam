@@ -47,6 +47,25 @@ function map(input, fn) {
 
 // Routes
 
+app.get('/longpoll/comments', function(req, res) {
+  var partyid = req.param('partyid');
+  var since = req.param('since');
+  data.getParty(req.session, partyid, function(party) {
+    if (party.error) {
+      res.send(403);
+    }
+    else {
+      data.longPollComments(req.session, partyid, since, function(changes) {
+	var result = {
+	  last_seq: changes.last_seq,
+	  comments: map(changes.results, function(x) { return x.id; })
+	};
+	res.send(result);
+      });
+    }
+  });
+});
+
 app.get('/longpoll/items', function(req, res) {
   var partyid = req.param('partyid');
   var since = req.param('since');
@@ -140,8 +159,33 @@ app.post('/newitem', function(req, res) {
   });
 });
 
+app.post('/newchat', function(req, res) {
+  var partyid = req.param('partyid');
+  var message = req.param('message');
+
+  data.getParty(req.session, partyid, function(party) {
+    if (party.error) {
+      res.send(403);
+    }
+    else {
+      uuid.get(function(uuid){
+        var comment = {
+          partyid: partyid,
+          user: req.session.user.id,
+          message: message,
+          time: new Date()
+        };
+        data.couchPost('/chat/'+uuid, comment, function(result) {
+          res.send(JSON.stringify(result));
+        });
+      });
+    }
+  });
+
+});
+
 app.post('/newcomment', function(req, res) {
-  var itemid = req.param('id');
+  var itemid = req.param('itemid');
   var message = req.param('message');
 
   data.getItem(req.session, itemid, function(item) {
@@ -149,16 +193,17 @@ app.post('/newcomment', function(req, res) {
       res.send(403);
     }
     else {
-      if (!(item.comments instanceof Array)) {
-        item.comments = [];
-      }
-      item.comments.push({
-        user: req.session.user.id,
-        message: message,
-        time: new Date()
-      });
-      data.couchPost('/items/'+itemid, item, function(result) {
-        res.send(JSON.stringify(result));
+      uuid.get(function(uuid){
+        var comment = {
+          partyid: item.partyid,
+          itemid: itemid,
+          user: req.session.user.id,
+          message: message,
+          time: new Date()
+        };
+        data.couchPost('/chat/'+uuid, comment, function(result) {
+          res.send(JSON.stringify(result));
+        });
       });
     }
   });
@@ -211,9 +256,45 @@ function viewValues(viewResult) {
   return results;
 }
 
+app.get('/comment', function(req, res) {
+  var commentid = req.param('commentid');
+  data.getComment(req.session, commentid, function(comment) {
+    if (comment.error) {
+      res.send(403);
+    }
+    else {
+      res.send(JSON.stringify(comment));
+    }
+  });
+});
+
+app.get('/comments', function(req, res) {
+  var partyid = req.param('partyid');
+  data.getComments(req.session, partyid, function(items) {
+    if (items.error) {
+      res.send(403);
+    }
+    else {
+      res.send(JSON.stringify(viewValues(items)));
+    }
+  });
+});
+
+app.get('/item', function(req, res) {
+  var itemid = req.param('itemid');
+  data.getItem(req.session, itemid, function(item) {
+    if (item.error) {
+      res.send(403);
+    }
+    else {
+      res.send(JSON.stringify(item));
+    }
+  });
+});
+
 app.get('/items', function(req, res) {
-  var id = req.param('id');
-  data.getItems(req.session, id, function(items) {
+  var partyid = req.param('partyid');
+  data.getItems(req.session, partyid, function(items) {
     if (items.error) {
       res.send(403);
     }

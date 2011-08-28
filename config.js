@@ -1,6 +1,9 @@
+//exports.couch = {
+//  basicauth: new Buffer('admin:Xy123123').toString('base64'),
+//  server: 'partyplanner.iriscouch.com'
+//};
 exports.couch = {
-  basicauth: new Buffer('admin:Xy123123').toString('base64'),
-  server: 'partyplanner.iriscouch.com'
+  server: 'buzzbam.iriscouch.com'
 };
 exports.fb = {
   key: '225589484159909',
