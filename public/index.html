@@ -48,8 +48,8 @@
 				</div>
 				<div class="grid-collaborate">
 					<div class="grid-posts fff">
-                        <div data-bind="click: addPost">Add Topic</div>
-						<ul data-bind='template: { name: "postTemplate", foreach: selectedPartyItems }'></ul>
+                        <div data-bind="click: addItem">Add Topic</div>
+						<div data-bind='template: { name: "topicTemplate", foreach: selectedPartyItems }'></div>
 					</div>
 					<div class="grid-users fff">
                       <ul data-bind='template: { name: "friendTemplate", foreach: friends }'></ul>
@@ -81,7 +81,7 @@
     
 <script type="text/x-jquery-tmpl" id="chatTemplate">
   <li>
-   <span class="op-name" data-bind="text: name"></span> <span data-bind="text: message"></span>
+    <span class="op-name" data-bind="text: name"></span> <span data-bind="text: message"></span>
   </li>
 </script>
 
@@ -99,9 +99,10 @@
     <li data-bind="text: description"></li>
 </script>
 
-<script type="text/x-jquery-tmpl" id="postTemplate">
+<script type="text/x-jquery-tmpl" id="topicTemplate">
     <span data-bind="text: description"></span>
-    <ul data-bind='template: { name: "commentTemplate", foreach: friends }'></ul>
+    <div data-bind="click: function() { plannerViewModel.addComment(this, 'New comment'); }">Add Comment</div>
+    <ul data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
 </script>
 
 <script type="text/x-jquery-tmpl" id="commentTemplate">

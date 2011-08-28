@@ -3,76 +3,82 @@ var publicParties = [];
 var friends = [];
 
 var whereInfo = function (opt) {
-  this.id = opt.id;
-  this.location = ko.observable(opt.location);
+  var that = this;
+  that.id = opt.id;
+  that.location = ko.observable(opt.location);
 };
 
 var whenInfo = function (opt) {
-  this.id = opt.id;
-  this.startTime = ko.observable(opt.startTime);
-  this.endTime = ko.observable(opt.endTime);
+  var that = this;
+  that.id = opt.id;
+  that.startTime = ko.observable(opt.startTime);
+  that.endTime = ko.observable(opt.endTime);
   
-  this.formattedTimeDateFull = ko.dependentObservable(function () {
-    if (this.startTime && this.endTime) {
-      return this.startTime + ' ' + this.endTime;
-    } else if (this.startTime) {
-      return this.startTime;
+  that.formattedTimeDateFull = ko.dependentObservable(function () {
+    if (that.startTime && that.endTime) {
+      return that.startTime + ' ' + that.endTime;
+    } else if (that.startTime) {
+      return that.startTime;
     }
     else return '';
   });
 };
 
 var user = function (opt) {
-  this.id = opt.id;
-  this.userId = opt.userId;
-  this.firstName = opt.firstName;
-  this.lastName = opt.lastName;
-  this.fullName = opt.fullName;
-  this.link = opt.link;
-  this.email = opt.email;
-  this.role = opt.role ? opt.role : 'contrib';
-  this.rsvp = opt.rsvp ? opt.rsvp : 'maybe';
-  this.timezone = opt.timezone;
-  this.locale = opt.locale;
+  var that = this;
+  that.id = opt.id;
+  that.userId = opt.userId;
+  that.firstName = opt.firstName;
+  that.lastName = opt.lastName;
+  that.fullName = opt.fullName;
+  that.link = opt.link;
+  that.email = opt.email;
+  that.role = opt.role ? opt.role : 'contrib';
+  that.rsvp = opt.rsvp ? opt.rsvp : 'maybe';
+  that.timezone = opt.timezone;
+  that.locale = opt.locale;
 };
 
 var friend = function (opt) {
-	this.userId = opt.userId;
-	this.fullName = opt.fullName;
-	
-	this.remove = function () { viewModel.friends.remove(this); }
+  var that = this;
+	that.userId = opt.userId;
+	that.fullName = opt.fullName;
+	that.remove = function () { viewModel.friends.remove(that); }
 }
 
 var item = function (opt) {
-  this.id = opt.id;
-  this.isTodo = ko.observable(opt.isTodo);
-  this.isDone = ko.observable(opt.isDone);
-  this.description = opt.description;
-  this.comments = ko.observableArray(opt.comments ? opt.comments : []);
+  var that = this;
+  that.id = opt.id;
+  that.isTodo = ko.observable(opt.isTodo);
+  that.isDone = ko.observable(opt.isDone);
+  that.description = ko.observable(opt.description);
+  that.comments = ko.observableArray(opt.comments ? opt.comments : []);
 };
 
 var comment = function (opt) {
-  this.id = opt.id;
-  this.userId = opt.userId;
-  this.text = opt.text;
-  this.time = opt.time ? opt.time : Date.now();
-  this.getUserInfo = function (callback) {
-    server.getUserInfo(opt.userId, callback);
-  }
+  var that = this;
+  that.id = opt.id;
+  that.itemId = opt.itemId;
+  that.userId = opt.userId;
+  that.text = opt.text;
+  that.time = opt.time ? opt.time : Date.now();
+  that.getUserInfo = function (callback) {
+      server.getUserInfo(opt.userId, callback);
+    }
 };
 
 var partyInfo = function (opt) {
-  this.id = opt.id;
-  this.isPublic = opt.isPublic;
-  this.title = ko.observable(opt.title);
-  this.description = ko.observable(opt.description);
-  this.users = ko.observableArray([]);//[new user(opt.creator)]);
-  this.userIds = ko.observableArray(opt.userIds);
-  this.items = ko.observableArray([]);
-  var itemsC = this.items;
-  this.todos = ko.dependentObservable(function() {
+  var that = this;
+  that.id = opt.id;
+  that.isPublic = opt.isPublic;
+  that.title = ko.observable(opt.title);
+  that.description = ko.observable(opt.description);
+  that.users = ko.observableArray([]);//[new user(opt.creator)]);
+  that.userIds = ko.observableArray(opt.userIds);
+  that.items = ko.observableArray([]);
+  that.todos = ko.dependentObservable(function() {
     var newTodos = [];
-    var curItems = itemsC();
+    var curItems = that.items();
     for (var i in curItems) {
       if (curItems[i].isTodo()) {
         newTodos.push(curItems[i]);
@@ -80,16 +86,14 @@ var partyInfo = function (opt) {
     }
     return newTodos;
   });
-  this.whereInfo = new whereInfo(opt.where ? opt.where : {});
-  this.whenInfo = new whenInfo(opt.when ? opt.when : {});
-  var whereInfoC = this.whereInfo;
-  this.formattedLocation = ko.dependentObservable(function () {
-      return whereInfoC.location;
-    }, this);
-  var whenInfoC = this.whenInfo;
-  this.formattedDateTimeFull = ko.dependentObservable(function () {
+  that.whereInfo = new whereInfo(opt.where ? opt.where : {});
+  that.whenInfo = new whenInfo(opt.when ? opt.when : {});
+  that.formattedLocation = ko.dependentObservable(function () {
+      return that.whereInfo.location;
+    }, that);
+  that.formattedDateTimeFull = ko.dependentObservable(function () {
       return "";
-    }, this);
+    }, that);
 };
   
 var viewModel = {
@@ -140,34 +144,44 @@ viewModel.selectedPartyUsers = function () {
     return viewModel.selectedParty().users;
   }
   return [];
-}
-viewModel.selectedPartyTodos = function () {
+};
+viewModel.selectedPartyTodos = ko.dependentObservable(function () {
   if (viewModel.selectedParty()) {
-    return viewModel.selectedParty().todos;
+    return viewModel.selectedParty().todos();
   }
   return [];
-}
-viewModel.selectedPartyItems = function () {
+});
+viewModel.selectedPartyItems = ko.dependentObservable(function () {
   if (viewModel.selectedParty()) {
-    return viewModel.selectedParty().items;
+    return viewModel.selectedParty().items();
   }
   return [];
-}
-viewModel.selectedPartyDescription = function () {
+});
+viewModel.selectedPartyDescription = ko.dependentObservable(function () {
   if (viewModel.selectedParty()) {
-    return viewModel.selectedParty().description;
+    return viewModel.selectedParty().description();
   }
   return "";
-}
-viewModel.selectedPartyTitle = function () {
+});
+viewModel.selectedPartyTitle = ko.dependentObservable(function () {
   if (viewModel.selectedParty()) {
-    return viewModel.selectedParty().title;
+    return viewModel.selectedParty().title();
   }
   return "";
-}
+});
 viewModel.redirectToParty = function(partyId) {
   window.location = 'http://partyplanner.no.de/index.html?partyId=' + partyId;
-}
+};
+viewModel.addComment = function(item, message) {
+  if (item) {
+    server.newComment(item.id, message, function(data) {
+      var comment = parseComment(data);
+      comment.itemId = item.id;
+      comment.userId = viewModel.user().id;
+      item.comments.push(comment);
+    });
+  }
+};
 
 window.plannerViewModel = viewModel;
 
