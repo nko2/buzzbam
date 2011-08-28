@@ -191,6 +191,11 @@ $(document).ready(function() {
   }
   var uri = parseUri(window.location.search);
   if (uri && uri.queryKey && uri.queryKey.partyId) {
+    if (uri.queryKey.partyId == 'new') {
+      server.newParty(title, description, function(data) {
+          
+        });
+    }
     server.getParty(uri.queryKey.partyId, function(data) {
       var newParty = parseParty(data);
       // select the new party by default
