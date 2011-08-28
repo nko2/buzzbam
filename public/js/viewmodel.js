@@ -70,8 +70,8 @@ var partyInfo = function (opt) {
   this.users = ko.observableArray();//[new user(opt.creator)]);
   this.userIds = ko.observableArray(opt.userIds);
   this.items = ko.observableArray([]);
-  this.tasks: ko.observableArray([]),
-  this.todos: ko.observableArray([]),
+  this.tasks = ko.observableArray([]);
+  this.todos = ko.observableArray([]);
   this.whereInfo = new whereInfo(opt.where ? opt.where : {});
   this.whenInfo = new whenInfo(opt.when ? opt.when : {});
 };
@@ -83,9 +83,9 @@ var viewModel = {
   parties: ko.observableArray(parties),
   publicParties: ko.observableArray(publicParties),
   selectedParty: ko.observable(),
-  whereVisible: ko.observable(false);
-  whenVisible: ko.observable(false);
-  whereVisible: ko.observable(false);
+  whereVisible: ko.observable(false),
+  whenVisible: ko.observable(false),
+  whereVisible: ko.observable(false),
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
