@@ -103,16 +103,16 @@ function descriptionChange() {
 }
 
 function addPost() {
-  var currentParty = viewModel.currentParty();
-  if (currentParty) {
-    var partyId = currentParty.id;
+  var selectedParty = viewModel.selectedParty();
+  if (selectedParty) {
+    var partyId = selectedParty.id;
     server.newItem(partyId, 'New Topic', parseItem);
   }
 }
 
 function parseItem(data) {
-  var currentParty = viewModel.currentParty();
-  if (currentParty) {
+  var selectedParty = viewModel.selectedParty();
+  if (selectedParty) {
     var newItem = new item([]);
   }
 }
