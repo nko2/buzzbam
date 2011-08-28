@@ -32,3 +32,12 @@ function prepareChat()
   getChats();
 }
 
+$(document).ready(function() {
+  boolean prepared = false;
+  viewModel.currentParty.subscribe(function (newValue) {
+    if (!prepared) {
+      prepared = true;
+      prepareChat();
+    }
+  });
+});
