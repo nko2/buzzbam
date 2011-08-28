@@ -143,7 +143,7 @@
     <span data-bind="text: description"></span>
     <div data-bind="click: function() { plannerViewModel.addComment(this, $('#commentta').val()); $('#commentta').val('') }">add comment</div>
     <textarea class="oi-ta" id="commentta"></textarea>
-    <ul data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
+    <ul class="na-chad" data-bind='template: { name: "commentTemplate", foreach: comments }'></ul>
 </script>
 
 <script type="text/x-jquery-tmpl" id="commentTemplate">
