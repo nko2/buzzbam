@@ -174,9 +174,7 @@ viewModel.redirectToParty = function(partyId) {
 };
 viewModel.addComment = function(item, message) {
   if (item) {
-    server.newComment(item.id, message, function(data) {
-      parseComment(data);
-    });
+    server.newComment(item.id, message);
   }
 };
 

@@ -114,11 +114,7 @@ function descriptionChange() {
 }
 
 function addItem() {
-  var selectedParty = viewModel.selectedParty();
-  if (selectedParty) {
-    var partyId = selectedParty.id;
-    server.newItem(partyId, 'New Topic', parseItem);
-  }
+  server.newItem('New Topic');
 }
 
 var orphanComments = [];
@@ -183,6 +179,13 @@ function parseComment(data) {
       orphanComments.push(newComment);
     }
     else {
+      var existingChats = viewModel.chats();
+      for (var index in existingChats) {
+        var existing = existingChats[index];
+        if (existing.id == newComment.id) {
+          return; // dup
+        }
+      }
       viewModel.chats.push(newComment);
     }
   }

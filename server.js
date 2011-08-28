@@ -84,92 +84,44 @@ app.post('/updateparty', function(req,res) {
   });
 });
 
-app.post('/newitem', function(req, res) {
-  var partyid = req.param('id');
-  var description = req.param('description');
-
-  data.getParty(req.session, partyid, function(party) {
-    if (party.error) {
-      res.send(403);
-    }
-    else {
-      var item = {
-        task: true,
-        done: false,
-        partyid: partyid,
-        description: description,
-      };
-
-      uuid.get(function(uuid){
-        data.couchPost('/items/'+uuid, item, function(result) {
-          if (result.ok) {
-            data.couchGet('/items/'+uuid, function(result) {
-              res.send(result);
-            });
-          }
-          else {
-            res.send(result);
-          }
-        });
-      });
-    }
+app.get('/uuids', function(req, res) {
+  var options = {
+    host: config.couch.server,
+    port: 443,
+    path: '/_uuids?count=100'
+  };
+  client.get(options, function(result) {
+    res.send(JSON.stringify(result.uuids));
   });
 });
 
-app.post('/newchat', function(req, res) {
-  var partyid = req.param('partyid');
-  var message = req.param('message');
+app.post('/newitem', function(req, res) {
+  var uuid = req.param('uuid');
+  var item = JSON.parse(req.param('item'));
 
-  data.getParty(req.session, partyid, function(party) {
+  data.getParty(req.session, item.partyid, function(party) {
     if (party.error) {
       res.send(403);
     }
     else {
-      uuid.get(function(uuid){
-        var comment = {
-          partyid: partyid,
-          user: req.session.user.id,
-          name: req.session.user.name,
-          message: message,
-          time: new Date()
-        };
-        data.couchPost('/chat/'+uuid, comment, function(result) {
-          if (result.ok) {
-            data.couchGet('/chat/'+uuid, function(result) {
-              res.send(result);
-            });
-          }
-          else {
-            res.send(result);
-          }
-        });
+      data.couchPost('/items/'+uuid, item, function(result) {
+	res.send(result);
       });
     }
   });
-
 });
 
 app.post('/newcomment', function(req, res) {
-  var itemid = req.param('itemid');
-  var message = req.param('message');
+  var uuid = req.param('uuid');
+  var comment = JSON.parse(req.param('comment'));
 
-  data.getItem(req.session, itemid, function(item) {
-    if (item.error) {
+  data.getParty(req.session, comment.partyid, function(party) {
+    if (comment.error) {
       res.send(403);
     }
     else {
-      uuid.get(function(uuid){
-        var comment = {
-          partyid: item.partyid,
-          itemid: itemid,
-          user: req.session.user.id,
-          name: req.session.user.name,
-          message: message,
-          time: new Date()
-        };
-        data.couchPost('/chat/'+uuid, comment, function(result) {
-          res.send(JSON.stringify(result));
-        });
+      data.couchPost('/chat/'+uuid, comment, function(result) {
+        res.send(result);
       });
     }
   });
