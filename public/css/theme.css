@@ -303,7 +303,15 @@ Zones
 	position: absolute;
 	top: 4px;
 	right: 10px;
+	height: 32px;
+}
+
+
+.site-default .zone-portal_header .ol-supnav li {
 	line-height: 32px;
+	height: 32px;
+	display: inline-block;
+	float: left;
 }
 
 .site-default .zone-portal_header .os-icon {
@@ -312,7 +320,6 @@ Zones
 	background: transparent url(images/social_facebook.png) no-repeat;
 	display: inline-block;
 	text-indent: -9999px;
-	margin-left: 10px;
 }
 
 /* ZONE: event_list*/
