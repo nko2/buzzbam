@@ -75,6 +75,10 @@ var server = (function() {
     $.getJSON('parties', callback);
   };
 
+  that.getPublicParties = function(callback) {
+    $.getJSON('parties', {public:true}, callback);
+  };
+
   that.getItems = function(partyid, callback) {
     $.getJSON('parties', {id:partyid}, callback);
   };

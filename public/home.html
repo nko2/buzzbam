@@ -43,28 +43,7 @@
 				<h2 class="oc-h2">
 					Public Events
 				</h2>
-				<ul class="ol-events">
-					<li class="og-event">
-						<div class="oi-title">Event 1</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 2</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 3</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 4</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 5</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-				</ul>
+				<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: publicParties}"></ul>
 			</div>
 		</div>
 		<div class="grid-group_50">
@@ -72,28 +51,7 @@
 				<h2 class="oc-h2">
 					My Events
 				</h2>
-				<ul class="ol-events" data-bind="template: >
-					<li class="og-event">
-						<div class="oi-title">Event 1</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 2</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 3</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 4</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-					<li class="og-event">
-						<div class="oi-title">Event 5</div>
-						<span class="oi-locaiton">[location]</span><span class="oi-datetime">[time/date]</span>
-					</li>
-				</ul>
+				<ul class="ol-events" data-bind="template: {name: 'partyTemplate', foreach: parties}"></ul>
 			</div>
 		</div>
 	</div>
@@ -115,11 +73,19 @@
 <script src="js/koscript.js"></script>
 <script src="js/viewmodel.js"></script>
 <script src="js/script.js"></script>
+<script src="js/home.script.js"></script>
 
 <script type="text/x-jquery-tmpl" id="friendTemplate">
   <li>
     <span data-bind="text: fullName"></span>
   </li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="partyTemplate">
+    <li class="og-event">
+        <div class="oi-title" data-bind="text: title"></div>
+        <span class="oi-location" data-bind="text: formattedLocation"></span><span class="oi-datetime" data-bind="text: formattedTimeDateFull"></span>
+    </li>
 </script>
 
 </body>

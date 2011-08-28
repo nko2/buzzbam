@@ -1,25 +1,25 @@
 var parties = [];
+var publicParties = [];
 var friends = [];
-var tasks = [];
-var todos = [];
 
 var whereInfo = function (opt) {
   this.id = opt.id;
-  this.location = opt.location;
+  this.location = ko.observable(opt.location);
 };
 
 var whenInfo = function (opt) {
   this.id = opt.id;
-  this.startTime = opt.startTime;
-  this.endTime = opt.endTime;
+  this.startTime = ko.observable(opt.startTime);
+  this.endTime = ko.observable(opt.endTime);
   
-  formattedTimeFull = function () {
-    if (this.startTime && this.endTime) {
-      return this.startTime + ' ' + this.endTime;
-    } else if (this.startTime) {
-      return this.startTime;
+  formattedTimeDateFull = ko.dependentObservable(function () {
+    if (this.startTime() && this.endTime()) {
+      return this.startTime() + ' ' + this.endTime();
+    } else if (this.startTime()) {
+      return this.startTime();
     }
-    else return '';  
+    else return '';
+  });
 };
 
 var user = function (opt) {
@@ -56,6 +56,10 @@ var comment = function (opt) {
   this.userId = opt.userId;
   this.text = opt.text;
   this.time = opt.time ? opt.time : Date.now();
+  
+  this.getUserInfo = function (callback) {
+    server.getUserInfo(this.userId, callback);
+  }
 };
 
 var partyInfo = function (opt) {
@@ -66,22 +70,34 @@ var partyInfo = function (opt) {
   this.users = ko.observableArray();//[new user(opt.creator)]);
   this.userIds = ko.observableArray(opt.userIds);
   this.items = ko.observableArray([]);
+  this.tasks: ko.observableArray(tasks),
+  this.todos: ko.observableArray(todos),
   this.whereInfo = new whereInfo(opt.where ? opt.where : {});
   this.whenInfo = new whenInfo(opt.when ? opt.when : {});
+  
 };
-
+  
 var viewModel = {
   user: ko.observable(),
   isLoggedIn: ko.observable(false),
   friends: ko.observableArray(friends),
   parties: ko.observableArray(parties),
+  publicParties: ko.observableArray(publicParties),
   selectedParty: ko.observable(),
-  tasks: ko.observableArray(tasks),
-  todos: ko.observableArray(todos),
 };
 
 viewModel.formattedLoggedInName = ko.dependentObservable(function () {
   if (viewModel.user() && viewModel.isLoggedIn()) {
+    var name = viewModel.user().fullName;
+    return "Logout (" + name + ")";
+  } else {
+    return "Log into Facebook";
+  }
+}, viewModel);
+
+viewModel.formattedLocation = ko.dependentObservable(function () {
+  if (viewModel.selectedParty() &&
+      viewModel.selectedParty().whereInfo) {
     var name = viewModel.user().fullName;
     return "Logout (" + name + ")";
   } else {

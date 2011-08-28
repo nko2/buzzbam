@@ -36,15 +36,15 @@
 			<div class="grid-group_100">
 				<div class="grid-task">
 					<div class="grid-progress fff">
-						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: tasks></ul>
+						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedParty.tasks></ul>
 					</div>
 					<div class="grid-todo fff">
-						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: todos></ul>
+						<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedParty.todos></ul>
 					</div>
 				</div>
 				<div class="grid-collaborate">
 					<div class="grid-posts fff">
-						Post<br />Post<br />Post<br />Post<br />Post<br />Post<br />
+						<ul data-bind='template: { name: "postTemplate", foreach: selectdParty.items }'></ul>
 					</div>
 					<div class="grid-users fff">
                       <ul data-bind='template: { name: "friendTemplate", foreach: friends }'></ul>
@@ -70,6 +70,7 @@
 <script src="js/koscript.js"></script>
 <script src="js/viewmodel.js"></script>
 <script src="js/script.js"></script>
+<script src="js/index.script.js"></script>
     
 <script type="text/x-jquery-tmpl" id="friendTemplate">
   <li>
@@ -83,6 +84,15 @@
 
 <script type="text/x-jquery-tmpl" id="checklistTemplate">
     <li data-bind="text: description"></li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="postTemplate">
+    <span data-bind="text: description"></span>
+    <ul data-bind='template: { name: "commentTemplate", foreach: friends }'></ul>
+</script>
+
+<script type="text/x-jquery-tmpl" id="commentTemplate">
+    <li><span data-bind="text: userId"></span><span data-bind="text: text"></span></li>
 </script>
 
 </body>

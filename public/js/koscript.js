@@ -1,4 +1,4 @@
-function populateParties(data) {
+function parseParties(data) {
   var newParties = [];
   for (var i in data) {
     newParties.push(new partyInfo({
@@ -12,10 +12,20 @@ function populateParties(data) {
       whenId: data[i].whenId,
     }));
   }
+  return newParties;
+}
+
+function populateParties(data) {
+  var newParties = parseParties(data);
   viewModel.parties(newParties);
-  if (parties.count > 0) {
-    viewModel.selectedParty(parties[0]);
+  if (viewModel.parties.count > 0) {
+    viewModel.selectedParty(viewModel.parties[0]);
   }
+};
+
+function populatePublicParties(data) {
+  var newParties = parseParties(data);
+  viewModel.publicParties(newParties);
 };
 
 function populateFriends(data) {
