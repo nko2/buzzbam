@@ -348,7 +348,7 @@ Zones
 	left: 20px;
 }
 
-.site-default .zone-event_preview .oi-timedate,.site-default .zone-event_preview .oi-locaiton, .site-default .zone-event_preview .oi-attendees {
+.site-default .zone-event_preview .oi-timedate,.site-default .zone-event_preview .oi-location, .site-default .zone-event_preview .oi-attendees {
 	resize: none;
 	border: 0 solid transparent;
 	background: transparent;

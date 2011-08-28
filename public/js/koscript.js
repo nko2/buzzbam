@@ -62,14 +62,13 @@ function createNewParty() {
 function whereClick() {
 }
 function whereChange() {
-  if (viewModel.selectedParty()) {
-    viewModel.selectedParty().whereInfo.location($('.oi-where').val());
-  }
+  modelUpdateWhere($('.oi-location').val());
 }
 
 function whenClick() {
 }
 function whenChange() {
+  modelUpdateWhen($('.oi-timedate').val());
 }
 
 function whoClick() {
