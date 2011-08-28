@@ -379,7 +379,46 @@ Zones
 .site-default .zone-task.grid-task {
 	min-height: 500px;
 	z-index: 1000;
-	background: ;
+}
+
+.site-default .zone-task .zone-progress .ol-checklist {
+	border-bottom: 2px dotted #c6c6c6;
+}
+
+.site-default .zone-progress .ol-checklist {
+	margin: 10px 10px 0 10px;
+	padding: 0 0 10px 0;
+}
+
+.site-default .zone-progress .ol-checklist li {
+	font-size: 17px;
+	color: #00aedd;
+	list-style-type: none;
+	line-height: 32px;
+	background: transparent url(images/gray_check.png) no-repeat;
+	padding-left: 40px;
+}
+
+.site-default .zone-task .ol-checklist li.role-complete {
+	color: #333;
+	background: transparent url(images/green_check.png) no-repeat;
+}
+
+/* ZONE: task */
+
+
+.site-default .zone-todo .ol-checklist {
+	margin: 10px 10px 0 10px;
+	padding: 10px 0 10px 0;
+}
+
+.site-default .zone-todo .ol-checklist li {
+	font-size: 12px;
+	color: #00aedd;
+	list-style-type: none;
+	line-height: 20px;
+	padding-left: 40px;
+	cursor: pointer;
 }
 
 /* ZONE: collaborate */

@@ -52,15 +52,33 @@
 					<div class="zone-collaborate">
 						
 						<div class="grid-task zone-task">
-							<div class="grid-progress">
+							<div class="grid-progress zone-progress">
 								<ul class="ol-checklist">
-									<li>Got Where?</li>
-									<li>Got When?</li>
-									<li>Got Who?</li>
+									<li class="role-complete">Name your event</li>
+									<li class="role-complete">Set a time</li>
+									<li class="role-complete">Pick a location</li>
+									<li>Invite some guests</li>
 								</ul>
 							</div>
 							<div class="grid-todo zone-todo">
-								<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedPartyTodos }"></ul>
+								<ul class="ol-checklist" data-bind="template: { name: 'checklistTemplate', foreach: selectedPartyTodos }">
+								
+								
+								
+								
+									<li data-bind="text: description">Task 1</li>
+									<li data-bind="text: description">Task 2</li>
+									<li data-bind="text: description">Task 3</li>
+									<li data-bind="text: description">Task 4</li>
+									<li data-bind="text: description">Task 5</li>
+									<li data-bind="text: description">Task 6</li>
+									<li data-bind="text: description">Task 7</li>
+								
+								
+								
+								
+								
+								</ul>
 							</div>
 						</div>
 						<div class="grid-posts zone-posts">
