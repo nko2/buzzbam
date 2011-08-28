@@ -6,9 +6,9 @@ function loadChat(chatid)
   });
 }
 
-function getChats()
+function getChats(id)
 {
-  server.longPollCommentChanges("59a7245936b94ea159abbbd75a001000", function(chats) {
+  server.longPollCommentChanges(id, function(chats) {
 
     for (var index in chats) {
       var chatid = chats[index];
@@ -16,28 +16,28 @@ function getChats()
     }
 
     // get more
-    getChats();
+    getChats(id);
   });
 }
 
-function prepareChat()
+function prepareChat(id)
 {
   // get it started
-  server.getComments("59a7245936b94ea159abbbd75a001000", function (chats) {
+  server.getComments(id, function (chats) {
     for (var index in chats) {
       var chatid = chats[index];
       loadChat(chatid);
     }
   });
-  getChats();
+  getChats(id);
 }
 
 $(document).ready(function() {
-  boolean prepared = false;
-  viewModel.currentParty.subscribe(function (newValue) {
+  var prepared = false;
+  viewModel.selectedParty.subscribe(function (newValue) {
     if (!prepared) {
       prepared = true;
-      prepareChat();
+      prepareChat(newValue.id);
     }
   });
 });
